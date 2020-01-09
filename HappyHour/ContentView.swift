@@ -9,15 +9,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var items: ItemModel
+    
     var body: some View {
-        Text("Hello, World!")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        VStack {
+            ForEach(items.items, id: \.self) {
+                Text($0)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(ItemModel())
     }
 }

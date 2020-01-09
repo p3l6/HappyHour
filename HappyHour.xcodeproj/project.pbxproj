@@ -12,6 +12,7 @@
 		DA528E3023C6306B001E5445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA528E2F23C6306B001E5445 /* Assets.xcassets */; };
 		DA528E3323C6306B001E5445 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA528E3223C6306B001E5445 /* Preview Assets.xcassets */; };
 		DA528E3623C6306B001E5445 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA528E3423C6306B001E5445 /* Main.storyboard */; };
+		DA60540523C7884D006BB663 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60540423C7884D006BB663 /* ItemModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		DA528E3523C6306B001E5445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA528E3723C6306B001E5445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA528E3823C6306B001E5445 /* HappyHour.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappyHour.entitlements; sourceTree = "<group>"; };
+		DA60540423C7884D006BB663 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			children = (
 				DA528E2B23C6306A001E5445 /* AppDelegate.swift */,
 				DA528E2D23C6306A001E5445 /* ContentView.swift */,
+				DA60540423C7884D006BB663 /* ItemModel.swift */,
 				DA528E2F23C6306B001E5445 /* Assets.xcassets */,
 				DA528E3423C6306B001E5445 /* Main.storyboard */,
 				DA528E3723C6306B001E5445 /* Info.plist */,
@@ -145,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA60540523C7884D006BB663 /* ItemModel.swift in Sources */,
 				DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */,
 				DA528E2C23C6306A001E5445 /* AppDelegate.swift in Sources */,
 			);
