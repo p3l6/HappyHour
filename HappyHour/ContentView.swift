@@ -12,6 +12,11 @@ struct ListItem: View {
     @EnvironmentObject var items: ItemModel
     let item: ItemModel.Item
     @State private var text: String = "NIL"
+    
+    init(item: ItemModel.Item) {
+        self.item = item
+        text = self.item.text
+    }
 
     var body: some View {
         HStack{
@@ -20,8 +25,9 @@ struct ListItem: View {
             }) {
                 Text("del")
             }
-            Text(self.item.text)
-            TextField("newtext", text:self.$text)
+            TextField("newtext", text:self.$text, onCommit: {
+                self.items.update(self.item.id, to: self.text)
+            })
         }
     }
 }
@@ -32,7 +38,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             ForEach(items.items, id: \.id) { item in
-                ListItem(items: self._items, item: item)
+                ListItem(item: item)
             }
             Button(action: {
                 self.items.add("new item")

@@ -29,7 +29,8 @@ final class ItemModel: ObservableObject {
     }
     
     func update(_ x: Int, to: String) {
-        items[x] = Item(id: items[x].id, text: to)
+        let index = items.firstIndex(where: {x==$0.id})!
+        items[index] = Item(id: items[index].id, text: to)
     }
 }
 
