@@ -9,15 +9,27 @@
 import Foundation
 
 final class ItemModel: ObservableObject {
-     @Published var items = ["A","B","C"]
+    static var permanumber = 4
     
-    func remove(_ x: String) {
-        //! remove specific item, not all matching ones
-        items.removeAll(where: {$0==x})
+    struct Item {
+        let id: Int
+        let text: String
+    }
+
+    @Published var items = [Item(id: 0, text: "A"),Item(id: 1, text: "B"),Item(id: 3, text: "C")]
+    
+    func remove(_ x: Int) {
+        //! there may be a more efficient way and a filter
+        items.removeAll(where: {x==$0.id})
     }
     
     func add(_ x: String) {
-        items.append(x)
+        items.append(Item(id: ItemModel.permanumber, text: x))
+        ItemModel.permanumber += 1
+    }
+    
+    func update(_ x: Int, to: String) {
+        items[x] = Item(id: items[x].id, text: to)
     }
 }
 

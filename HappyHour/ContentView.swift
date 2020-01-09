@@ -8,22 +8,31 @@
 
 import SwiftUI
 
+struct ListItem: View {
+    @EnvironmentObject var items: ItemModel
+    let item: ItemModel.Item
+    @State private var text: String = "NIL"
+
+    var body: some View {
+        HStack{
+            Button(action: {
+                self.items.remove(self.item.id)
+            }) {
+                Text("del")
+            }
+            Text(self.item.text)
+            TextField("newtext", text:self.$text)
+        }
+    }
+}
+
 struct ContentView: View {
     @EnvironmentObject var items: ItemModel
-    @State private var text: String = "NIL"
     
     var body: some View {
         VStack {
-            ForEach(items.items, id: \.self) { item in
-                HStack{
-                    Button(action: {
-                        self.items.remove(item)
-                    }) {
-                        Text("del")
-                    }
-                    Text(item)
-                    TextField("newtext", text:self.$text)
-                }
+            ForEach(items.items, id: \.id) { item in
+                ListItem(items: self._items, item: item)
             }
             Button(action: {
                 self.items.add("new item")
