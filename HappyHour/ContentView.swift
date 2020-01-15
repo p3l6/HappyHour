@@ -10,23 +10,17 @@ import SwiftUI
 
 struct ListItem: View {
     @EnvironmentObject var items: ItemModel
-    let item: ItemModel.Item
-    @State private var text: String = "NIL"
-    
-    init(item: ItemModel.Item) {
-        self.item = item
-        text = self.item.text
-    }
+    var itemId: ItemModel.ItemIdentifier
 
     var body: some View {
         HStack{
             Button(action: {
-                self.items.remove(self.item.id)
+                self.items.remove(self.itemId)
             }) {
                 Text("del")
             }
-            TextField("newtext", text:self.$text, onCommit: {
-                self.items.update(self.item.id, to: self.text)
+            TextField("newtext", text:self.$items.items[self.itemId].text, onCommit: {
+                print(self.items.items[self.itemId].text)
             })
         }
     }
@@ -37,8 +31,8 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            ForEach(items.items, id: \.id) { item in
-                ListItem(item: item)
+            ForEach(self.items.items) { item in
+                ListItem(itemId: item.id)
             }
             Button(action: {
                 self.items.add("new item")
