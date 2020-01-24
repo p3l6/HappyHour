@@ -43,6 +43,7 @@ struct ListRow: View {
 
 struct List: View {
     @EnvironmentObject var model: ItemModel
+    @State var editText: String = ""
     let title: String
     
     var body: some View {
@@ -51,9 +52,14 @@ struct List: View {
             ForEach(self.model.items) { item in
                 ListRow(item: item)
             }
-            Button(action: {self.model.add("")}) {
-                Text("add")
-            }
+            TextField("new item", text:self.$editText, onCommit: {
+                if self.editText.count > 0 {
+                    self.model.add(self.editText)
+                    print(self.editText)
+                    self.editText = ""
+                    self.model.save()
+                }
+            })
         }
     }
 }
