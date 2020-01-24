@@ -29,6 +29,7 @@ struct ListItem: View {
             TextField("newtext", text:self.$editText, onCommit: {
                 self.item.text = self.editText
                 print(self.item.text)
+                self.items.save()
             })
         }
     }
