@@ -14,9 +14,18 @@ final class ItemModel: ObservableObject {
     typealias ListKeyPath = ReferenceWritableKeyPath<ItemModel,List>
     
     struct DiskData: Codable {
+        let planned: [String]?
         let today: [String]?
-        init(today: [String]? = nil) {
+        let tomorrow: [String]?
+        let qbi: [String]?
+        init(planned: [String]? = nil,
+             today: [String]? = nil,
+             tomorrow: [String]? = nil,
+             qbi: [String]? = nil) {
+            self.planned = planned
             self.today = today
+            self.tomorrow = tomorrow
+            self.qbi = qbi
         }
     }
     
@@ -33,7 +42,10 @@ final class ItemModel: ObservableObject {
         }
     }
 
+    @Published var planned: List
     @Published var today: List
+    @Published var tomorrow: List
+    @Published var qbi: List
     let file: URL
     
     static func dataDirectory() -> URL {
@@ -62,11 +74,19 @@ final class ItemModel: ObservableObject {
             }
         }
         
+        planned = diskData.planned?.map { Item(initialText: $0) } ?? []
         today = diskData.today?.map { Item(initialText: $0) } ?? []
+        tomorrow = diskData.tomorrow?.map { Item(initialText: $0) } ?? []
+        qbi = diskData.qbi?.map { Item(initialText: $0) } ?? []
     }
     
     func save() {
-        let data = DiskData(today: today.map { $0.text })
+        let data = DiskData(
+            planned: planned.map { $0.text },
+            today: today.map { $0.text },
+            tomorrow: tomorrow.map { $0.text },
+            qbi: qbi.map { $0.text }
+        )
         let enc = JSONEncoder.init()
         do {
             let encoded = try enc.encode(data)

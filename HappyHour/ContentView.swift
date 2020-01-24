@@ -73,7 +73,10 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            List(title:"Planned", listKey: \.planned)
             List(title:"Today", listKey: \.today)
+            List(title:"Tomorrow", listKey: \.tomorrow)
+            List(title:"QBI", listKey: \.qbi)
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
