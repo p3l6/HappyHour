@@ -111,7 +111,7 @@ final class ItemModel: ObservableObject {
         
         func printList(title: String, list: List) {
             if !list.isEmpty {
-                string.append("\(title):\n")
+                string.append("\n\(title):\n")
                 for item in list {
                     string.append("* \(item.text)\n")
                 }
@@ -120,6 +120,7 @@ final class ItemModel: ObservableObject {
         printList(title: "Today", list: today)
         printList(title: "Tomorrow", list: tomorrow)
         printList(title: "QBI", list: qbi)
+        string = string.trimmingCharacters(in: CharacterSet.newlines)
         return string
     }
     
