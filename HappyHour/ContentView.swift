@@ -18,9 +18,11 @@ struct ListRow: View {
     @EnvironmentObject var model: ItemModel
     @State var editText: String
     var item: ItemModel.Item
-    
-    init(item: ItemModel.Item) {
+    let listKey: ItemModel.ListKeyPath
+
+    init(item: ItemModel.Item, listKey: ItemModel.ListKeyPath) {
         self.item = item
+        self.listKey = listKey
         _editText = State(initialValue: item.text)
     }
     
@@ -33,7 +35,7 @@ struct ListRow: View {
                     self.model.save()
                 }
             })
-            Button(action: { self.model.remove(self.item.id)}) {
+            Button(action: { self.model.remove(self.item.id, keyPath:self.listKey)}) {
                 Text("🗑")
             }
             .buttonStyle(ButtonStyleNoBack())
@@ -45,16 +47,17 @@ struct List: View {
     @EnvironmentObject var model: ItemModel
     @State var editText: String = ""
     let title: String
+    let listKey: ItemModel.ListKeyPath
     
     var body: some View {
         VStack(alignment: .leading) {
             Text(title).bold()
-            ForEach(self.model.items) { item in
-                ListRow(item: item)
+            ForEach(self.model[keyPath: listKey]) { item in
+                ListRow(item: item, listKey:self.listKey)
             }
             TextField("new item", text:self.$editText, onCommit: {
                 if self.editText.count > 0 {
-                    self.model.add(self.editText)
+                    self.model.add(self.editText, keyPath:self.listKey)
                     print(self.editText)
                     self.editText = ""
                     self.model.save()
@@ -70,7 +73,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            List(title:"Today")
+            List(title:"Today", listKey: \.today)
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)

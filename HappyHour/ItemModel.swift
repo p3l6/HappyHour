@@ -9,8 +9,16 @@
 import Foundation
 
 final class ItemModel: ObservableObject {
-    
     typealias ItemIdentifier = Int
+    typealias List = [Item]
+    typealias ListKeyPath = ReferenceWritableKeyPath<ItemModel,List>
+    
+    struct DiskData: Codable {
+        let today: [String]?
+        init(today: [String]? = nil) {
+            self.today = today
+        }
+    }
     
     final class Item: ObservableObject, Identifiable {
         static var permanumber = 0
@@ -25,7 +33,7 @@ final class ItemModel: ObservableObject {
         }
     }
 
-    @Published var items: [Item]
+    @Published var today: List
     let file: URL
     
     static func dataDirectory() -> URL {
@@ -43,22 +51,22 @@ final class ItemModel: ObservableObject {
     init() {
         let dir = ItemModel.dataDirectory()
         file = dir.appendingPathComponent("data.json")
-        var strings = [String]()
+        var diskData = DiskData()
         if FileManager.default.fileExists(atPath:file.path) {
             let dec = JSONDecoder.init()
             do {
                 let data = FileManager.default.contents(atPath: file.path)
-                strings = try dec.decode([String].self, from: data!)
+                diskData = try dec.decode(DiskData.self, from: data!)
             } catch {
                 print("error trying load json file")
             }
         }
         
-        items = strings.map { Item(initialText: $0) }
+        today = diskData.today?.map { Item(initialText: $0) } ?? []
     }
     
     func save() {
-        let data = items.map { $0.text }
+        let data = DiskData(today: today.map { $0.text })
         let enc = JSONEncoder.init()
         do {
             let encoded = try enc.encode(data)
@@ -70,20 +78,18 @@ final class ItemModel: ObservableObject {
         }
     }
     
-    var itemIds: [ItemIdentifier] { items.map{$0.id} }
-    
-    func item(_ x: ItemIdentifier) -> Item {
-        let index = items.firstIndex(where: {x==$0.id})!
-        return items[index]
+    func item(_ x: ItemIdentifier, keyPath: ListKeyPath) -> Item {
+        let index = self[keyPath:keyPath].firstIndex(where: {x==$0.id})!
+        return today[index]
     }
     
-    func remove(_ x: ItemIdentifier) {
+    func remove(_ x: ItemIdentifier, keyPath: ListKeyPath) {
         //! there may be a more efficient way and a filter
-        items.removeAll(where: {x==$0.id})
+        self[keyPath:keyPath].removeAll(where: {x==$0.id})
     }
     
-    func add(_ x: String) {
-        items.append(Item(initialText: x))
+    func add(_ x: String, keyPath: ListKeyPath) {
+        self[keyPath:keyPath].append(Item(initialText: x))
     }
 }
 
