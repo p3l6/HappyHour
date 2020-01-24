@@ -61,6 +61,7 @@ struct List: View {
                 }
             })
         }
+        .padding(Edge.Set.horizontal)
     }
 }
 
@@ -68,9 +69,11 @@ struct ContentView: View {
     @EnvironmentObject var model: ItemModel
     
     var body: some View {
-        List(title:"Today")
-        .padding(Edge.Set.horizontal)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        VStack {
+            List(title:"Today")
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
 
