@@ -68,11 +68,24 @@ struct List: View {
     }
 }
 
+struct Toolbar: View {
+    @EnvironmentObject var model: ItemModel
+
+    var body: some View {
+        HStack {
+            Button(action: { self.model.clear() }) {
+                Text("Clear")
+            }
+        }
+    }
+}
+
 struct ContentView: View {
     @EnvironmentObject var model: ItemModel
     
     var body: some View {
         VStack {
+            Toolbar()
             List(title:"Planned", listKey: \.planned)
             List(title:"Today", listKey: \.today)
             List(title:"Tomorrow", listKey: \.tomorrow)

@@ -98,6 +98,14 @@ final class ItemModel: ObservableObject {
         }
     }
     
+    func clear() {
+        planned = tomorrow
+        today = []
+        tomorrow = []
+        qbi = []
+        self.save()
+    }
+    
     func item(_ x: ItemIdentifier, keyPath: ListKeyPath) -> Item {
         let index = self[keyPath:keyPath].firstIndex(where: {x==$0.id})!
         return today[index]
