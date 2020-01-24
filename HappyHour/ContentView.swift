@@ -76,7 +76,18 @@ struct Toolbar: View {
             Button(action: { self.model.clear() }) {
                 Text("Clear")
             }
+            Button(action: {
+                let text = self.model.formatted()
+                let pasteboard = NSPasteboard.general
+                pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
+                pasteboard.setString(text, forType: NSPasteboard.PasteboardType.string)
+            }) {
+                Text("Copy Report")
+            }
         }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .border(Color.secondary, width: 4)
     }
 }
 
@@ -85,11 +96,12 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Toolbar()
             List(title:"Planned", listKey: \.planned)
             List(title:"Today", listKey: \.today)
             List(title:"Tomorrow", listKey: \.tomorrow)
             List(title:"QBI", listKey: \.qbi)
+            Spacer()
+            Toolbar()
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)

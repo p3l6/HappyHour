@@ -106,6 +106,23 @@ final class ItemModel: ObservableObject {
         self.save()
     }
     
+    func formatted() -> String {
+        var string = ""
+        
+        func printList(title: String, list: List) {
+            if !list.isEmpty {
+                string.append("\(title):\n")
+                for item in list {
+                    string.append("* \(item.text)\n")
+                }
+            }
+        }
+        printList(title: "Today", list: today)
+        printList(title: "Tomorrow", list: tomorrow)
+        printList(title: "QBI", list: qbi)
+        return string
+    }
+    
     func item(_ x: ItemIdentifier, keyPath: ListKeyPath) -> Item {
         let index = self[keyPath:keyPath].firstIndex(where: {x==$0.id})!
         return today[index]
