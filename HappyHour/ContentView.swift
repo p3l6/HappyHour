@@ -73,6 +73,10 @@ struct Toolbar: View {
 
     var body: some View {
         HStack {
+            Text("PR 1234")
+            Text("PR1234")
+            Spacer()
+            Divider()
             Button(action: { self.model.clear() }) {
                 Text("Clear")
             }
