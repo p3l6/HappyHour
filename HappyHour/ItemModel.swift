@@ -121,6 +121,15 @@ final class ItemModel: ObservableObject {
         printList(title: "Tomorrow", list: tomorrow)
         printList(title: "QBI", list: qbi)
         string = string.trimmingCharacters(in: CharacterSet.newlines)
+        
+        if let pullUrl = UserDefaults.standard.string(forKey: "pullRequestURLprefix") {
+            string = string.replacingOccurrences(
+                of: #"PR ?(\d+)"#,
+                with: #"[PR]\(\#(pullUrl)$1\)"#,
+                options: .regularExpression
+            )
+        }
+        
         return string
     }
     
