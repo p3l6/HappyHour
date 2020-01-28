@@ -100,6 +100,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            Text(model.filename ?? "Date").bold()
             List(title:"Planned", listKey: \.planned)
             List(title:"Today", listKey: \.today)
             List(title:"Tomorrow", listKey: \.tomorrow)

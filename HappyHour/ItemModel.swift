@@ -30,7 +30,7 @@ final class ItemModel: ObservableObject {
         
         static func load(name:String) -> DiskData {
             let dir = ItemModel.dataDirectory()
-            let file = dir.appendingPathComponent(name)
+            let file = dir.appendingPathComponent(name).appendingPathExtension("json")
 
             var diskData = DiskData()
             if FileManager.default.fileExists(atPath:file.path) {
@@ -47,7 +47,7 @@ final class ItemModel: ObservableObject {
         
         func save(name: String) {
             let dir = ItemModel.dataDirectory()
-            let file = dir.appendingPathComponent(name)
+            let file = dir.appendingPathComponent(name).appendingPathExtension("json")
 
             let enc = JSONEncoder.init()
             do {
@@ -79,7 +79,7 @@ final class ItemModel: ObservableObject {
     @Published var tomorrow: List
     @Published var qbi: List
     
-    private let filename: String?
+    let filename: String?
     
     static func dataDirectory() -> URL {
         var dir: URL?
