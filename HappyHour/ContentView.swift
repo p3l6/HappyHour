@@ -104,7 +104,7 @@ struct ContentView: View {
             List(title:"Today", listKey: \.today)
             List(title:"Tomorrow", listKey: \.tomorrow)
             List(title:"QBI", listKey: \.qbi)
-            Spacer()
+            Spacer().layoutPriority(1)
             Toolbar()
         }
         .padding()
@@ -114,7 +114,15 @@ struct ContentView: View {
 
 
 struct ContentView_Previews: PreviewProvider {
+    static func sampleData() -> ItemModel {
+        let model = ItemModel()
+        model.add("Thing that was done", keyPath: \.today)
+        model.add("Another thing done", keyPath: \.today)
+        model.add("Something for tomorrow", keyPath: \.tomorrow)
+        return model
+    }
+    
     static var previews: some View {
-        ContentView().environmentObject(ItemModel())
+        ContentView().environmentObject(self.sampleData())
     }
 }

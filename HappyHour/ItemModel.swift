@@ -27,6 +27,38 @@ final class ItemModel: ObservableObject {
             self.tomorrow = tomorrow
             self.qbi = qbi
         }
+        
+        static func load(name:String) -> DiskData {
+            let dir = ItemModel.dataDirectory()
+            let file = dir.appendingPathComponent(name)
+
+            var diskData = DiskData()
+            if FileManager.default.fileExists(atPath:file.path) {
+                let dec = JSONDecoder.init()
+                do {
+                    let data = FileManager.default.contents(atPath: file.path)
+                    diskData = try dec.decode(DiskData.self, from: data!)
+                } catch {
+                    print("error trying load json file")
+                }
+            }
+            return diskData
+        }
+        
+        func save(name: String) {
+            let dir = ItemModel.dataDirectory()
+            let file = dir.appendingPathComponent(name)
+
+            let enc = JSONEncoder.init()
+            do {
+                let encoded = try enc.encode(self)
+                try FileManager.default.createDirectory(at: ItemModel.dataDirectory(), withIntermediateDirectories: true)
+                try encoded.write(to: file)
+            }
+            catch let e {
+                print("Error writing to file: \(e.localizedDescription)")
+            }
+        }
     }
     
     final class Item: ObservableObject, Identifiable {
@@ -46,7 +78,8 @@ final class ItemModel: ObservableObject {
     @Published var today: List
     @Published var tomorrow: List
     @Published var qbi: List
-    let file: URL
+    
+    private let filename: String?
     
     static func dataDirectory() -> URL {
         var dir: URL?
@@ -60,19 +93,9 @@ final class ItemModel: ObservableObject {
         return dir!
     }
     
-    init() {
-        let dir = ItemModel.dataDirectory()
-        file = dir.appendingPathComponent("data.json")
-        var diskData = DiskData()
-        if FileManager.default.fileExists(atPath:file.path) {
-            let dec = JSONDecoder.init()
-            do {
-                let data = FileManager.default.contents(atPath: file.path)
-                diskData = try dec.decode(DiskData.self, from: data!)
-            } catch {
-                print("error trying load json file")
-            }
-        }
+    init(filename: String) {
+        self.filename = filename
+        let diskData = DiskData.load(name:filename)
         
         planned = diskData.planned?.map { Item(initialText: $0) } ?? []
         today = diskData.today?.map { Item(initialText: $0) } ?? []
@@ -80,22 +103,24 @@ final class ItemModel: ObservableObject {
         qbi = diskData.qbi?.map { Item(initialText: $0) } ?? []
     }
     
+    init() {
+        filename = nil
+        planned = []
+        today = []
+        tomorrow = []
+        qbi = []
+    }
+    
     func save() {
+        guard let filename = filename else { return }
+        
         let data = DiskData(
             planned: planned.map { $0.text },
             today: today.map { $0.text },
             tomorrow: tomorrow.map { $0.text },
             qbi: qbi.map { $0.text }
         )
-        let enc = JSONEncoder.init()
-        do {
-            let encoded = try enc.encode(data)
-            try FileManager.default.createDirectory(at: ItemModel.dataDirectory(), withIntermediateDirectories: true)
-            try encoded.write(to: file)
-        }
-        catch let e {
-            print("Error writing to file: \(e.localizedDescription)")
-        }
+        data.save(name: filename)
     }
     
     func clear() {
