@@ -133,20 +133,29 @@ final class ItemModel: ObservableObject {
     }
     
     func formatted() -> NSAttributedString {
+        // MARKDOWN Version of pr replacement
+        // string = string.replacingOccurrences(
+        //     of: #"PR ?(\d+)"#,
+        //     with: #"[PR]\(\#(pullUrl)$1\)"#,
+        //     options: .regularExpression
+        // )
         var string = ""
         var boldRanges = [NSRange]()
-//        var links = [NSRange: NSURL]()
+        var links = [(NSRange, URL)]()
         
-        func transform(text: String) -> String {
-            var string = text
+        func transform(text: String, offset: Int) -> String {
             if let pullUrl = UserDefaults.standard.string(forKey: "pullRequestURLprefix") {
-                string = string.replacingOccurrences(
-                    of: #"PR ?(\d+)"#,
-                    with: #"[PR]\(\#(pullUrl)$1\)"#,
-                    options: .regularExpression
-                )
+                let fullRange = NSRange(text.startIndex..<text.endIndex, in: text)
+                let regex = try! NSRegularExpression(pattern: #"PR ?(\d+)"#)
+                regex.enumerateMatches(in: text, options: [], range: fullRange) { (match, _, _) in
+                    guard let match = match else { return }
+                    var actualRange = match.range
+                    actualRange.location += offset
+                    // TODO can crash, for example if pullUrl is set to garbage
+                    let path = "\(pullUrl)\(text[Range(match.range(at: 1), in: text)!])"
+                    links.append((actualRange, URL(string:path)! ))
+                }
             }
-            
             return string
         }
         
@@ -155,7 +164,7 @@ final class ItemModel: ObservableObject {
                 boldRanges.append(NSMakeRange(string.count, title.count+1))
                 string.append("\(title):\n")
                 for item in list {
-                    string.append("* \(transform(text:item.text))\n")
+                    string.append("* \(transform(text:item.text, offset: string.count+2))\n")
                 }
                 string.append("\n")
             }
@@ -170,7 +179,9 @@ final class ItemModel: ObservableObject {
             attrString.applyFontTraits(NSFontTraitMask.boldFontMask, range: range)
         }
         
-//        attrString.addAttributes([NSAttributedString.Key.link: URL()], range: linkRange)
+        for (range, url) in links {
+            attrString.addAttributes([NSAttributedString.Key.link: url], range: range)
+        }
         
         return attrString
     }
