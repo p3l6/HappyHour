@@ -83,8 +83,8 @@ struct Toolbar: View {
             Button(action: {
                 let text = self.model.formatted()
                 let pasteboard = NSPasteboard.general
-                pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
-                pasteboard.setString(text, forType: NSPasteboard.PasteboardType.string)
+                pasteboard.declareTypes([NSPasteboard.PasteboardType.rtf], owner: nil)
+                pasteboard.writeObjects([text])
             }) {
                 Text("Copy Report")
             }

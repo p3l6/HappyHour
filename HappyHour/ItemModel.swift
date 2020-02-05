@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 final class ItemModel: ObservableObject {
     typealias ItemIdentifier = Int
@@ -131,31 +132,47 @@ final class ItemModel: ObservableObject {
         self.save()
     }
     
-    func formatted() -> String {
+    func formatted() -> NSAttributedString {
         var string = ""
+        var boldRanges = [NSRange]()
+//        var links = [NSRange: NSURL]()
+        
+        func transform(text: String) -> String {
+            var string = text
+            if let pullUrl = UserDefaults.standard.string(forKey: "pullRequestURLprefix") {
+                string = string.replacingOccurrences(
+                    of: #"PR ?(\d+)"#,
+                    with: #"[PR]\(\#(pullUrl)$1\)"#,
+                    options: .regularExpression
+                )
+            }
+            
+            return string
+        }
         
         func printList(title: String, list: List) {
             if !list.isEmpty {
-                string.append("\n\(title):\n")
+                boldRanges.append(NSMakeRange(string.count, title.count+1))
+                string.append("\(title):\n")
                 for item in list {
-                    string.append("* \(item.text)\n")
+                    string.append("* \(transform(text:item.text))\n")
                 }
+                string.append("\n")
             }
         }
         printList(title: "Today", list: today)
         printList(title: "Tomorrow", list: tomorrow)
         printList(title: "QBI", list: qbi)
-        string = string.trimmingCharacters(in: CharacterSet.newlines)
         
-        if let pullUrl = UserDefaults.standard.string(forKey: "pullRequestURLprefix") {
-            string = string.replacingOccurrences(
-                of: #"PR ?(\d+)"#,
-                with: #"[PR]\(\#(pullUrl)$1\)"#,
-                options: .regularExpression
-            )
+        let attrString = NSMutableAttributedString(string: string)
+        
+        for range in boldRanges {
+            attrString.applyFontTraits(NSFontTraitMask.boldFontMask, range: range)
         }
         
-        return string
+//        attrString.addAttributes([NSAttributedString.Key.link: URL()], range: linkRange)
+        
+        return attrString
     }
     
     func item(_ x: ItemIdentifier, keyPath: ListKeyPath) -> Item {
