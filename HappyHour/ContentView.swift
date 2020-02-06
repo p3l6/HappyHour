@@ -109,7 +109,9 @@ struct ContentView: View {
             Toolbar()
         }
         .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(minWidth: 550, maxWidth: .infinity,
+               minHeight: 625, maxHeight: .infinity,
+               alignment: .topLeading)
     }
 }
 
