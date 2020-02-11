@@ -156,7 +156,7 @@ final class ItemModel: ObservableObject {
                     links.append((actualRange, URL(string:path)! ))
                 }
             }
-            return string
+            return text
         }
         
         func printList(title: String, list: List) {
