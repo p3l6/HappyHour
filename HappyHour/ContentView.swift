@@ -28,13 +28,14 @@ struct ListRow: View {
     
     var body: some View {
         HStack{
+            Text("❖")
             TextField("new item", text:self.$editText, onCommit: {
                 if self.item.text != self.editText {
                     self.item.text = self.editText
                     print(self.item.text)
                     self.model.save()
                 }
-            })
+            }).textFieldStyle(PlainTextFieldStyle())
             Button(action: { self.model.moveUp(self.item.id, keyPath:self.listKey)}) {
                 Text("↑")
             }.buttonStyle(ButtonStyleNoBack())
@@ -67,7 +68,7 @@ struct List: View {
                     self.editText = ""
                     self.model.save()
                 }
-            })
+            }).textFieldStyle(PlainTextFieldStyle())
         }
         .padding(Edge.Set.horizontal)
     }
@@ -124,9 +125,11 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static func sampleData() -> ItemModel {
         let model = ItemModel()
+        model.add("Thing that was planned", keyPath: \.planned)
         model.add("Thing that was done", keyPath: \.today)
         model.add("Another thing done", keyPath: \.today)
         model.add("Something for tomorrow", keyPath: \.tomorrow)
+        model.add("A really long thing that was done so that it won't all fit in one line at the default width and need to wrap.", keyPath: \.qbi)
         return model
     }
     
