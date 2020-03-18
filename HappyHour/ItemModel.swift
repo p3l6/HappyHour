@@ -196,6 +196,20 @@ final class ItemModel: ObservableObject {
         self[keyPath:keyPath].removeAll(where: {x==$0.id})
     }
     
+    func moveUp(_ x: ItemIdentifier, keyPath: ListKeyPath) {
+        if let idx = self[keyPath:keyPath].firstIndex(where: {x==$0.id}),
+               idx != self[keyPath:keyPath].startIndex {
+            self[keyPath:keyPath].swapAt(idx, idx - 1)
+        }
+    }
+    
+    func moveDown(_ x: ItemIdentifier, keyPath: ListKeyPath) {
+        if let idx = self[keyPath:keyPath].firstIndex(where: {x==$0.id}),
+               idx != self[keyPath:keyPath].endIndex - 1 {
+            self[keyPath:keyPath].swapAt(idx, idx + 1)
+        }
+    }
+    
     func add(_ x: String, keyPath: ListKeyPath) {
         self[keyPath:keyPath].append(Item(initialText: x))
     }

@@ -35,10 +35,15 @@ struct ListRow: View {
                     self.model.save()
                 }
             })
+            Button(action: { self.model.moveUp(self.item.id, keyPath:self.listKey)}) {
+                Text("↑")
+            }.buttonStyle(ButtonStyleNoBack())
+            Button(action: { self.model.moveDown(self.item.id, keyPath:self.listKey)}) {
+                Text("↓")
+            }.buttonStyle(ButtonStyleNoBack())
             Button(action: { self.model.remove(self.item.id, keyPath:self.listKey)}) {
                 Text("🗑")
-            }
-            .buttonStyle(ButtonStyleNoBack())
+            }.buttonStyle(ButtonStyleNoBack())
         }
     }
 }
