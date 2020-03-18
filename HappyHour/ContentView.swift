@@ -78,7 +78,7 @@ struct Toolbar: View {
             Spacer()
             Divider()
             Button(action: { self.model.clear() }) {
-                Text("Clear")
+                Text("Reset")
             }
             Button(action: {
                 let text = self.model.formatted()
@@ -86,7 +86,7 @@ struct Toolbar: View {
                 pasteboard.declareTypes([NSPasteboard.PasteboardType.rtf], owner: nil)
                 pasteboard.writeObjects([text])
             }) {
-                Text("Copy Report")
+                Text("Copy")
             }
         }
         .frame(maxWidth: .infinity)
