@@ -35,7 +35,9 @@ struct ListRow: View {
                     print(self.item.text)
                     self.model.save()
                 }
-            }).textFieldStyle(PlainTextFieldStyle())
+            })
+                .onExitCommand(perform: { NSApp.keyWindow?.makeFirstResponder(nil) })
+                .textFieldStyle(PlainTextFieldStyle())
             Button(action: { self.model.moveUp(self.item.id, keyPath:self.listKey)}) {
                 Text("↑")
             }.buttonStyle(ButtonStyleNoBack())
@@ -68,7 +70,9 @@ struct List: View {
                     self.editText = ""
                     self.model.save()
                 }
-            }).textFieldStyle(PlainTextFieldStyle())
+            })
+                .onExitCommand(perform: { NSApp.keyWindow?.makeFirstResponder(nil) })
+                .textFieldStyle(PlainTextFieldStyle())
         }
         .padding(Edge.Set.horizontal)
     }
