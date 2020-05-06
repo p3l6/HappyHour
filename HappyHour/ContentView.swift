@@ -79,7 +79,7 @@ struct List: View {
 }
 
 struct TimerBar: View {
-    @ObservedObject var timer = TaskTimer()
+    @EnvironmentObject var timer: TaskTimer
     
     func statusColor(_ stat:TaskTimer.Status) -> Color {
         switch stat {
@@ -179,6 +179,8 @@ struct ContentView_Previews: PreviewProvider {
     }
     
     static var previews: some View {
-        ContentView().environmentObject(self.sampleData())
+        ContentView()
+            .environmentObject(self.sampleData())
+            .environmentObject(TaskTimer())
     }
 }
