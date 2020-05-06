@@ -20,17 +20,14 @@ final class TaskTimer: ObservableObject {
     var delayTimer: Timer?
     
     private func sendNote(message:String) {
-        let noteCenter = UNUserNotificationCenter.current()
-        
         let content = UNMutableNotificationContent()
         content.title = "Task Timer"
         content.body = message
         content.sound = UNNotificationSound.default
         
-        let identifier = "Local Notification"
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: nil)
+        let request = UNNotificationRequest(identifier: "TaskTimerMessage", content: content, trigger: nil)
 
-        noteCenter.add(request) { (error) in
+        UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
                 print("Error \(error.localizedDescription)")
             }
@@ -54,8 +51,10 @@ final class TaskTimer: ObservableObject {
         if let t = delayTimer {
             t.invalidate()
             delayTimer = nil
+            print("TaskTimer cancelled")
+        } else {
+            print("TaskTimer reset")
         }
         status = .idle
-        print("TaskTimer reset or cancelled")
     }
 }
