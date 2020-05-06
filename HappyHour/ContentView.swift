@@ -78,6 +78,22 @@ struct List: View {
     }
 }
 
+struct TimerBar: View {
+    @ObservedObject var timer = TaskTimer()
+
+    var body: some View {
+        Button(action: {
+            if self.timer.status == .idle {
+                self.timer.start()
+            } else {
+                self.timer.reset()
+            }
+        }) {
+            Text(timer.statusLabel)
+        }
+    }
+}
+
 struct Toolbar: View {
     @EnvironmentObject var model: ItemModel
 
@@ -87,6 +103,7 @@ struct Toolbar: View {
             Text("PR1234")
             Spacer()
             Divider()
+            TimerBar()
             Button(action: { self.model.clear() }) {
                 Text("Reset")
             }

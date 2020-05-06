@@ -8,6 +8,7 @@
 
 import Cocoa
 import SwiftUI
+import UserNotifications
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -33,6 +34,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         statusBarItem.button?.title = "🍺"
         statusBarItem.button?.action = #selector(AppDelegate.showWindow)
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        let options: UNAuthorizationOptions = [.alert, .sound]
+        notificationCenter.requestAuthorization(options: options) {
+            (didAllow, error) in
+            if !didAllow {
+                print("User has declined notifications")
+            }
+        }
     }
 
     @objc func showWindow() {
@@ -43,7 +53,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
-
-
 }
 

@@ -13,6 +13,7 @@
 		DA528E3323C6306B001E5445 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA528E3223C6306B001E5445 /* Preview Assets.xcassets */; };
 		DA528E3623C6306B001E5445 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA528E3423C6306B001E5445 /* Main.storyboard */; };
 		DA60540523C7884D006BB663 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60540423C7884D006BB663 /* ItemModel.swift */; };
+		DA7EA8342462F14B005B1B4B /* TaskTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7EA8332462F14B005B1B4B /* TaskTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		DA528E3723C6306B001E5445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA528E3823C6306B001E5445 /* HappyHour.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappyHour.entitlements; sourceTree = "<group>"; };
 		DA60540423C7884D006BB663 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
+		DA7EA8332462F14B005B1B4B /* TaskTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				DA528E2B23C6306A001E5445 /* AppDelegate.swift */,
 				DA528E2D23C6306A001E5445 /* ContentView.swift */,
 				DA60540423C7884D006BB663 /* ItemModel.swift */,
+				DA7EA8332462F14B005B1B4B /* TaskTimer.swift */,
 				DA528E2F23C6306B001E5445 /* Assets.xcassets */,
 				DA528E3423C6306B001E5445 /* Main.storyboard */,
 				DA528E3723C6306B001E5445 /* Info.plist */,
@@ -150,6 +153,7 @@
 			files = (
 				DA60540523C7884D006BB663 /* ItemModel.swift in Sources */,
 				DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */,
+				DA7EA8342462F14B005B1B4B /* TaskTimer.swift in Sources */,
 				DA528E2C23C6306A001E5445 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
