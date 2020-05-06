@@ -19,14 +19,6 @@ final class TaskTimer: ObservableObject {
     @Published var status = Status.idle
     var delayTimer: Timer?
     
-    var statusLabel: String {
-        switch status {
-        case .idle: return "Start 5 sec"
-        case .running: return "Work Time!"
-        case .finished: return "Timer finished. (reset)"
-        }
-    }
-    
     private func sendNote(message:String) {
         let noteCenter = UNUserNotificationCenter.current()
         

@@ -80,17 +80,35 @@ struct List: View {
 
 struct TimerBar: View {
     @ObservedObject var timer = TaskTimer()
-
-    var body: some View {
-        Button(action: {
-            if self.timer.status == .idle {
-                self.timer.start()
-            } else {
-                self.timer.reset()
-            }
-        }) {
-            Text(timer.statusLabel)
+    
+    func statusColor(_ stat:TaskTimer.Status) -> Color {
+        switch stat {
+        case .idle: return Color.clear
+        case .running: return Color.gray
+        case .finished: return Color.blue
         }
+    }
+    
+    var body: some View {
+        HStack {
+            if self.timer.status == .idle {
+                Text("Start Focus Timer:")
+                Spacer()
+                Button(action: { self.timer.start() }) { Text("5 sec") }
+            } else if self.timer.status == .running {
+                Text("Focus Timer is running:")
+                Spacer()
+                Button(action: { self.timer.reset() }) { Text("Cancel") }
+            } else { // status is .finished
+                Text("Focus Timer Finished:")
+                Spacer()
+                Button(action: { self.timer.reset() }) { Text("Okay!") }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(statusColor(self.timer.status))
+        .border(Color.secondary, width: 4)
     }
 }
 
@@ -103,7 +121,6 @@ struct Toolbar: View {
             Text("PR1234")
             Spacer()
             Divider()
-            TimerBar()
             Button(action: { self.model.clear() }) {
                 Text("Reset")
             }
@@ -133,6 +150,7 @@ struct ContentView: View {
             List(title:"Tomorrow", listKey: \.tomorrow)
             List(title:"QBI", listKey: \.qbi)
             Spacer().layoutPriority(1)
+            TimerBar()
             Toolbar()
         }
         .padding()
