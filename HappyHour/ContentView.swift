@@ -94,13 +94,13 @@ struct TimerBar: View {
             if self.timer.status == .idle {
                 Text("Focus Timer:")
                 Spacer()
-                Button(action: { self.timer.start(minutes:  1) }) { Text( "1m") }
                 Button(action: { self.timer.start(minutes:  5) }) { Text( "5m") }
+                Button(action: { self.timer.start(minutes: 10) }) { Text("10m") }
                 Button(action: { self.timer.start(minutes: 15) }) { Text("15m") }
                 Button(action: { self.timer.start(minutes: 20) }) { Text("20m") }
                 Button(action: { self.timer.start(minutes: 30) }) { Text("30m") }
                 Button(action: { self.timer.start(minutes: 45) }) { Text("45m") }
-                Button(action: { self.timer.start(minutes: 50) }) { Text("50m") }
+                Button(action: { self.timer.start(minutes: 55) }) { Text("55m") }
             } else if self.timer.status == .running {
                 Text("Focus Timer is running: \(self.timer.duration) min")
                 Spacer()
@@ -108,6 +108,9 @@ struct TimerBar: View {
             } else { // status is .finished
                 Text("Focus Timer Finished:")
                 Spacer()
+                Button(action: { self.timer.start(minutes: self.timer.duration) }) {
+                    Text("Repeat: \(self.timer.duration)m")
+                }
                 Button(action: { self.timer.reset() }) { Text("Okay!") }
             }
         }
