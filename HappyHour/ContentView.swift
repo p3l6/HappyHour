@@ -92,11 +92,17 @@ struct TimerBar: View {
     var body: some View {
         HStack {
             if self.timer.status == .idle {
-                Text("Start Focus Timer:")
+                Text("Focus Timer:")
                 Spacer()
-                Button(action: { self.timer.start() }) { Text("5 sec") }
+                Button(action: { self.timer.start(minutes:  1) }) { Text( "1m") }
+                Button(action: { self.timer.start(minutes:  5) }) { Text( "5m") }
+                Button(action: { self.timer.start(minutes: 15) }) { Text("15m") }
+                Button(action: { self.timer.start(minutes: 20) }) { Text("20m") }
+                Button(action: { self.timer.start(minutes: 30) }) { Text("30m") }
+                Button(action: { self.timer.start(minutes: 45) }) { Text("45m") }
+                Button(action: { self.timer.start(minutes: 50) }) { Text("50m") }
             } else if self.timer.status == .running {
-                Text("Focus Timer is running:")
+                Text("Focus Timer is running: \(self.timer.duration) min")
                 Spacer()
                 Button(action: { self.timer.reset() }) { Text("Cancel") }
             } else { // status is .finished

@@ -18,6 +18,7 @@ final class TaskTimer: ObservableObject {
     
     @Published var status = Status.idle
     var delayTimer: Timer?
+    var duration = 0
     
     private func sendNote(message:String) {
         let content = UNMutableNotificationContent()
@@ -34,9 +35,11 @@ final class TaskTimer: ObservableObject {
         }
     }
     
-    func start() {
+    func start(minutes: Int) {
         status = .running
-        delayTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { timer in self.finish() })
+        duration = minutes
+        let interval = 60.0 * Double(minutes)
+        delayTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: { timer in self.finish() })
         print("TaskTimer started")
     }
     
