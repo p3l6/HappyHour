@@ -22,7 +22,7 @@ final class TaskTimer: ObservableObject {
     
     private func sendNote(message:String) {
         let content = UNMutableNotificationContent()
-        content.title = "Task Timer"
+        content.title = "Focus Timer"
         content.body = message
         content.sound = UNNotificationSound.default
         
@@ -44,7 +44,7 @@ final class TaskTimer: ObservableObject {
     }
     
     private func finish() {
-        sendNote(message: "Task timer has finished!")
+        sendNote(message: "Focus timer has finished!")
         delayTimer = nil
         status = .finished
         print("TaskTimer finished. Notification sent")
