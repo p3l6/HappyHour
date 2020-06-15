@@ -164,7 +164,7 @@ final class ItemModel: ObservableObject {
                 boldRanges.append(NSMakeRange(string.count, title.count+1))
                 string.append("\(title):\n")
                 for item in list {
-                    string.append("* \(transform(text:item.text, offset: string.count+2))\n")
+                    string.append("\t● \(transform(text:item.text, offset: string.count+2))\n")
                 }
                 string.append("\n")
             }
@@ -173,7 +173,8 @@ final class ItemModel: ObservableObject {
         printList(title: "Tomorrow", list: tomorrow)
         printList(title: "QBI", list: qbi)
         
-        let attrString = NSMutableAttributedString(string: string)
+        let attrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0)]
+        let attrString = NSMutableAttributedString(string: string, attributes:attrs)
         
         for range in boldRanges {
             attrString.applyFontTraits(NSFontTraitMask.boldFontMask, range: range)
