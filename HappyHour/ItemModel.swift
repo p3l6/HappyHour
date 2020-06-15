@@ -164,7 +164,7 @@ final class ItemModel: ObservableObject {
                 boldRanges.append(NSMakeRange(string.count, title.count+1))
                 string.append("\(title):\n")
                 for item in list {
-                    string.append("\t● \(transform(text:item.text, offset: string.count+2))\n")
+                    string.append("\t● \(transform(text:item.text, offset: string.count+3))\n")
                 }
                 string.append("\n")
             }
