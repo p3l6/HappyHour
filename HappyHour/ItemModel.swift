@@ -139,52 +139,51 @@ final class ItemModel: ObservableObject {
         //     with: #"[PR]\(\#(pullUrl)$1\)"#,
         //     options: .regularExpression
         // )
-        var string = ""
-        var boldRanges = [NSRange]()
-        var links = [(NSRange, URL)]()
+        let baseAttrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0)]
+        let boldAttrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0, weight: .bold)]
         
-        func transform(text: String, offset: Int) -> String {
+        func transform(text: String) -> NSAttributedString {
+            let attrText = NSMutableAttributedString(string: text, attributes: baseAttrs)
             if let pullUrl = UserDefaults.standard.string(forKey: "pullRequestURLprefix") {
                 let fullRange = NSRange(text.startIndex..<text.endIndex, in: text)
                 let regex = try! NSRegularExpression(pattern: #"PR ?(\d+)"#)
                 regex.enumerateMatches(in: text, options: [], range: fullRange) { (match, _, _) in
                     guard let match = match else { return }
-                    var actualRange = match.range
-                    actualRange.location += offset
                     // TODO: can crash, for example if pullUrl is set to garbage
                     let path = "\(pullUrl)\(text[Range(match.range(at: 1), in: text)!])"
-                    links.append((actualRange, URL(string:path)! ))
+                    attrText.addAttributes([NSAttributedString.Key.link: URL(string:path)!], range: match.range)
                 }
             }
-            return text
+            return attrText
         }
         
-        func printList(title: String, list: List) {
+        func attr(_ string: String) -> NSAttributedString {
+            return NSMutableAttributedString(string: string, attributes: baseAttrs)
+        }
+        
+        func bold(_ string: String) -> NSAttributedString {
+            return NSMutableAttributedString(string: string, attributes:boldAttrs)
+        }
+        
+        var string = NSMutableAttributedString(string: "", attributes: baseAttrs)
+        
+        func printList(title: String, list: List, prefix: String) {
             if !list.isEmpty {
-                boldRanges.append(NSMakeRange(string.count, title.count+1))
-                string.append("\(title):\n")
+                string.append(bold(title))
+                string.append(attr(":\n"))
                 for item in list {
-                    string.append("\t● \(transform(text:item.text, offset: string.count+3))\n")
+                    string.append(attr(prefix))
+                    string.append(transform(text:item.text))
+                    string.append(attr("\n"))
                 }
-                string.append("\n")
+                string.append(attr("\n"))
             }
         }
-        printList(title: "Today", list: today)
-        printList(title: "Tomorrow", list: tomorrow)
-        printList(title: "QBI", list: qbi)
+        printList(title: "Today", list: today, prefix: "✅ ")
+        printList(title: "Tomorrow", list: tomorrow, prefix: "➡️ ")
+        printList(title: "QBI", list: qbi, prefix: "⁉️ ")
         
-        let attrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0)]
-        let attrString = NSMutableAttributedString(string: string, attributes:attrs)
-        
-        for range in boldRanges {
-            attrString.applyFontTraits(NSFontTraitMask.boldFontMask, range: range)
-        }
-        
-        for (range, url) in links {
-            attrString.addAttributes([NSAttributedString.Key.link: url], range: range)
-        }
-        
-        return attrString
+        return string
     }
     
     func item(_ x: ItemIdentifier, keyPath: ListKeyPath) -> Item {
@@ -193,7 +192,7 @@ final class ItemModel: ObservableObject {
     }
     
     func remove(_ x: ItemIdentifier, keyPath: ListKeyPath) {
-        //! there may be a more efficient way and a filter
+        //TODO: there may be a more efficient way and a filter
         self[keyPath:keyPath].removeAll(where: {x==$0.id})
     }
     
