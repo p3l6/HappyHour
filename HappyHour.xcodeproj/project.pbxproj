@@ -63,10 +63,7 @@
 				DA528E2D23C6306A001E5445 /* ContentView.swift */,
 				DA60540423C7884D006BB663 /* ItemModel.swift */,
 				DA7EA8332462F14B005B1B4B /* TaskTimer.swift */,
-				DA528E2F23C6306B001E5445 /* Assets.xcassets */,
-				DA528E3423C6306B001E5445 /* Main.storyboard */,
-				DA528E3723C6306B001E5445 /* Info.plist */,
-				DA528E3823C6306B001E5445 /* HappyHour.entitlements */,
+				DA8B300424ED758D001E1AA2 /* Content */,
 				DA528E3123C6306B001E5445 /* Preview Content */,
 			);
 			path = HappyHour;
@@ -78,6 +75,17 @@
 				DA528E3223C6306B001E5445 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DA8B300424ED758D001E1AA2 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				DA528E2F23C6306B001E5445 /* Assets.xcassets */,
+				DA528E3423C6306B001E5445 /* Main.storyboard */,
+				DA528E3723C6306B001E5445 /* Info.plist */,
+				DA528E3823C6306B001E5445 /* HappyHour.entitlements */,
+			);
+			name = Content;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
