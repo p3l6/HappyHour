@@ -89,7 +89,7 @@ final class ItemModel: ObservableObject {
             dir = dir?.appendingPathComponent("dev.pwxn.HappyHour")
         }
         catch {
-            // TODO what to do here? quit with a message?
+            // TODO: what to do here? quit with a message?
         }
         return dir!
     }
@@ -151,7 +151,7 @@ final class ItemModel: ObservableObject {
                     guard let match = match else { return }
                     var actualRange = match.range
                     actualRange.location += offset
-                    // TODO can crash, for example if pullUrl is set to garbage
+                    // TODO: can crash, for example if pullUrl is set to garbage
                     let path = "\(pullUrl)\(text[Range(match.range(at: 1), in: text)!])"
                     links.append((actualRange, URL(string:path)! ))
                 }

@@ -88,6 +88,7 @@
 			buildConfigurationList = DA528E3B23C6306B001E5445 /* Build configuration list for PBXNativeTarget "HappyHour" */;
 			buildPhases = (
 				DA528E2423C6306A001E5445 /* Sources */,
+				DA8B300324ED68E3001E1AA2 /* ShellScript */,
 				DA528E2523C6306A001E5445 /* Frameworks */,
 				DA528E2623C6306A001E5445 /* Resources */,
 			);
@@ -145,6 +146,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DA8B300324ED68E3001E1AA2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DA528E2423C6306A001E5445 /* Sources */ = {
