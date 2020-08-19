@@ -121,13 +121,34 @@ struct TimerBar: View {
     }
 }
 
+struct HelpWidget: View {
+    @State var helpSheetVisible = false
+    
+    var body: some View {
+        Button(action: { self.helpSheetVisible = true }) {
+            Text("Help")
+        }.popover(isPresented: self.$helpSheetVisible) {
+            VStack(alignment: .leading) {
+                Text("The Copy action will format the sections suitable for email,")
+                Text("and place them on the clipboard")
+                Divider()
+                Text("You May specify PRs with either of the follwing formats:")
+                Text("PR 1234 | PR1234")
+                Text("And they will be automatically linked, using the URL set in preferences.")
+                Divider()
+                Text("Resetting the form clears all sections,")
+                Text("except that the contents from tomorrow are moved to planned")
+            }.padding()
+        }
+    }
+}
+
 struct Toolbar: View {
     @EnvironmentObject var model: ItemModel
 
     var body: some View {
         HStack {
-            Text("PR 1234")
-            Text("PR1234")
+            HelpWidget()
             Spacer()
             Divider()
             Button(action: { self.model.clear() }) {
