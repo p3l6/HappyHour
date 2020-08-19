@@ -180,7 +180,10 @@ struct ContentView: View {
             List(title:"Tomorrow", listKey: \.tomorrow)
             List(title:"QBI", listKey: \.qbi)
             Spacer().layoutPriority(1)
-            TimerBar()
+            // TODO: Need to load this from an observable, so that it reloads when changed
+            if UserDefaults.standard.bool(forKey: "showFocusTimer") {
+                TimerBar()
+            }
             Toolbar()
         }
         .padding()
