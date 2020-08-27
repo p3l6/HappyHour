@@ -151,6 +151,20 @@ struct Toolbar: View {
             HelpWidget()
             Spacer()
             Divider()
+            Button(action: {
+                if let service = NSSharingService(named: NSSharingService.Name.composeEmail) {
+                    let today = Date()
+                    let f = DateFormatter()
+                    f.dateFormat = "yyyy-MM-dd"
+                    if let standupEmail = UserDefaults.standard.string(forKey: "standupEmail") {
+                        service.recipients = [standupEmail]
+                    }
+                    service.subject = "\(f.string(from: today)) Standup"
+                    service.perform(withItems: [self.model.formatted()])
+                }
+            }) {
+                Text("Send")
+            }
             Button(action: { self.model.clear() }) {
                 Text("Reset")
             }

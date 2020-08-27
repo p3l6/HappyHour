@@ -745,6 +745,27 @@
                                     <binding destination="Ltx-bk-Mqb" name="value" keyPath="values.showFocusTimer" id="l8z-EE-VkB"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4wG-P6-epN">
+                                <rect key="frame" x="30" y="98" width="186" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Standup email thread address" id="tcb-da-lw9">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Yp-oC-dMs">
+                                <rect key="frame" x="32" y="69" width="359" height="21"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="standup@your-team.com" drawsBackground="YES" id="glw-qg-B7C">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="Ltx-bk-Mqb" name="value" keyPath="values.standupEmail" id="kda-VB-6tM"/>
+                                </connections>
+                            </textField>
                         </subviews>
                     </view>
                 </viewController>
