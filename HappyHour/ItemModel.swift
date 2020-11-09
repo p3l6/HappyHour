@@ -176,7 +176,6 @@ final class ItemModel: ObservableObject {
                     string.append(transform(text:item.text))
                     string.append(attr("\n"))
                 }
-                string.append(attr("\n"))
             }
         }
         printList(title: "Today", list: today, prefix: "✅ ")
