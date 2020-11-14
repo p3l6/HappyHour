@@ -165,7 +165,7 @@ final class ItemModel: ObservableObject {
             return NSMutableAttributedString(string: string, attributes:boldAttrs)
         }
         
-        var string = NSMutableAttributedString(string: "", attributes: baseAttrs)
+        let string = NSMutableAttributedString(string: "", attributes: baseAttrs)
         
         func printList(title: String, list: List, prefix: String) {
             if !list.isEmpty {
