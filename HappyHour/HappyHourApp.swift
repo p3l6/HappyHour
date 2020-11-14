@@ -19,12 +19,6 @@ struct HappyHourApp: App {
                 .environmentObject(ItemModel(filename: "Standup"))
                 .environmentObject(TaskTimer())
                 .environmentObject(settings)
-            // TODO: Do these modifiers mean anything?
-    //        window.setFrameAutosaveName("Main Window")
-    //        window.contentView = NSHostingView(rootView: contentView)
-    //        window.isReleasedWhenClosed = false
-    //        window.makeKeyAndOrderFront(nil)
-    //        .defaultAppStorage(T##store: UserDefaults##UserDefaults)
         }
         
         Settings {
