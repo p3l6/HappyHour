@@ -11,11 +11,14 @@ import UserNotifications
 
 @main
 struct HappyHourApp: App {
+    let settings = UserSettings()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(ItemModel(filename: "Standup"))
                 .environmentObject(TaskTimer())
+                .environmentObject(settings)
             // TODO: Do these modifiers mean anything?
     //        window.setFrameAutosaveName("Main Window")
     //        window.contentView = NSHostingView(rootView: contentView)
@@ -25,14 +28,8 @@ struct HappyHourApp: App {
         }
         
         Settings {
-            Group {
-                // TODO: make these affect user settings
-                Text("Pull Request URL")
-                Text("Field, https://github.com/user/project/pull/, pullRequestURLprefix")
-                Text("Check, Show Focus Timer, showFocusTimer" )
-                Text("Standup eamil thread address")
-                Text("Field, standup@your-team.com, standupEmail")
-            }.padding()
+            SettingsView()
+                .environmentObject(settings)
         }
 //        WKNotificationScene {
 //            let notificationCenter = UNUserNotificationCenter.current()

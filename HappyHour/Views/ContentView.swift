@@ -185,7 +185,8 @@ struct Toolbar: View {
 
 struct ContentView: View {
     @EnvironmentObject var model: ItemModel
-    
+    @EnvironmentObject var settings: UserSettings
+
     var body: some View {
         VStack {
             Text(model.filename ?? "Date").bold()
@@ -194,8 +195,7 @@ struct ContentView: View {
             List(title:"Tomorrow", listKey: \.tomorrow)
             List(title:"QBI", listKey: \.qbi)
             Spacer().layoutPriority(1)
-            // TODO: Need to load this from an observable, so that it reloads when changed
-            if UserDefaults.standard.bool(forKey: "showFocusTimer") {
+            if settings.showFocusTimer {
                 TimerBar()
             }
             Toolbar()

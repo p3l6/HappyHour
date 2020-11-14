@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA3E6E86255F8E3F0071E539 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E6E85255F8E3F0071E539 /* UserSettings.swift */; };
+		DA3E6E8A255F8EF90071E539 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E6E89255F8EF90071E539 /* SettingsView.swift */; };
 		DA528E2C23C6306A001E5445 /* HappyHourApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA528E2B23C6306A001E5445 /* HappyHourApp.swift */; };
 		DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA528E2D23C6306A001E5445 /* ContentView.swift */; };
 		DA528E3023C6306B001E5445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA528E2F23C6306B001E5445 /* Assets.xcassets */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA3E6E85255F8E3F0071E539 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		DA3E6E89255F8EF90071E539 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DA528E2823C6306A001E5445 /* HappyHour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyHour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA528E2B23C6306A001E5445 /* HappyHourApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyHourApp.swift; sourceTree = "<group>"; };
 		DA528E2D23C6306A001E5445 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -43,6 +47,7 @@
 			children = (
 				DA60540423C7884D006BB663 /* ItemModel.swift */,
 				DA7EA8332462F14B005B1B4B /* TaskTimer.swift */,
+				DA3E6E85255F8E3F0071E539 /* UserSettings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -51,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				DA528E2D23C6306A001E5445 /* ContentView.swift */,
+				DA3E6E89255F8EF90071E539 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -193,7 +199,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA60540523C7884D006BB663 /* ItemModel.swift in Sources */,
+				DA3E6E86255F8E3F0071E539 /* UserSettings.swift in Sources */,
 				DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */,
+				DA3E6E8A255F8EF90071E539 /* SettingsView.swift in Sources */,
 				DA7EA8342462F14B005B1B4B /* TaskTimer.swift in Sources */,
 				DA528E2C23C6306A001E5445 /* HappyHourApp.swift in Sources */,
 			);
