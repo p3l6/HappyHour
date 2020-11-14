@@ -144,7 +144,8 @@ final class ItemModel: ObservableObject {
         
         func transform(text: String) -> NSAttributedString {
             let attrText = NSMutableAttributedString(string: text, attributes: baseAttrs)
-            if let pullUrl = UserDefaults.standard.string(forKey: "pullRequestURLprefix") {
+            let pullUrl = UserSettings().pullRequestURLprefix
+            if pullUrl.count > 0 {
                 let fullRange = NSRange(text.startIndex..<text.endIndex, in: text)
                 let regex = try! NSRegularExpression(pattern: #"PR ?(\d+)"#)
                 regex.enumerateMatches(in: text, options: [], range: fullRange) { (match, _, _) in

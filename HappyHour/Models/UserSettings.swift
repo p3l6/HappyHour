@@ -2,15 +2,14 @@
 import Foundation
 
 private func loadPreference<T>(_ name: String, initially: T) -> T {
-    if let pref = UserDefaults.standard.object(forKey: "showFocusTimer") as? T {
+    if let pref = UserDefaults.standard.object(forKey: name) as? T {
         return pref
     }
     return initially
 }
 
 class UserSettings: ObservableObject {
-    // @AppStorage ???? Neat, is that new?
-    
+    // Use @AppStorage instead?
     @Published var showFocusTimer: Bool {
         didSet { UserDefaults.standard.set(showFocusTimer, forKey: "showFocusTimer") }
     }

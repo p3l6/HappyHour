@@ -145,6 +145,7 @@ struct HelpWidget: View {
 
 struct Toolbar: View {
     @EnvironmentObject var model: ItemModel
+    @EnvironmentObject var settings: UserSettings
 
     var body: some View {
         HStack {
@@ -156,8 +157,8 @@ struct Toolbar: View {
                     let today = Date()
                     let f = DateFormatter()
                     f.dateFormat = "yyyy-MM-dd"
-                    if let standupEmail = UserDefaults.standard.string(forKey: "standupEmail") {
-                        service.recipients = [standupEmail]
+                    if settings.standupEmail.count > 0 {
+                        service.recipients = [settings.standupEmail]
                     }
                     service.subject = "\(f.string(from: today)) Standup"
                     service.perform(withItems: [self.model.formatted()])
