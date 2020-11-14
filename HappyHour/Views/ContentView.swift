@@ -126,7 +126,7 @@ struct HelpWidget: View {
     
     var body: some View {
         Button(action: { self.helpSheetVisible = true }) {
-            Text("Help")
+            Label("Help", systemImage:"questionmark.circle")
         }.popover(isPresented: self.$helpSheetVisible) {
             VStack(alignment: .leading) {
                 Text("The Copy action will format the sections suitable for email,")
@@ -140,47 +140,6 @@ struct HelpWidget: View {
                 Text("except that the contents from tomorrow are moved to planned")
             }.padding()
         }
-    }
-}
-
-struct Toolbar: View {
-    @EnvironmentObject var model: ItemModel
-    @EnvironmentObject var settings: UserSettings
-
-    var body: some View {
-        HStack {
-            HelpWidget()
-            Spacer()
-            Divider()
-            Button(action: {
-                if let service = NSSharingService(named: NSSharingService.Name.composeEmail) {
-                    let today = Date()
-                    let f = DateFormatter()
-                    f.dateFormat = "yyyy-MM-dd"
-                    if settings.standupEmail.count > 0 {
-                        service.recipients = [settings.standupEmail]
-                    }
-                    service.subject = "\(f.string(from: today)) Standup"
-                    service.perform(withItems: [self.model.formatted()])
-                }
-            }) {
-                Text("Send")
-            }
-            Button(action: { self.model.clear() }) {
-                Text("Reset")
-            }
-            Button(action: {
-                let text = self.model.formatted()
-                let pasteboard = NSPasteboard.general
-                pasteboard.declareTypes([NSPasteboard.PasteboardType.rtf], owner: nil)
-                pasteboard.writeObjects([text])
-            }) {
-                Text("Copy")
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .padding()
-        .border(Color.secondary, width: 4)
     }
 }
 
@@ -199,12 +158,39 @@ struct ContentView: View {
             if settings.showFocusTimer {
                 TimerBar()
             }
-            Toolbar()
         }
         .padding()
         .frame(minWidth: 550, maxWidth: .infinity,
                minHeight: 625, maxHeight: .infinity,
                alignment: .topLeading)
+        .toolbar {
+            HelpWidget()
+            Button {
+                if let service = NSSharingService(named: NSSharingService.Name.composeEmail) {
+                    let today = Date()
+                    let f = DateFormatter()
+                    f.dateFormat = "yyyy-MM-dd"
+                    if settings.standupEmail.count > 0 {
+                        service.recipients = [settings.standupEmail]
+                    }
+                    service.subject = "\(f.string(from: today)) Standup"
+                    service.perform(withItems: [self.model.formatted()])
+                }
+            } label:  {
+                Label("Send", systemImage:"paperplane")
+            }
+            Button { self.model.clear() } label: {
+                Label("Reset", systemImage:"repeat")
+            }
+            Button {
+                let text = self.model.formatted()
+                let pasteboard = NSPasteboard.general
+                pasteboard.declareTypes([NSPasteboard.PasteboardType.rtf], owner: nil)
+                pasteboard.writeObjects([text])
+            } label:  {
+                Label("Copy", systemImage:"doc.on.doc")
+            }
+        }
     }
 }
 
