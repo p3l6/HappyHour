@@ -7,22 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA528E2C23C6306A001E5445 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA528E2B23C6306A001E5445 /* AppDelegate.swift */; };
+		DA528E2C23C6306A001E5445 /* HappyHourApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA528E2B23C6306A001E5445 /* HappyHourApp.swift */; };
 		DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA528E2D23C6306A001E5445 /* ContentView.swift */; };
 		DA528E3023C6306B001E5445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA528E2F23C6306B001E5445 /* Assets.xcassets */; };
 		DA528E3323C6306B001E5445 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA528E3223C6306B001E5445 /* Preview Assets.xcassets */; };
-		DA528E3623C6306B001E5445 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA528E3423C6306B001E5445 /* Main.storyboard */; };
 		DA60540523C7884D006BB663 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60540423C7884D006BB663 /* ItemModel.swift */; };
 		DA7EA8342462F14B005B1B4B /* TaskTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7EA8332462F14B005B1B4B /* TaskTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DA528E2823C6306A001E5445 /* HappyHour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyHour.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA528E2B23C6306A001E5445 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DA528E2B23C6306A001E5445 /* HappyHourApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyHourApp.swift; sourceTree = "<group>"; };
 		DA528E2D23C6306A001E5445 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DA528E2F23C6306B001E5445 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA528E3223C6306B001E5445 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		DA528E3523C6306B001E5445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA528E3723C6306B001E5445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA528E3823C6306B001E5445 /* HappyHour.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappyHour.entitlements; sourceTree = "<group>"; };
 		DA60540423C7884D006BB663 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
@@ -40,6 +38,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA3E6E80255F8D900071E539 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DA60540423C7884D006BB663 /* ItemModel.swift */,
+				DA7EA8332462F14B005B1B4B /* TaskTimer.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DA3E6E82255F8D990071E539 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DA528E2D23C6306A001E5445 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		DA528E1F23C6306A001E5445 = {
 			isa = PBXGroup;
 			children = (
@@ -59,10 +74,9 @@
 		DA528E2A23C6306A001E5445 /* HappyHour */ = {
 			isa = PBXGroup;
 			children = (
-				DA528E2B23C6306A001E5445 /* AppDelegate.swift */,
-				DA528E2D23C6306A001E5445 /* ContentView.swift */,
-				DA60540423C7884D006BB663 /* ItemModel.swift */,
-				DA7EA8332462F14B005B1B4B /* TaskTimer.swift */,
+				DA528E2B23C6306A001E5445 /* HappyHourApp.swift */,
+				DA3E6E82255F8D990071E539 /* Views */,
+				DA3E6E80255F8D900071E539 /* Models */,
 				DA8B300424ED758D001E1AA2 /* Content */,
 				DA528E3123C6306B001E5445 /* Preview Content */,
 			);
@@ -81,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				DA528E2F23C6306B001E5445 /* Assets.xcassets */,
-				DA528E3423C6306B001E5445 /* Main.storyboard */,
 				DA528E3723C6306B001E5445 /* Info.plist */,
 				DA528E3823C6306B001E5445 /* HappyHour.entitlements */,
 			);
@@ -147,7 +160,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA528E3623C6306B001E5445 /* Main.storyboard in Resources */,
 				DA528E3323C6306B001E5445 /* Preview Assets.xcassets in Resources */,
 				DA528E3023C6306B001E5445 /* Assets.xcassets in Resources */,
 			);
@@ -183,22 +195,11 @@
 				DA60540523C7884D006BB663 /* ItemModel.swift in Sources */,
 				DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */,
 				DA7EA8342462F14B005B1B4B /* TaskTimer.swift in Sources */,
-				DA528E2C23C6306A001E5445 /* AppDelegate.swift in Sources */,
+				DA528E2C23C6306A001E5445 /* HappyHourApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		DA528E3423C6306B001E5445 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DA528E3523C6306B001E5445 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DA528E3923C6306B001E5445 /* Debug */ = {
@@ -252,7 +253,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -307,7 +308,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -331,7 +332,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.pwxn.HappyHour;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -354,7 +355,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.pwxn.HappyHour;
 				PRODUCT_NAME = "$(TARGET_NAME)";
