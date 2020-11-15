@@ -68,29 +68,13 @@ struct SectionView: View {
     }
 }
 
-struct ContentView: View {
+struct ToolbarItems: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var settings: UserSettings
     @State var helpSheetVisible = false
 
     var body: some View {
         Group {
-            List {
-                SectionView(title:"Planned").environmentObject(model.planned)
-                SectionView(title:"Today").environmentObject(model.today)
-                SectionView(title:"Tomorrow").environmentObject(model.tomorrow)
-                SectionView(title:"QBI").environmentObject(model.qbi)
-            }
-            if settings.showFocusTimer {
-                TimerBar()
-            }
-        }
-        .padding()
-        .frame(minWidth: 450, maxWidth: .infinity,
-               minHeight: 425, maxHeight: .infinity,
-               alignment: .topLeading)
-        .navigationTitle(settings.storageFileName)
-        .toolbar {
             Button {
                 self.helpSheetVisible = true
             } label: {
@@ -124,6 +108,31 @@ struct ContentView: View {
                 Label("Copy", systemImage:"doc.on.doc")
             }
         }
+    }
+}
+
+struct ContentView: View {
+    @EnvironmentObject var model: ItemModel
+    @EnvironmentObject var settings: UserSettings
+
+    var body: some View {
+        Group {
+            List {
+                SectionView(title:"Planned").environmentObject(model.planned)
+                SectionView(title:"Today").environmentObject(model.today)
+                SectionView(title:"Tomorrow").environmentObject(model.tomorrow)
+                SectionView(title:"QBI").environmentObject(model.qbi)
+            }
+            if settings.showFocusTimer {
+                TimerBar()
+            }
+        }
+        .padding()
+        .frame(minWidth: 450, maxWidth: .infinity,
+               minHeight: 425, maxHeight: .infinity,
+               alignment: .topLeading)
+        .navigationTitle(settings.storageFileName)
+        .toolbar { ToolbarItems() }
     }
 }
 
