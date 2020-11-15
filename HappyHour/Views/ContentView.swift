@@ -151,8 +151,8 @@ struct ContentView: View {
                 SectionView(title:"Tomorrow").environmentObject(model.tomorrow)
                 SectionView(title:"QBI").environmentObject(model.qbi)
             }
+            .listStyle(DefaultListStyle())
         }
-        .padding()
         .frame(minWidth: 450, maxWidth: .infinity,
                minHeight: 425, maxHeight: .infinity,
                alignment: .topLeading)

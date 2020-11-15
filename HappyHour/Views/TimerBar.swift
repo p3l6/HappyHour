@@ -29,9 +29,9 @@ struct TimerBar: View {
             if timer.status == .running {
                 HStack {
                     Text("Focus Timer is running: \(timer.duration) min")
-                        .foregroundColor(.accentColor)
                     Spacer()
                     Button(action: { timer.reset() }) { Text("Cancel") }
+                        .foregroundColor(.accentColor)
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
