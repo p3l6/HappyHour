@@ -16,6 +16,7 @@
 		DA60540523C7884D006BB663 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60540423C7884D006BB663 /* ItemModel.swift */; };
 		DA7EA8342462F14B005B1B4B /* TaskTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7EA8332462F14B005B1B4B /* TaskTimer.swift */; };
 		DAA6712F2560D413004CE69E /* TimerBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA6712E2560D413004CE69E /* TimerBar.swift */; };
+		DAA671322560DC58004CE69E /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA671312560DC58004CE69E /* HelpView.swift */; };
 		DABCA5C72560B46200F02836 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABCA5C62560B46200F02836 /* Formatter.swift */; };
 		DABCA5CA2560B66A00F02836 /* DiskData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABCA5C92560B66A00F02836 /* DiskData.swift */; };
 /* End PBXBuildFile section */
@@ -33,6 +34,7 @@
 		DA60540423C7884D006BB663 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
 		DA7EA8332462F14B005B1B4B /* TaskTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTimer.swift; sourceTree = "<group>"; };
 		DAA6712E2560D413004CE69E /* TimerBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerBar.swift; sourceTree = "<group>"; };
+		DAA671312560DC58004CE69E /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		DABCA5C62560B46200F02836 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		DABCA5C92560B66A00F02836 /* DiskData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -64,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				DA528E2D23C6306A001E5445 /* ContentView.swift */,
+				DAA671312560DC58004CE69E /* HelpView.swift */,
 				DAA6712E2560D413004CE69E /* TimerBar.swift */,
 				DA3E6E89255F8EF90071E539 /* SettingsView.swift */,
 			);
@@ -210,6 +213,7 @@
 				DA60540523C7884D006BB663 /* ItemModel.swift in Sources */,
 				DA3E6E86255F8E3F0071E539 /* UserSettings.swift in Sources */,
 				DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */,
+				DAA671322560DC58004CE69E /* HelpView.swift in Sources */,
 				DABCA5C72560B46200F02836 /* Formatter.swift in Sources */,
 				DAA6712F2560D413004CE69E /* TimerBar.swift in Sources */,
 				DA3E6E8A255F8EF90071E539 /* SettingsView.swift in Sources */,

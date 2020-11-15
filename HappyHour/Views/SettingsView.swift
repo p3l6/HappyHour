@@ -16,3 +16,10 @@ struct SettingsView: View {
         .frame(width: 350)
     }
 }
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
+            .environmentObject(UserSettings())
+    }
+}

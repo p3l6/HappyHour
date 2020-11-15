@@ -67,31 +67,10 @@ struct List: View {
     }
 }
 
-struct HelpWidget: View {
-    @State var helpSheetVisible = false
-    
-    var body: some View {
-        Button(action: { self.helpSheetVisible = true }) {
-            Label("Help", systemImage:"questionmark.circle")
-        }.popover(isPresented: self.$helpSheetVisible) {
-            VStack(alignment: .leading) {
-                Text("The Copy action will format the sections suitable for email,")
-                Text("and place them on the clipboard")
-                Divider()
-                Text("You May specify PRs with either of the follwing formats:")
-                Text("PR 1234 | PR1234")
-                Text("And they will be automatically linked, using the URL set in preferences.")
-                Divider()
-                Text("Resetting the form clears all sections,")
-                Text("except that the contents from tomorrow are moved to planned")
-            }.padding()
-        }
-    }
-}
-
 struct ContentView: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var settings: UserSettings
+    @State var helpSheetVisible = false
 
     var body: some View {
         VStack {
@@ -110,7 +89,13 @@ struct ContentView: View {
                minHeight: 625, maxHeight: .infinity,
                alignment: .topLeading)
         .toolbar {
-            HelpWidget()
+            Button {
+                self.helpSheetVisible = true
+            } label: {
+                Label("Help", systemImage:"questionmark.circle")
+            }.popover(isPresented: self.$helpSheetVisible) {
+               HelpView()
+            }
             Button {
                 if let service = NSSharingService(named: NSSharingService.Name.composeEmail) {
                     let today = Date()
@@ -156,5 +141,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
             .environmentObject(self.sampleData())
             .environmentObject(TaskTimer())
+            .environmentObject(UserSettings())
     }
 }
