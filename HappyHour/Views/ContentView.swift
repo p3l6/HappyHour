@@ -11,6 +11,7 @@ struct ListRow: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var listModel: ItemModel.List
     @EnvironmentObject var item: ItemModel.Item
+    let index: Int
 
     var body: some View {
         HStack{
@@ -19,20 +20,10 @@ struct ListRow: View {
                 print(self.item.text)
                 self.model.save()
             })
-            .onExitCommand(perform: { NSApp.keyWindow?.makeFirstResponder(nil) })
+            .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
             .textFieldStyle(PlainTextFieldStyle())
             Button {
-                self.listModel.moveUp(self.item.id)
-            } label: {
-                Label("Up", systemImage: "arrow.up").labelStyle(IconOnlyLabelStyle())
-            }.buttonStyle(ButtonStyleNoBack())
-            Button {
-                    self.listModel.moveDown(self.item.id)
-            } label: {
-                Label("Down", systemImage: "arrow.down").labelStyle(IconOnlyLabelStyle())
-            }.buttonStyle(ButtonStyleNoBack())
-            Button {
-                self.listModel.remove(self.item.id)
+                listModel.remove(at: index)
             } label: {
                 Label("Trash", systemImage: "trash").labelStyle(IconOnlyLabelStyle())
             }.buttonStyle(ButtonStyleNoBack())
@@ -40,30 +31,34 @@ struct ListRow: View {
     }
 }
 
-struct List: View {
+struct SectionView: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var listModel: ItemModel.List
     @State var editText: String = ""
     let title: String
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(title).bold()
-            ForEach(self.listModel.items) { item in
-                ListRow().environmentObject(item)
+        Section(header: Text(title),
+                footer:
+                    TextField("new item", text:self.$editText, onCommit: {
+                        if self.editText.count > 0 {
+                            self.listModel.add(self.editText)
+                            print(self.editText)
+                            self.editText = ""
+                            self.model.save()
+                        }
+                    })
+                    .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
+                    .textFieldStyle(PlainTextFieldStyle())
+                ){
+            ForEach(Array(listModel.items.enumerated()), id:\.1.id) { index, item in
+                ListRow(index: index)
+                    .environmentObject(item)
             }
-            TextField("new item", text:self.$editText, onCommit: {
-                if self.editText.count > 0 {
-                    self.listModel.add(self.editText)
-                    print(self.editText)
-                    self.editText = ""
-                    self.model.save()
-                }
-            })
-            .onExitCommand(perform: { NSApp.keyWindow?.makeFirstResponder(nil) })
-            .textFieldStyle(PlainTextFieldStyle())
+            .onMove { indices, newOffset in
+                listModel.items.move(fromOffsets: indices, toOffset: newOffset)
+            }
         }
-        .padding(Edge.Set.horizontal)
     }
 }
 
@@ -73,19 +68,20 @@ struct ContentView: View {
     @State var helpSheetVisible = false
 
     var body: some View {
-        VStack {
-            List(title:"Planned").environmentObject(model.planned)
-            List(title:"Today").environmentObject(model.today)
-            List(title:"Tomorrow").environmentObject(model.tomorrow)
-            List(title:"QBI").environmentObject(model.qbi)
-            Spacer().layoutPriority(1)
+        Group {
+            List {
+                SectionView(title:"Planned").environmentObject(model.planned)
+                SectionView(title:"Today").environmentObject(model.today)
+                SectionView(title:"Tomorrow").environmentObject(model.tomorrow)
+                SectionView(title:"QBI").environmentObject(model.qbi)
+            }
             if settings.showFocusTimer {
                 TimerBar()
             }
         }
         .padding()
-        .frame(minWidth: 550, maxWidth: .infinity,
-               minHeight: 625, maxHeight: .infinity,
+        .frame(minWidth: 450, maxWidth: .infinity,
+               minHeight: 425, maxHeight: .infinity,
                alignment: .topLeading)
         .navigationTitle(settings.storageFileName)
         .toolbar {
