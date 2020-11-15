@@ -86,6 +86,7 @@ struct ToolbarItems: View {
     @EnvironmentObject var settings: UserSettings
     @State var helpSheetVisible = false
     @State var timerSheetVisible = false
+    @State var resetAlertVisible = false
 
     var body: some View {
         Group {
@@ -121,9 +122,14 @@ struct ToolbarItems: View {
             }
             
             Button {
-                model.clear()
+                resetAlertVisible = true
             } label: {
                 Label("Reset", systemImage:"repeat")
+            }.alert(isPresented: $resetAlertVisible) {
+                Alert(title: Text("Do you want to reset the lists?"),
+                      message: Text("This will move tomorrow's items to planned. Everything else will be lost."),
+                      primaryButton: .default(Text("Reset"), action: { model.clear()}),
+                      secondaryButton: .cancel())
             }
             
             Button {

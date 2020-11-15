@@ -43,10 +43,10 @@ final class ItemModel: ObservableObject {
     }
     
     func clear() {
-        planned = tomorrow
-        today = List()
-        tomorrow = List()
-        qbi = List()
+        planned.items = tomorrow.items
+        today.items.removeAll()
+        tomorrow.items.removeAll()
+        qbi.items.removeAll()
         self.save()
     }
 }
