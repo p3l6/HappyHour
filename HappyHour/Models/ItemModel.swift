@@ -25,32 +25,7 @@ final class ItemModel: ObservableObject {
     @Published var tomorrow: List
     @Published var qbi: List
     
-    let filename: String?
-    
-    static func dataDirectory() -> URL {
-        var dir: URL?
-        do {
-            dir = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            dir = dir?.appendingPathComponent("dev.pwxn.HappyHour")
-        }
-        catch {
-            // TODO: what to do here? quit with a message?
-        }
-        return dir!
-    }
-    
-    init(filename: String) {
-        self.filename = filename
-        let diskData = DiskData.load(name:filename)
-        
-        planned = diskData.planned?.map { Item(initialText: $0) } ?? []
-        today = diskData.today?.map { Item(initialText: $0) } ?? []
-        tomorrow = diskData.tomorrow?.map { Item(initialText: $0) } ?? []
-        qbi = diskData.qbi?.map { Item(initialText: $0) } ?? []
-    }
-    
     init() {
-        filename = nil
         planned = []
         today = []
         tomorrow = []
@@ -58,15 +33,8 @@ final class ItemModel: ObservableObject {
     }
     
     func save() {
-        guard let filename = filename else { return }
-        
-        let data = DiskData(
-            planned: planned.map { $0.text },
-            today: today.map { $0.text },
-            tomorrow: tomorrow.map { $0.text },
-            qbi: qbi.map { $0.text }
-        )
-        data.save(name: filename)
+        //TODO: we can probably refactor this method away
+        DiskData(itemModel:self).save()
     }
     
     func clear() {

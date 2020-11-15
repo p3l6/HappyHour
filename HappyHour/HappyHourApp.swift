@@ -5,11 +5,12 @@ import UserNotifications
 @main
 struct HappyHourApp: App {
     let settings = UserSettings()
+    let itemModel = DiskData.load().makeModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(ItemModel(filename: "Standup"))
+                .environmentObject(itemModel)
                 .environmentObject(TaskTimer())
                 .environmentObject(settings)
         }

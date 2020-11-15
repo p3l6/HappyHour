@@ -22,9 +22,14 @@ class UserSettings: ObservableObject {
         didSet { UserDefaults.standard.set(standupEmail, forKey: "standupEmail") }
     }
     
+    @Published var storageFileName: String {
+        didSet { UserDefaults.standard.set(storageFileName, forKey: "storageFileName") }
+    }
+    
     init() {
         self.showFocusTimer = loadPreference("showFocusTimer", initially: true)
         self.pullRequestURLprefix = loadPreference("pullRequestURLprefix", initially: "")
         self.standupEmail = loadPreference("standupEmail", initially: "")
+        self.storageFileName = loadPreference("storageFileName", initially: "Standup")
     }
 }
