@@ -16,6 +16,7 @@
 		DA60540523C7884D006BB663 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60540423C7884D006BB663 /* ItemModel.swift */; };
 		DA7EA8342462F14B005B1B4B /* TaskTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7EA8332462F14B005B1B4B /* TaskTimer.swift */; };
 		DABCA5C72560B46200F02836 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABCA5C62560B46200F02836 /* Formatter.swift */; };
+		DABCA5CA2560B66A00F02836 /* DiskData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABCA5C92560B66A00F02836 /* DiskData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		DA60540423C7884D006BB663 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
 		DA7EA8332462F14B005B1B4B /* TaskTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTimer.swift; sourceTree = "<group>"; };
 		DABCA5C62560B46200F02836 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		DABCA5C92560B66A00F02836 /* DiskData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 			isa = PBXGroup;
 			children = (
 				DA60540423C7884D006BB663 /* ItemModel.swift */,
+				DABCA5C92560B66A00F02836 /* DiskData.swift */,
 				DABCA5C62560B46200F02836 /* Formatter.swift */,
 				DA7EA8332462F14B005B1B4B /* TaskTimer.swift */,
 				DA3E6E85255F8E3F0071E539 /* UserSettings.swift */,
@@ -207,6 +210,7 @@
 				DABCA5C72560B46200F02836 /* Formatter.swift in Sources */,
 				DA3E6E8A255F8EF90071E539 /* SettingsView.swift in Sources */,
 				DA7EA8342462F14B005B1B4B /* TaskTimer.swift in Sources */,
+				DABCA5CA2560B66A00F02836 /* DiskData.swift in Sources */,
 				DA528E2C23C6306A001E5445 /* HappyHourApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
