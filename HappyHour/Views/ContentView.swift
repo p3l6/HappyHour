@@ -31,26 +31,32 @@ struct ListRow: View {
     }
 }
 
-struct SectionView: View {
+struct NewItem: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var listModel: ItemModel.List
     @State var editText: String = ""
+    
+    var body: some View {
+        TextField("new item", text:self.$editText, onCommit: {
+            if self.editText.count > 0 {
+                self.listModel.add(self.editText)
+                print(self.editText)
+                self.editText = ""
+                self.model.save()
+            }
+        })
+        .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
+        .textFieldStyle(PlainTextFieldStyle())
+    }
+}
+
+struct SectionView: View {
+    @EnvironmentObject var listModel: ItemModel.List
     let title: String
     
     var body: some View {
         Section(header: Text(title),
-                footer:
-                    TextField("new item", text:self.$editText, onCommit: {
-                        if self.editText.count > 0 {
-                            self.listModel.add(self.editText)
-                            print(self.editText)
-                            self.editText = ""
-                            self.model.save()
-                        }
-                    })
-                    .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
-                    .textFieldStyle(PlainTextFieldStyle())
-                ){
+                footer: NewItem()){
             ForEach(Array(listModel.items.enumerated()), id:\.1.id) { index, item in
                 ListRow(index: index)
                     .environmentObject(item)
