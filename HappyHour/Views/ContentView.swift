@@ -74,7 +74,6 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Text(settings.storageFileName).bold()
             List(title:"Planned").environmentObject(model.planned)
             List(title:"Today").environmentObject(model.today)
             List(title:"Tomorrow").environmentObject(model.tomorrow)
@@ -88,6 +87,7 @@ struct ContentView: View {
         .frame(minWidth: 550, maxWidth: .infinity,
                minHeight: 625, maxHeight: .infinity,
                alignment: .topLeading)
+        .navigationTitle(settings.storageFileName)
         .toolbar {
             Button {
                 self.helpSheetVisible = true
