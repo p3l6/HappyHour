@@ -21,7 +21,7 @@ struct ListRow: View {
     
     var body: some View {
         HStack{
-            Text("❖")
+            Image(systemName: "arrowtriangle.right.fill")
             TextField("new item", text:self.$editText, onCommit: {
                 if self.item.text != self.editText {
                     self.item.text = self.editText
@@ -31,14 +31,20 @@ struct ListRow: View {
             })
                 .onExitCommand(perform: { NSApp.keyWindow?.makeFirstResponder(nil) })
                 .textFieldStyle(PlainTextFieldStyle())
-            Button(action: { self.model.moveUp(self.item.id, keyPath:self.listKey)}) {
-                Text("↑")
+            Button {
+                self.model.moveUp(self.item.id, keyPath:self.listKey)
+            } label: {
+                Label("Up", systemImage: "arrow.up").labelStyle(IconOnlyLabelStyle())
             }.buttonStyle(ButtonStyleNoBack())
-            Button(action: { self.model.moveDown(self.item.id, keyPath:self.listKey)}) {
-                Text("↓")
+            Button {
+                    self.model.moveDown(self.item.id, keyPath:self.listKey)
+            } label: {
+                Label("Down", systemImage: "arrow.down").labelStyle(IconOnlyLabelStyle())
             }.buttonStyle(ButtonStyleNoBack())
-            Button(action: { self.model.remove(self.item.id, keyPath:self.listKey)}) {
-                Text("🗑")
+            Button {
+                self.model.remove(self.item.id, keyPath:self.listKey)
+            } label: {
+                Label("Trash", systemImage: "trash").labelStyle(IconOnlyLabelStyle())
             }.buttonStyle(ButtonStyleNoBack())
         }
     }
