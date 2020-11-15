@@ -49,7 +49,7 @@ struct NewItem: View {
     var body: some View {
         HStack{
             Image(systemName: "rhombus")
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
             TextField("new item", text:self.$editText, onCommit: {
                 if self.editText.count > 0 {
                     self.listModel.add(self.editText)
@@ -86,9 +86,18 @@ struct ToolbarItems: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var settings: UserSettings
     @State var helpSheetVisible = false
+    @State var timerSheetVisible = false
 
     var body: some View {
         Group {
+            Button {
+                timerSheetVisible = true
+            } label: {
+                Label("Focus Timer", systemImage:"timer")
+            }.popover(isPresented: $timerSheetVisible) {
+                TimerStarter()
+            }
+            
             Button {
                 self.helpSheetVisible = true
             } label: {
@@ -96,6 +105,7 @@ struct ToolbarItems: View {
             }.popover(isPresented: self.$helpSheetVisible) {
                HelpView()
             }
+            
             Button {
                 if let service = NSSharingService(named: NSSharingService.Name.composeEmail) {
                     let today = Date()
@@ -110,9 +120,13 @@ struct ToolbarItems: View {
             } label:  {
                 Label("Send", systemImage:"paperplane")
             }
-            Button { self.model.clear() } label: {
+            
+            Button {
+                self.model.clear()
+            } label: {
                 Label("Reset", systemImage:"repeat")
             }
+            
             Button {
                 let text = self.model.formatted()
                 let pasteboard = NSPasteboard.general
@@ -131,14 +145,12 @@ struct ContentView: View {
 
     var body: some View {
         Group {
+            TimerBar()
             List {
                 SectionView(title:"Planned").environmentObject(model.planned)
                 SectionView(title:"Today").environmentObject(model.today)
                 SectionView(title:"Tomorrow").environmentObject(model.tomorrow)
                 SectionView(title:"QBI").environmentObject(model.qbi)
-            }
-            if settings.showFocusTimer {
-                TimerBar()
             }
         }
         .padding()
