@@ -19,8 +19,8 @@ struct ListRow: View {
             Image(systemName: "rhombus")
                 .foregroundColor(.accentColor)
             TextField("new item", text:$item.text, onCommit: {
-                print(self.item.text)
-                self.model.save()
+                print(item.text)
+                model.save()
             })
             .padding(1)
             .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
@@ -32,7 +32,6 @@ struct ListRow: View {
                     Label("Trash", systemImage: "trash")
                         .labelStyle(IconOnlyLabelStyle())
                 }.buttonStyle(ButtonStyleNoBack())
-                
             }
         }
         .onHover { over in
@@ -50,12 +49,12 @@ struct NewItem: View {
         HStack{
             Image(systemName: "rhombus")
                 .foregroundColor(.secondary)
-            TextField("new item", text:self.$editText, onCommit: {
-                if self.editText.count > 0 {
-                    self.listModel.add(self.editText)
-                    print(self.editText)
-                    self.editText = ""
-                    self.model.save()
+            TextField("new item", text:$editText, onCommit: {
+                if editText.count > 0 {
+                    listModel.add(editText)
+                    print(editText)
+                    editText = ""
+                    model.save()
                 }
             })
             .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
@@ -99,10 +98,10 @@ struct ToolbarItems: View {
             }
             
             Button {
-                self.helpSheetVisible = true
+                helpSheetVisible = true
             } label: {
                 Label("Help", systemImage:"questionmark.circle")
-            }.popover(isPresented: self.$helpSheetVisible) {
+            }.popover(isPresented: $helpSheetVisible) {
                HelpView()
             }
             
@@ -115,20 +114,20 @@ struct ToolbarItems: View {
                         service.recipients = [settings.standupEmail]
                     }
                     service.subject = "\(f.string(from: today)) Standup"
-                    service.perform(withItems: [self.model.formatted()])
+                    service.perform(withItems: [model.formatted()])
                 }
             } label:  {
                 Label("Send", systemImage:"paperplane")
             }
             
             Button {
-                self.model.clear()
+                model.clear()
             } label: {
                 Label("Reset", systemImage:"repeat")
             }
             
             Button {
-                let text = self.model.formatted()
+                let text = model.formatted()
                 let pasteboard = NSPasteboard.general
                 pasteboard.declareTypes([NSPasteboard.PasteboardType.rtf], owner: nil)
                 pasteboard.writeObjects([text])
@@ -176,7 +175,7 @@ struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
         ContentView()
-            .environmentObject(self.sampleData())
+            .environmentObject(sampleData())
             .environmentObject(TaskTimer())
             .environmentObject(UserSettings())
     }

@@ -8,13 +8,13 @@ struct TimerStarter: View {
         VStack {
             Text ("Start Focus Timer:")
             HStack {
-                Button(action: { self.timer.start(minutes:  5) }) { Text( "5m") }
-                Button(action: { self.timer.start(minutes: 10) }) { Text("10m") }
-                Button(action: { self.timer.start(minutes: 15) }) { Text("15m") }
-                Button(action: { self.timer.start(minutes: 20) }) { Text("20m") }
-                Button(action: { self.timer.start(minutes: 30) }) { Text("30m") }
-                Button(action: { self.timer.start(minutes: 45) }) { Text("45m") }
-                Button(action: { self.timer.start(minutes: 55) }) { Text("55m") }
+                Button(action: { timer.start(minutes:  5) }) { Text( "5m") }
+                Button(action: { timer.start(minutes: 10) }) { Text("10m") }
+                Button(action: { timer.start(minutes: 15) }) { Text("15m") }
+                Button(action: { timer.start(minutes: 20) }) { Text("20m") }
+                Button(action: { timer.start(minutes: 30) }) { Text("30m") }
+                Button(action: { timer.start(minutes: 45) }) { Text("45m") }
+                Button(action: { timer.start(minutes: 55) }) { Text("55m") }
             }
         }
         .padding()
@@ -28,10 +28,10 @@ struct TimerBar: View {
         Group {
             if timer.status == .running {
                 HStack {
-                    Text("Focus Timer is running: \(self.timer.duration) min")
+                    Text("Focus Timer is running: \(timer.duration) min")
                         .foregroundColor(.accentColor)
                     Spacer()
-                    Button(action: { self.timer.reset() }) { Text("Cancel") }
+                    Button(action: { timer.reset() }) { Text("Cancel") }
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -41,10 +41,10 @@ struct TimerBar: View {
                 HStack {
                     Text("Focus Timer Finished:")
                     Spacer()
-                    Button(action: { self.timer.start(minutes: self.timer.duration) }) {
-                        Text("Repeat: \(self.timer.duration)m")
+                    Button(action: { timer.start(minutes: timer.duration) }) {
+                        Text("Repeat: \(timer.duration)m")
                     }
-                    Button(action: { self.timer.reset() }) { Text("Okay!") }
+                    Button(action: { timer.reset() }) { Text("Okay!") }
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
