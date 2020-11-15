@@ -1,10 +1,3 @@
-//
-//  TaskTimer.swift
-//  HappyHour
-//
-//  Created by Paul Landers on 5/6/20.
-//  Copyright © 2020 Paul Landers. All rights reserved.
-//
 
 import Foundation
 import UserNotifications
