@@ -3,18 +3,24 @@ import SwiftUI
 
 struct TimerStarter: View {
     @EnvironmentObject var timer: TaskTimer
+    @Binding var popupVisible: Bool
+    
+    func start(_ minutes: Int) {
+        timer.start(minutes: minutes)
+        popupVisible = false
+    }
     
     var body: some View {
         VStack {
             Text ("Start Focus Timer:")
             HStack {
-                Button(action: { timer.start(minutes:  5) }) { Text( "5m") }
-                Button(action: { timer.start(minutes: 10) }) { Text("10m") }
-                Button(action: { timer.start(minutes: 15) }) { Text("15m") }
-                Button(action: { timer.start(minutes: 20) }) { Text("20m") }
-                Button(action: { timer.start(minutes: 30) }) { Text("30m") }
-                Button(action: { timer.start(minutes: 45) }) { Text("45m") }
-                Button(action: { timer.start(minutes: 55) }) { Text("55m") }
+                Button(action: { start( 5) }) { Text( "5m") }
+                Button(action: { start(10) }) { Text("10m") }
+                Button(action: { start(15) }) { Text("15m") }
+                Button(action: { start(20) }) { Text("20m") }
+                Button(action: { start(30) }) { Text("30m") }
+                Button(action: { start(45) }) { Text("45m") }
+                Button(action: { start(55) }) { Text("55m") }
             }
         }
         .padding()
@@ -74,7 +80,7 @@ struct TimerBar_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            TimerStarter().environmentObject(envs[.idle]!)
+            TimerStarter(popupVisible: .constant(true)).environmentObject(envs[.idle]!)
             TimerBar().environmentObject(envs[.running]!)
             TimerBar().environmentObject(envs[.finished]!)
         }

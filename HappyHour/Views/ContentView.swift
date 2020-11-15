@@ -94,7 +94,7 @@ struct ToolbarItems: View {
             } label: {
                 Label("Focus Timer", systemImage:"timer")
             }.popover(isPresented: $timerSheetVisible) {
-                TimerStarter()
+                TimerStarter(popupVisible: $timerSheetVisible)
             }
             
             Button {

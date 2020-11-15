@@ -29,6 +29,7 @@ final class TaskTimer: ObservableObject {
     }
     
     func start(minutes: Int) {
+        cancel()
         status = .running
         duration = minutes
         let interval = 60.0 * Double(minutes)
@@ -43,14 +44,17 @@ final class TaskTimer: ObservableObject {
         print("TaskTimer finished. Notification sent")
     }
     
-    func reset() {
+    private func cancel() {
         if let t = delayTimer {
             t.invalidate()
             delayTimer = nil
             print("TaskTimer cancelled")
-        } else {
-            print("TaskTimer reset")
         }
+    }
+    
+    func reset() {
+        cancel()
+        print("TaskTimer reset")
         status = .idle
     }
 }
