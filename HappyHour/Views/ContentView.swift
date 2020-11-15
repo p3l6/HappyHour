@@ -9,40 +9,30 @@ struct ButtonStyleNoBack: ButtonStyle {
 
 struct ListRow: View {
     @EnvironmentObject var model: ItemModel
-    @State var editText: String
-    var item: ItemModel.Item
-    let listKey: ItemModel.ListKeyPath
+    @EnvironmentObject var listModel: ItemModel.List
+    @EnvironmentObject var item: ItemModel.Item
 
-    init(item: ItemModel.Item, listKey: ItemModel.ListKeyPath) {
-        self.item = item
-        self.listKey = listKey
-        _editText = State(initialValue: item.text)
-    }
-    
     var body: some View {
         HStack{
             Image(systemName: "arrowtriangle.right.fill")
-            TextField("new item", text:self.$editText, onCommit: {
-                if self.item.text != self.editText {
-                    self.item.text = self.editText
-                    print(self.item.text)
-                    self.model.save()
-                }
+            TextField("new item", text:$item.text, onCommit: {
+                print(self.item.text)
+                self.model.save()
             })
-                .onExitCommand(perform: { NSApp.keyWindow?.makeFirstResponder(nil) })
-                .textFieldStyle(PlainTextFieldStyle())
+            .onExitCommand(perform: { NSApp.keyWindow?.makeFirstResponder(nil) })
+            .textFieldStyle(PlainTextFieldStyle())
             Button {
-                self.model.moveUp(self.item.id, keyPath:self.listKey)
+                self.listModel.moveUp(self.item.id)
             } label: {
                 Label("Up", systemImage: "arrow.up").labelStyle(IconOnlyLabelStyle())
             }.buttonStyle(ButtonStyleNoBack())
             Button {
-                    self.model.moveDown(self.item.id, keyPath:self.listKey)
+                    self.listModel.moveDown(self.item.id)
             } label: {
                 Label("Down", systemImage: "arrow.down").labelStyle(IconOnlyLabelStyle())
             }.buttonStyle(ButtonStyleNoBack())
             Button {
-                self.model.remove(self.item.id, keyPath:self.listKey)
+                self.listModel.remove(self.item.id)
             } label: {
                 Label("Trash", systemImage: "trash").labelStyle(IconOnlyLabelStyle())
             }.buttonStyle(ButtonStyleNoBack())
@@ -52,26 +42,26 @@ struct ListRow: View {
 
 struct List: View {
     @EnvironmentObject var model: ItemModel
+    @EnvironmentObject var listModel: ItemModel.List
     @State var editText: String = ""
     let title: String
-    let listKey: ItemModel.ListKeyPath
     
     var body: some View {
         VStack(alignment: .leading) {
             Text(title).bold()
-            ForEach(self.model[keyPath: listKey]) { item in
-                ListRow(item: item, listKey:self.listKey)
+            ForEach(self.listModel.items) { item in
+                ListRow().environmentObject(item)
             }
             TextField("new item", text:self.$editText, onCommit: {
                 if self.editText.count > 0 {
-                    self.model.add(self.editText, keyPath:self.listKey)
+                    self.listModel.add(self.editText)
                     print(self.editText)
                     self.editText = ""
                     self.model.save()
                 }
             })
-                .onExitCommand(perform: { NSApp.keyWindow?.makeFirstResponder(nil) })
-                .textFieldStyle(PlainTextFieldStyle())
+            .onExitCommand(perform: { NSApp.keyWindow?.makeFirstResponder(nil) })
+            .textFieldStyle(PlainTextFieldStyle())
         }
         .padding(Edge.Set.horizontal)
     }
@@ -106,10 +96,10 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text(settings.storageFileName).bold()
-            List(title:"Planned", listKey: \.planned)
-            List(title:"Today", listKey: \.today)
-            List(title:"Tomorrow", listKey: \.tomorrow)
-            List(title:"QBI", listKey: \.qbi)
+            List(title:"Planned").environmentObject(model.planned)
+            List(title:"Today").environmentObject(model.today)
+            List(title:"Tomorrow").environmentObject(model.tomorrow)
+            List(title:"QBI").environmentObject(model.qbi)
             Spacer().layoutPriority(1)
             if settings.showFocusTimer {
                 TimerBar()
@@ -154,11 +144,11 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static func sampleData() -> ItemModel {
         let model = ItemModel()
-        model.add("Thing that was planned", keyPath: \.planned)
-        model.add("Thing that was done", keyPath: \.today)
-        model.add("Another thing done", keyPath: \.today)
-        model.add("Something for tomorrow", keyPath: \.tomorrow)
-        model.add("A really long thing that was done so that it won't all fit in one line at the default width and need to wrap.", keyPath: \.qbi)
+        model.planned.add("Thing that was planned")
+        model.today.add("Thing that was done")
+        model.today.add("Another thing done")
+        model.tomorrow.add("Something for tomorrow")
+        model.qbi.add("A really long thing that was done so that it won't all fit in one line at the default width and need to wrap.")
         return model
     }
     

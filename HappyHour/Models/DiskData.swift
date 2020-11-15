@@ -18,19 +18,19 @@ struct DiskData: Codable {
     }
     
     init(itemModel: ItemModel) {
-        planned = itemModel.planned.map { $0.text }
-        today = itemModel.today.map { $0.text }
-        tomorrow = itemModel.tomorrow.map { $0.text }
-        qbi = itemModel.qbi.map { $0.text }
+        planned = itemModel.planned.items.map { $0.text }
+        today = itemModel.today.items.map { $0.text }
+        tomorrow = itemModel.tomorrow.items.map { $0.text }
+        qbi = itemModel.qbi.items.map { $0.text }
     }
     
     func makeModel() -> ItemModel {
         let itemModel = ItemModel()
         
-        self.planned?.forEach { itemModel.add($0, keyPath: \.planned) }
-        self.today?.forEach { itemModel.add($0, keyPath: \.today) }
-        self.tomorrow?.forEach { itemModel.add($0, keyPath: \.tomorrow) }
-        self.qbi?.forEach { itemModel.add($0, keyPath: \.qbi) }
+        self.planned?.forEach { itemModel.planned.add($0) }
+        self.today?.forEach { itemModel.today.add($0) }
+        self.tomorrow?.forEach { itemModel.tomorrow.add($0) }
+        self.qbi?.forEach { itemModel.qbi.add($0) }
         return itemModel
     }
     

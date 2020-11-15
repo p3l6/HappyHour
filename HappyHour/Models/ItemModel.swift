@@ -4,19 +4,45 @@ import AppKit
 
 final class ItemModel: ObservableObject {
     typealias ItemIdentifier = Int
-    typealias List = [Item]
-    typealias ListKeyPath = ReferenceWritableKeyPath<ItemModel,List>
     
     final class Item: ObservableObject, Identifiable {
         static var permanumber = 0
         
         let id: ItemIdentifier
-        var text: String
+        @Published var text: String
         
         init(initialText: String) {
             id = Item.permanumber
             Item.permanumber += 1
             text = initialText
+        }
+    }
+    
+    final class List: ObservableObject {
+        @Published var items: [Item] = []
+        
+        func remove(_ x: ItemIdentifier) {
+            //TODO: there may be a more efficient way and a filter
+            self.items.removeAll(where: {x==$0.id})
+        }
+        
+        func moveUp(_ x: ItemIdentifier) {
+            if let idx = self.items.firstIndex(where: {x==$0.id}),
+               idx != self.items.startIndex {
+                self.items.swapAt(idx, idx - 1)
+            }
+            // TODO: Should save here?
+        }
+        
+        func moveDown(_ x: ItemIdentifier) {
+            if let idx = self.items.firstIndex(where: {x==$0.id}),
+               idx != self.items.endIndex - 1 {
+                self.items.swapAt(idx, idx + 1)
+            }
+        }
+        
+        func add(_ x: String) {
+            self.items.append(Item(initialText: x))
         }
     }
 
@@ -26,10 +52,10 @@ final class ItemModel: ObservableObject {
     @Published var qbi: List
     
     init() {
-        planned = []
-        today = []
-        tomorrow = []
-        qbi = []
+        planned = List()
+        today = List()
+        tomorrow = List()
+        qbi = List()
     }
     
     func save() {
@@ -39,38 +65,9 @@ final class ItemModel: ObservableObject {
     
     func clear() {
         planned = tomorrow
-        today = []
-        tomorrow = []
-        qbi = []
+        today = List()
+        tomorrow = List()
+        qbi = List()
         self.save()
     }
-    
-    func item(_ x: ItemIdentifier, keyPath: ListKeyPath) -> Item {
-        let index = self[keyPath:keyPath].firstIndex(where: {x==$0.id})!
-        return today[index]
-    }
-    
-    func remove(_ x: ItemIdentifier, keyPath: ListKeyPath) {
-        //TODO: there may be a more efficient way and a filter
-        self[keyPath:keyPath].removeAll(where: {x==$0.id})
-    }
-    
-    func moveUp(_ x: ItemIdentifier, keyPath: ListKeyPath) {
-        if let idx = self[keyPath:keyPath].firstIndex(where: {x==$0.id}),
-               idx != self[keyPath:keyPath].startIndex {
-            self[keyPath:keyPath].swapAt(idx, idx - 1)
-        }
-    }
-    
-    func moveDown(_ x: ItemIdentifier, keyPath: ListKeyPath) {
-        if let idx = self[keyPath:keyPath].firstIndex(where: {x==$0.id}),
-               idx != self[keyPath:keyPath].endIndex - 1 {
-            self[keyPath:keyPath].swapAt(idx, idx + 1)
-        }
-    }
-    
-    func add(_ x: String, keyPath: ListKeyPath) {
-        self[keyPath:keyPath].append(Item(initialText: x))
-    }
 }
-

@@ -40,10 +40,10 @@ extension ItemModel {
         let string = NSMutableAttributedString(string: "", attributes: baseAttrs)
         
         func printList(title: String, list: List, prefix: String) {
-            if !list.isEmpty {
+            if !list.items.isEmpty {
                 string.append(bold(title))
                 string.append(attr(":\n"))
-                for item in list {
+                for item in list.items {
                     string.append(attr(prefix))
                     string.append(transform(text:item.text))
                     string.append(attr("\n"))
