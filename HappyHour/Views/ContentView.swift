@@ -15,7 +15,8 @@ struct ListRow: View {
 
     var body: some View {
         HStack{
-            Image(systemName: "arrowtriangle.right.fill")
+            Image(systemName: "rhombus")
+                .foregroundColor(.accentColor)
             TextField("new item", text:$item.text, onCommit: {
                 print(self.item.text)
                 self.model.save()
@@ -25,7 +26,9 @@ struct ListRow: View {
             Button {
                 listModel.remove(at: index)
             } label: {
-                Label("Trash", systemImage: "trash").labelStyle(IconOnlyLabelStyle())
+                Label("Trash", systemImage: "trash")
+                    .labelStyle(IconOnlyLabelStyle())
+                    .foregroundColor(.accentColor)
             }.buttonStyle(ButtonStyleNoBack())
         }
     }
@@ -55,7 +58,7 @@ struct SectionView: View {
     let title: String
     
     var body: some View {
-        Section(header: Text(title),
+        Section(header: Text(title).foregroundColor(.accentColor),
                 footer: NewItem()){
             ForEach(Array(listModel.items.enumerated()), id:\.1.id) { index, item in
                 ListRow(index: index)
