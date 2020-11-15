@@ -11,6 +11,7 @@ struct ListRow: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var listModel: ItemModel.List
     @EnvironmentObject var item: ItemModel.Item
+    @State var hovered = false
     let index: Int
 
     var body: some View {
@@ -21,15 +22,21 @@ struct ListRow: View {
                 print(self.item.text)
                 self.model.save()
             })
+            .padding(1)
             .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
             .textFieldStyle(PlainTextFieldStyle())
-            Button {
-                listModel.remove(at: index)
-            } label: {
-                Label("Trash", systemImage: "trash")
-                    .labelStyle(IconOnlyLabelStyle())
-                    .foregroundColor(.accentColor)
-            }.buttonStyle(ButtonStyleNoBack())
+            if hovered {
+                Button {
+                    listModel.remove(at: index)
+                } label: {
+                    Label("Trash", systemImage: "trash")
+                        .labelStyle(IconOnlyLabelStyle())
+                }.buttonStyle(ButtonStyleNoBack())
+                
+            }
+        }
+        .onHover { over in
+            hovered = over
         }
     }
 }
@@ -40,16 +47,20 @@ struct NewItem: View {
     @State var editText: String = ""
     
     var body: some View {
-        TextField("new item", text:self.$editText, onCommit: {
-            if self.editText.count > 0 {
-                self.listModel.add(self.editText)
-                print(self.editText)
-                self.editText = ""
-                self.model.save()
-            }
-        })
-        .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
-        .textFieldStyle(PlainTextFieldStyle())
+        HStack{
+            Image(systemName: "rhombus")
+                .foregroundColor(.gray)
+            TextField("new item", text:self.$editText, onCommit: {
+                if self.editText.count > 0 {
+                    self.listModel.add(self.editText)
+                    print(self.editText)
+                    self.editText = ""
+                    self.model.save()
+                }
+            })
+            .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
+            .textFieldStyle(PlainTextFieldStyle())
+        }
     }
 }
 
