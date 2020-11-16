@@ -92,6 +92,12 @@ struct ToolbarItems: View {
     var body: some View {
         Group {
             Button {
+                NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+            } label: {
+                Label("Preferences", systemImage:"gear")
+            }
+            
+            Button {
                 timerSheetVisible = true
             } label: {
                 Label("Focus Timer", systemImage:"timer")
