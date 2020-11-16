@@ -43,10 +43,21 @@ final class ItemModel: ObservableObject {
     }
     
     func clear() {
-        planned.items = tomorrow.items
-        today.items.removeAll()
-        tomorrow.items.removeAll()
-        qbi.items.removeAll()
+        let settings = UserSettings()
+        
+        // here, keep and toPlanned have the same meaning
+        if settings.resetBehaviorPlanned == .discard { planned.items.removeAll() }
+        
+        // add anything else to planned
+        if settings.resetBehaviorToday    == .toPlanned { planned.items.append(contentsOf: today.items) }
+        if settings.resetBehaviorTomorrow == .toPlanned { planned.items.append(contentsOf: tomorrow.items) }
+        if settings.resetBehaviorQbi      == .toPlanned { planned.items.append(contentsOf: qbi.items) }
+
+        // clear what's needed
+        if settings.resetBehaviorToday    != .keep { today.items.removeAll() }
+        if settings.resetBehaviorTomorrow != .keep { tomorrow.items.removeAll() }
+        if settings.resetBehaviorQbi      != .keep { qbi.items.removeAll() }
+        
         self.save()
     }
 }

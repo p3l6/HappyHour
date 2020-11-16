@@ -66,9 +66,10 @@ struct NewItem: View {
 struct SectionView: View {
     @EnvironmentObject var listModel: ItemModel.List
     let title: String
+    let icon: String
     
     var body: some View {
-        Section(header: Text(title).foregroundColor(.accentColor),
+        Section(header: Label(title, systemImage:icon).foregroundColor(.accentColor),
                 footer: NewItem()){
             ForEach(Array(listModel.items.enumerated()), id:\.1.id) { index, item in
                 ListRow(index: index)
@@ -127,7 +128,7 @@ struct ToolbarItems: View {
                 Label("Reset", systemImage:"repeat")
             }.alert(isPresented: $resetAlertVisible) {
                 Alert(title: Text("Do you want to reset the lists?"),
-                      message: Text("This will move tomorrow's items to planned. Everything else will be lost."),
+                      message: Text("By default, this will move tomorrow's items to planned. Everything else will be lost."),
                       primaryButton: .default(Text("Reset"), action: { model.clear()}),
                       secondaryButton: .cancel())
             }
@@ -152,10 +153,10 @@ struct ContentView: View {
         Group {
             TimerBar()
             List {
-                SectionView(title:"Planned").environmentObject(model.planned)
-                SectionView(title:"Today").environmentObject(model.today)
-                SectionView(title:"Tomorrow").environmentObject(model.tomorrow)
-                SectionView(title:"QBI").environmentObject(model.qbi)
+                SectionView(title:"Planned", icon: "tray").environmentObject(model.planned)
+                SectionView(title:"Today", icon: "checkmark.square").environmentObject(model.today)
+                SectionView(title:"Tomorrow", icon: "calendar").environmentObject(model.tomorrow)
+                SectionView(title:"QBI", icon: "hand.raised").environmentObject(model.qbi)
             }
             .listStyle(DefaultListStyle())
         }
