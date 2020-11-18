@@ -42,6 +42,14 @@ final class ItemModel: ObservableObject {
         DiskData(itemModel:self).save()
     }
     
+    func remove(id: UUID) {
+        //TODO: could be more efficient?
+        planned.items.removeAll(where: {item in item.id == id })
+        today.items.removeAll(where: {item in item.id == id })
+        tomorrow.items.removeAll(where: {item in item.id == id })
+        qbi.items.removeAll(where: {item in item.id == id })
+    }
+    
     func clear() {
         let settings = UserSettings()
         
