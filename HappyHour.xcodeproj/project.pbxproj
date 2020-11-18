@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DA3E6E86255F8E3F0071E539 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E6E85255F8E3F0071E539 /* UserSettings.swift */; };
 		DA3E6E8A255F8EF90071E539 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E6E89255F8EF90071E539 /* SettingsView.swift */; };
+		DA4C826E2564363D002D67BF /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C826D2564363D002D67BF /* Toolbar.swift */; };
 		DA528E2C23C6306A001E5445 /* HappyHourApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA528E2B23C6306A001E5445 /* HappyHourApp.swift */; };
 		DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA528E2D23C6306A001E5445 /* ContentView.swift */; };
 		DA528E3023C6306B001E5445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA528E2F23C6306B001E5445 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		DA3E6E85255F8E3F0071E539 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		DA3E6E89255F8EF90071E539 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		DA4C826D2564363D002D67BF /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		DA528E2823C6306A001E5445 /* HappyHour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyHour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA528E2B23C6306A001E5445 /* HappyHourApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyHourApp.swift; sourceTree = "<group>"; };
 		DA528E2D23C6306A001E5445 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				DA528E2D23C6306A001E5445 /* ContentView.swift */,
+				DA4C826D2564363D002D67BF /* Toolbar.swift */,
 				DAA671312560DC58004CE69E /* HelpView.swift */,
 				DAA6712E2560D413004CE69E /* TimerBar.swift */,
 				DA3E6E89255F8EF90071E539 /* SettingsView.swift */,
@@ -211,6 +214,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA60540523C7884D006BB663 /* ItemModel.swift in Sources */,
+				DA4C826E2564363D002D67BF /* Toolbar.swift in Sources */,
 				DA3E6E86255F8E3F0071E539 /* UserSettings.swift in Sources */,
 				DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */,
 				DAA671322560DC58004CE69E /* HelpView.swift in Sources */,
