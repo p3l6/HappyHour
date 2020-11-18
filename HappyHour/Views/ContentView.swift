@@ -24,7 +24,7 @@ struct ListRow: View {
                     print(item.text)
                     model.save()
                 })
-                .padding(1)
+                .padding(.vertical, 1)
                 .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
                 .textFieldStyle(PlainTextFieldStyle())
                 if hovered {
@@ -53,6 +53,19 @@ struct ListRow: View {
             listModel.items.insert(item, at: index+1)
             model.remove(id: dragHelper.source)
         }
+    }
+}
+
+struct SectionHeader: View {
+    let title: String
+    let icon: String
+    
+    var body: some View {
+        Label(title, systemImage:icon)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 2)
+            .padding(.leading, 20)
+            .foregroundColor(.accentColor)
     }
 }
 
@@ -88,9 +101,8 @@ struct SectionView: View {
     let icon: String
     
     var body: some View {
-        Section(header: Label(title, systemImage:icon).foregroundColor(.accentColor).onDrop(of: DragHelper.type, isTargeted: $dropTarget, perform:performDrop),
-                footer: NewItem().onDrop(of: DragHelper.type, isTargeted: $dropTargetFooter, perform:performDropFooter)
-        ){
+        Section(header: SectionHeader(title: title, icon: icon).onDrop(of: DragHelper.type, isTargeted: $dropTarget, perform:performDrop),
+                footer: NewItem().onDrop(of: DragHelper.type, isTargeted: $dropTargetFooter, perform:performDropFooter)){
             if dropTarget { Divider() }
             
             ForEach(Array(listModel.items.enumerated()), id:\.1.id) { index, item in
@@ -101,6 +113,7 @@ struct SectionView: View {
             
             if dropTargetFooter { Divider() }
         }
+        .padding(.horizontal)
     }
 
     func performDrop(itemProviders: [NSItemProvider]) -> Bool {
@@ -127,10 +140,12 @@ struct ContentView: View {
     var body: some View {
         Group {
             TimerBar()
-            SectionView(title:"Planned", icon: "tray").environmentObject(model.planned)
-            SectionView(title:"Today", icon: "checkmark.square").environmentObject(model.today)
-            SectionView(title:"Tomorrow", icon: "calendar").environmentObject(model.tomorrow)
-            SectionView(title:"QBI", icon: "hand.raised").environmentObject(model.qbi)
+            ScrollView {
+                SectionView(title:"Planned", icon: "tray").environmentObject(model.planned)
+                SectionView(title:"Today", icon: "checkmark.square").environmentObject(model.today)
+                SectionView(title:"Tomorrow", icon: "calendar").environmentObject(model.tomorrow)
+                SectionView(title:"QBI", icon: "hand.raised").environmentObject(model.qbi)
+            }
         }
         .frame(minWidth: 520, maxWidth: .infinity,
                minHeight: 425, maxHeight: .infinity,

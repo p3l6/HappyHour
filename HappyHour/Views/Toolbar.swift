@@ -23,6 +23,7 @@ struct ToolbarItems: View {
             }.popover(isPresented: $timerSheetVisible) {
                 TimerStarter(popupVisible: $timerSheetVisible)
             }
+            //TODO: tooltips on these buttons?
             
             Button {
                 helpSheetVisible = true
