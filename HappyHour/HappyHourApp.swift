@@ -21,6 +21,8 @@ struct HappyHourApp: App {
     }
 }
 
+// TODO: There's a menu option to create a new window? Should disable that somehow. Single window app. Related to LSGUI im sure
+
 //        var statusBarItem: NSStatusItem!
 //        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 //        statusBarItem.button?.title = "🍺"
