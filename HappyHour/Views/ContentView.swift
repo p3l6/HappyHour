@@ -7,6 +7,40 @@ struct ButtonStyleNoBack: ButtonStyle {
     }
 }
 
+struct DropDivider: View {
+    let visible: Bool
+    var body: some View { Group { if visible { Divider().background(Color.accentColor)}}}
+}
+
+struct Trash: View {
+    @EnvironmentObject var listModel: ItemModel.List
+    let index: Int
+    
+    var body: some View {
+        Button {
+            listModel.remove(at: index)
+        } label: {
+            Label("Trash", systemImage: "trash")
+                .labelStyle(IconOnlyLabelStyle())
+        }.buttonStyle(ButtonStyleNoBack())
+    }
+}
+
+struct EditField: View {
+    @EnvironmentObject var item: ItemModel.Item
+    @EnvironmentObject var model: ItemModel
+
+    var body: some View {
+        TextField("new item", text:$item.text, onCommit: {
+            print(item.text)
+            model.save()
+        })
+        .padding(.vertical, 3)
+        .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
+        .textFieldStyle(PlainTextFieldStyle())
+    }
+}
+
 struct ListRow: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var listModel: ItemModel.List
@@ -18,31 +52,15 @@ struct ListRow: View {
     var body: some View {
         VStack {
             HStack {
-                Image(systemName: "rhombus")
-                    .foregroundColor(.accentColor)
-                TextField("new item", text:$item.text, onCommit: {
-                    print(item.text)
-                    model.save()
-                })
-                .padding(.vertical, 1)
-                .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
-                .textFieldStyle(PlainTextFieldStyle())
-                if hovered {
-                    Button {
-                        listModel.remove(at: index)
-                    } label: {
-                        Label("Trash", systemImage: "trash")
-                            .labelStyle(IconOnlyLabelStyle())
-                    }.buttonStyle(ButtonStyleNoBack())
-                }
+                Image(systemName: "rhombus").foregroundColor(.accentColor)
+                EditField()
+                if hovered { Trash(index: index) }
                 Image(systemName: "line.horizontal.3")
                     .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
             }
-            .onHover { over in
-                hovered = over
-            }
+            .onHover { over in hovered = over }
             
-            if dropTarget { Divider() }
+            DropDivider(visible: dropTarget)
         }
         .onDrop(of: DragHelper.type, isTargeted: $dropTarget, perform: performDrop)
     }
@@ -76,8 +94,7 @@ struct NewItem: View {
     
     var body: some View {
         HStack{
-            Image(systemName: "rhombus")
-                .foregroundColor(.secondary)
+            Image(systemName: "rhombus").foregroundColor(.secondary)
             TextField("new item", text:$editText, onCommit: {
                 if editText.count > 0 {
                     listModel.add(editText)
@@ -86,6 +103,7 @@ struct NewItem: View {
                     model.save()
                 }
             })
+            .padding(.vertical, 3)
             .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
             .textFieldStyle(PlainTextFieldStyle())
         }
@@ -103,15 +121,13 @@ struct SectionView: View {
     var body: some View {
         Section(header: SectionHeader(title: title, icon: icon).onDrop(of: DragHelper.type, isTargeted: $dropTarget, perform:performDrop),
                 footer: NewItem().onDrop(of: DragHelper.type, isTargeted: $dropTargetFooter, perform:performDropFooter)){
-            if dropTarget { Divider() }
+            DropDivider(visible: dropTarget)
             
             ForEach(Array(listModel.items.enumerated()), id:\.1.id) { index, item in
-                ListRow(index: index)
-                    .environmentObject(item)
-                    
+                ListRow(index: index).environmentObject(item)
             }
             
-            if dropTargetFooter { Divider() }
+            DropDivider(visible: dropTargetFooter)
         }
         .padding(.horizontal)
     }
