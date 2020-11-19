@@ -7,37 +7,45 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="app_icon.svg"
-   inkscape:version="1.0rc1 (09960d6, 2020-04-09)"
-   width="64.0px"
-   height="64.0px"
-   viewBox="0 0 64.0 64.0"
+   inkscape:export-ydpi="702.17145"
+   inkscape:export-xdpi="702.17145"
+   inkscape:export-filename="/Users/paul/var/HappyHour/app_icon512.png"
+   id="SVGRoot"
    version="1.1"
-   id="SVGRoot">
+   viewBox="0 0 70 70"
+   height="70"
+   width="70"
+   inkscape:version="1.0rc1 (09960d6, 2020-04-09)"
+   sodipodi:docname="app_icon.svg">
   <defs
      id="defs12" />
   <sodipodi:namedview
-     inkscape:window-maximized="0"
-     inkscape:window-y="101"
-     inkscape:window-x="86"
-     inkscape:window-height="943"
-     inkscape:window-width="1252"
-     showgrid="true"
-     inkscape:document-rotation="0"
-     inkscape:current-layer="layer1"
-     inkscape:document-units="px"
-     inkscape:cy="43.025704"
-     inkscape:cx="10.370498"
-     inkscape:zoom="2"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
+     borderlayer="false"
+     inkscape:showpageshadow="false"
+     inkscape:pagecheckerboard="false"
+     id="base"
+     pagecolor="#9bffff"
      bordercolor="#666666"
-     pagecolor="#ffffff"
-     id="base">
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="6"
+     inkscape:cx="41.537165"
+     inkscape:cy="39.359037"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     inkscape:window-width="1252"
+     inkscape:window-height="943"
+     inkscape:window-x="86"
+     inkscape:window-y="73"
+     inkscape:window-maximized="0">
     <inkscape:grid
-       type="xygrid"
-       id="grid21" />
+       originy="0"
+       originx="5"
+       id="grid21"
+       type="xygrid" />
   </sodipodi:namedview>
   <metadata
      id="metadata15">
@@ -52,57 +60,63 @@
     </rdf:RDF>
   </metadata>
   <g
-     id="layer1"
+     transform="translate(5)"
+     style="opacity:1"
+     inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     inkscape:label="Layer 1">
-    <ellipse
-       ry="20"
-       rx="15"
-       cy="35"
-       cx="45"
-       id="path32"
-       style="fill:#808080" />
-    <ellipse
-       ry="15"
+     id="layer1">
+    <rect
        rx="10"
-       cy="35"
-       cx="45"
-       id="path34"
-       style="fill:#ffffff" />
+       inkscape:export-ydpi="409.60001"
+       inkscape:export-xdpi="409.60001"
+       ry="10"
+       y="5"
+       x="0"
+       height="60"
+       width="60"
+       id="rect26"
+       style="fill:#ffffff;stroke-width:0.923077" />
+    <path
+       inkscape:connector-curvature="0"
+       d="M 40,15 A 15,20 0 0 0 25,35 15,20 0 0 0 40,55 15,20 0 0 0 55,35 15,20 0 0 0 40,15 Z m 0,5 A 10,15 0 0 1 50,35 10,15 0 0 1 40,50 10,15 0 0 1 30,35 10,15 0 0 1 40,20 Z"
+       style="fill:#808080"
+       id="path32" />
     <rect
-       y="10"
-       x="10"
-       height="50"
-       width="35"
+       rx="5"
+       ry="5"
+       style="fill:#808080"
        id="rect28"
-       style="fill:#808080" />
+       width="35"
+       height="50"
+       x="10"
+       y="10" />
     <rect
-       y="25"
-       x="15"
-       height="30"
-       width="25"
+       style="fill:#d3bc5f;stroke-width:0.866025"
        id="rect36"
-       style="fill:#d3bc5f;stroke-width:0.866025" />
-    <rect
-       y="15"
-       x="15"
-       height="10"
        width="25"
+       height="30"
+       x="15"
+       y="25" />
+    <rect
+       style="fill:#b3b3b3;fill-opacity:1"
        id="rect42"
-       style="fill:#b3b3b3;fill-opacity:1" />
+       width="25"
+       height="10"
+       x="15"
+       y="15" />
     <rect
-       y="20"
-       x="20"
-       height="30"
-       width="5"
+       style="fill:#999999;fill-opacity:1"
        id="rect38"
-       style="fill:#999999;fill-opacity:1" />
-    <rect
-       y="20"
-       x="30"
-       height="30"
        width="5"
+       height="30"
+       x="20"
+       y="20" />
+    <rect
+       style="fill:#999999;fill-opacity:1"
        id="rect40"
-       style="fill:#999999;fill-opacity:1" />
+       width="5"
+       height="30"
+       x="30"
+       y="20" />
   </g>
 </svg>
