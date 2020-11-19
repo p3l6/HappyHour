@@ -14,22 +14,25 @@ struct ToolbarItems: View {
                 NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
             } label: {
                 Label("Preferences", systemImage:"gear")
-            }
+            }.help("Open Preferences")
             
             Button {
                 timerSheetVisible = true
             } label: {
                 Label("Focus Timer", systemImage:"timer")
-            }.popover(isPresented: $timerSheetVisible) {
+            }
+            .help("Start a timer...")
+            .popover(isPresented: $timerSheetVisible) {
                 TimerStarter(popupVisible: $timerSheetVisible)
             }
-            //TODO: tooltips on these buttons?
             
             Button {
                 helpSheetVisible = true
             } label: {
                 Label("Help", systemImage:"questionmark.circle")
-            }.popover(isPresented: $helpSheetVisible) {
+            }
+            .help("Show help...")
+            .popover(isPresented: $helpSheetVisible) {
                HelpView()
             }
             
@@ -46,7 +49,7 @@ struct ToolbarItems: View {
                 }
             } label:  {
                 Label("Send", systemImage:"paperplane")
-            }
+            }.help("Send formatted standup in an email")
             
             Button {
                 resetAlertVisible = true
@@ -57,7 +60,7 @@ struct ToolbarItems: View {
                       message: Text("By default, this will move tomorrow's items to planned. Everything else will be lost."),
                       primaryButton: .default(Text("Reset"), action: { model.clear()}),
                       secondaryButton: .cancel())
-            }
+            }.help("Reset the lists, according to preferences")
             
             Button {
                 let text = model.formatted()
@@ -66,7 +69,7 @@ struct ToolbarItems: View {
                 pasteboard.writeObjects([text])
             } label:  {
                 Label("Copy", systemImage:"doc.on.doc")
-            }
+            }.help("Copy formatted standup to clipboard")
         }
     }
 }
