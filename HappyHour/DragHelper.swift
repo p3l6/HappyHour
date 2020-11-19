@@ -13,8 +13,8 @@ import Foundation
 
 class DragHelper: NSObject, NSItemProviderWriting, NSItemProviderReading, Codable {
     static let type = [kUTTypeData as String]
-    static var readableTypeIdentifiersForItemProvider = [kUTTypeData as String]
-    static var writableTypeIdentifiersForItemProvider = [kUTTypeData as String]
+    static let readableTypeIdentifiersForItemProvider = type
+    static let writableTypeIdentifiersForItemProvider = type
     
     let text: String
     let source: UUID
@@ -28,7 +28,7 @@ class DragHelper: NSObject, NSItemProviderWriting, NSItemProviderReading, Codabl
         do {
             return try JSONDecoder().decode(Self.self, from: data)
         } catch {
-            fatalError("Error decoding dragged object")
+            fatalError("Error: decoding dragged object")
         }
     }
     
