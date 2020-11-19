@@ -5,7 +5,8 @@ import AppKit
 final class ItemModel: ObservableObject {
     final class Item: ObservableObject, Identifiable {
         let id = UUID()
-        @Published var text: String
+        var dirty = true
+        @Published var text: String { didSet { dirty = true }}
         
         init(initialText: String) {
             text = initialText
@@ -17,7 +18,7 @@ final class ItemModel: ObservableObject {
         
         func remove(at index: Int) {
             self.items.remove(at: index)
-            // TODO: Should save here?
+            // TODO: How to mark this dirty?
         }
         
         func add(_ x: String) {
@@ -38,8 +39,20 @@ final class ItemModel: ObservableObject {
     }
     
     func save() {
-        //TODO: we can probably refactor this method away
+        print("checking for save...")
+        let dirty = [planned, today, tomorrow, qbi].flatMap { list in
+            list.items.filter { item in item.dirty }}
+            
+        if dirty.count == 0 {
+            return
+        }
+        
+        print("  saving")
         DiskData(itemModel:self).save()
+        
+        for item in dirty {
+            item.dirty = false
+        }
     }
     
     func remove(id: UUID) {
@@ -65,7 +78,5 @@ final class ItemModel: ObservableObject {
         if settings.resetBehaviorToday    != .keep { today.items.removeAll() }
         if settings.resetBehaviorTomorrow != .keep { tomorrow.items.removeAll() }
         if settings.resetBehaviorQbi      != .keep { qbi.items.removeAll() }
-        
-        self.save()
     }
 }

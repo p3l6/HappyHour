@@ -31,10 +31,7 @@ struct EditField: View {
     @EnvironmentObject var model: ItemModel
 
     var body: some View {
-        TextField("new item", text:$item.text, onCommit: {
-            print(item.text)
-            model.save()
-        })
+        TextField("new item", text:$item.text)
         .padding(.vertical, 3)
         .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
         .textFieldStyle(PlainTextFieldStyle())
@@ -100,7 +97,6 @@ struct NewItem: View {
                     listModel.add(editText)
                     print(editText)
                     editText = ""
-                    model.save()
                 }
             })
             .padding(.vertical, 3)
