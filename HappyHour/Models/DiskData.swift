@@ -34,49 +34,51 @@ struct DiskData: Codable {
         return itemModel
     }
     
-    static func dataDirectory() -> URL {
+    static func dataDirectory() -> URL? {
         var dir: URL?
         do {
             dir = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             dir = dir?.appendingPathComponent("dev.pwxn.HappyHour")
         }
         catch {
-            // TODO: what to do here? quit with a message?
+            return nil
         }
-        return dir!
+        return dir
     }
     
     static func load() -> DiskData {
-        let dir = DiskData.dataDirectory()
+        guard let dir = DiskData.dataDirectory() else {
+            print("Error: Could not determine application storage directory.")
+            return DiskData()
+        }
+        
         let name = UserSettings().storageFileName
         let file = dir.appendingPathComponent(name).appendingPathExtension("json")
 
         var diskData = DiskData()
         if FileManager.default.fileExists(atPath:file.path) {
-            let dec = JSONDecoder.init()
             do {
                 let data = FileManager.default.contents(atPath: file.path)
-                diskData = try dec.decode(DiskData.self, from: data!)
+                diskData = try JSONDecoder.init().decode(DiskData.self, from: data!)
             } catch {
-                print("error trying load json file")
+                print("Error: Could not load json file into model")
             }
         }
         return diskData
     }
     
     func save() {
-        let dir = DiskData.dataDirectory()
+        guard let dir = DiskData.dataDirectory() else { return }
         let name = UserSettings().storageFileName
         let file = dir.appendingPathComponent(name).appendingPathExtension("json")
 
-        let enc = JSONEncoder.init()
         do {
-            let encoded = try enc.encode(self)
-            try FileManager.default.createDirectory(at: DiskData.dataDirectory(), withIntermediateDirectories: true)
+            let encoded = try JSONEncoder.init().encode(self)
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
             try encoded.write(to: file)
         }
         catch let e {
-            print("Error writing to file: \(e.localizedDescription)")
+            print("Error: Could not write to file \(file): \(e.localizedDescription)")
         }
     }
 }

@@ -12,7 +12,6 @@ import Foundation
  */
 
 class DragHelper: NSObject, NSItemProviderWriting, NSItemProviderReading, Codable {
-    //TODO: combine coding with ItemModel? and this is an extension?
     static let type = [kUTTypeData as String]
     static var readableTypeIdentifiersForItemProvider = [kUTTypeData as String]
     static var writableTypeIdentifiersForItemProvider = [kUTTypeData as String]
