@@ -21,9 +21,9 @@ extension ItemModel {
                 let regex = try! NSRegularExpression(pattern: #"PR ?(\d+)"#)
                 regex.enumerateMatches(in: text, options: [], range: fullRange) { (match, _, _) in
                     guard let match = match else { return }
-                    // TODO: can crash, for example if pullUrl is set to garbage
                     let path = "\(pullUrl)\(text[Range(match.range(at: 1), in: text)!])"
-                    attrText.addAttributes([NSAttributedString.Key.link: URL(string:path)!], range: match.range)
+                    guard let url = URL(string:path) else { return }
+                    attrText.addAttributes([NSAttributedString.Key.link: url], range: match.range)
                 }
             }
             return attrText
