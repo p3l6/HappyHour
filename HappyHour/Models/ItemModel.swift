@@ -4,9 +4,9 @@ import AppKit
 
 final class ItemModel: ObservableObject {
     final class Item: ObservableObject, Identifiable {
-        let id = UUID()
-        var dirty = true
         @Published var text: String { didSet { dirty = true }}
+        let id = UUID()
+        fileprivate var dirty = true
         
         init(initialText: String) {
             text = initialText
@@ -15,14 +15,15 @@ final class ItemModel: ObservableObject {
     
     final class List: ObservableObject {
         @Published var items: [Item] = []
+        fileprivate var dirty = false
         
         func remove(at index: Int) {
-            self.items.remove(at: index)
-            // TODO: How to mark this dirty?
+            items.remove(at: index)
+            dirty = true
         }
         
         func add(_ x: String) {
-            self.items.append(Item(initialText: x))
+            items.append(Item(initialText: x))
         }
     }
 
@@ -39,19 +40,18 @@ final class ItemModel: ObservableObject {
     }
     
     func save() {
+        let lists = [planned, today, tomorrow, qbi]
+        let dirtyItems = lists.flatMap { $0.items.filter(\.dirty) }
+        let dirtyLists = lists.filter(\.dirty)
+        
         print("checking for save...")
-        let dirty = [planned, today, tomorrow, qbi].flatMap { list in
-            list.items.filter { item in item.dirty }}
+        if dirtyItems.count != 0 ||
+           dirtyLists.count != 0 {
+            print("  saving")
             
-        if dirty.count == 0 {
-            return
-        }
-        
-        print("  saving")
-        DiskData(itemModel:self).save()
-        
-        for item in dirty {
-            item.dirty = false
+            DiskData(itemModel:self).save()
+            dirtyItems.forEach { $0.dirty = false }
+            dirtyLists.forEach { $0.dirty = false }
         }
     }
     
