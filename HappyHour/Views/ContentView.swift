@@ -20,18 +20,16 @@ struct Trash: View {
         Button {
             listModel.remove(at: index)
         } label: {
-            Label("Trash", systemImage: "trash")
-                .labelStyle(IconOnlyLabelStyle())
+            Label("Trash", systemImage: "trash").labelStyle(IconOnlyLabelStyle())
         }.buttonStyle(ButtonStyleNoBack())
     }
 }
 
 struct EditField: View {
     @EnvironmentObject var item: ItemModel.Item
-    @EnvironmentObject var model: ItemModel
 
     var body: some View {
-        TextField("new item", text:$item.text)
+        TextField("blank", text:$item.text)
         .padding(.vertical, 3)
         .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
         .textFieldStyle(PlainTextFieldStyle())
@@ -85,17 +83,15 @@ struct SectionHeader: View {
 }
 
 struct NewItem: View {
-    @EnvironmentObject var model: ItemModel
     @EnvironmentObject var listModel: ItemModel.List
     @State var editText: String = ""
     
     var body: some View {
         HStack{
             Image(systemName: "rhombus").foregroundColor(.secondary)
-            TextField("new item", text:$editText, onCommit: {
+            TextField("add item", text:$editText, onCommit: {
                 if editText.count > 0 {
                     listModel.add(editText)
-                    print(editText)
                     editText = ""
                 }
             })
