@@ -5,9 +5,17 @@ struct ToolbarItems: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var settings: UserSettings
     @State var helpSheetVisible = false
+    @State var previewSheetVisible = false
     @State var timerSheetVisible = false
     @State var resetAlertVisible = false
 
+    func copyHandler() {
+        let text = model.formatted()
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([NSPasteboard.PasteboardType.rtf], owner: nil)
+        pasteboard.writeObjects([text])
+    }
+    
     var body: some View {
         Group {
             Button {
@@ -62,17 +70,29 @@ struct ToolbarItems: View {
                       secondaryButton: .cancel())
             }.help("Reset the lists, according to preferences")
             
-            Button {
-                let text = model.formatted()
-                let pasteboard = NSPasteboard.general
-                pasteboard.declareTypes([NSPasteboard.PasteboardType.rtf], owner: nil)
-                pasteboard.writeObjects([text])
-            } label:  {
+            Button(action: copyHandler) {
                 Label("Copy", systemImage:"doc.on.doc")
             }.help("Copy formatted standup to clipboard")
+            
+            Button {
+               previewSheetVisible = true
+            } label:  {
+                Label("Preview", systemImage:"doc.richtext")
+            }
+            .help("Preview formatted standup")
+            .popover(isPresented: $previewSheetVisible) {
+                VStack {
+                    // FIXME: SwiftUI.Text does not support attributed strings at this time
+                    Text(model.formatted().string)
+                    Button(action: copyHandler) {
+                        Label("Copy", systemImage:"doc.on.doc")
+                    }.help("Copy formatted standup to clipboard")
+                }.padding()
+            }
         }
     }
 }
+
 struct Toolbar_Previews: PreviewProvider {
     static var previews: some View {
         ToolbarItems()
