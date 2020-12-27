@@ -159,7 +159,7 @@ struct ContentView: View {
                minHeight: 425, maxHeight: .infinity,
                alignment: .topLeading)
         .navigationTitle(settings.storageFileName)
-        .toolbar { ToolbarItems() }
+        .toolbar(id: "mainToolbar") { ToolbarItems() }
     }
 }
 
