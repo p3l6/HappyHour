@@ -3,6 +3,7 @@ import SwiftUI
 
 @main
 struct HappyHourApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let settings = UserSettings()
     let itemModel = DiskData.load().makeModel()
     
@@ -15,7 +16,8 @@ struct HappyHourApp: App {
                 .onReceive(NotificationCenter.default.publisher(for: NSApplication.willResignActiveNotification)) { _ in
                     itemModel.save()
                 }
-        }
+                .handlesExternalEvents(preferring: Set(arrayLiteral: "showWindow"), allowing: Set(arrayLiteral: "*"))
+        }.handlesExternalEvents(matching: Set(arrayLiteral: "showWindow"))
         
         Settings {
             SettingsView()
@@ -24,9 +26,27 @@ struct HappyHourApp: App {
     }
 }
 
-// TODO: There's a menu option to create a new window? Should disable that somehow. Single window app. Related to LSGUI im sure
+class AppDelegate: NSObject, NSApplicationDelegate {
+    private var statusBarItem: NSStatusItem? = nil
+    @Environment(\.openURL) var openURL
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        let statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        statusBarItem.button?.title = "🍺"
+        statusBarItem.button?.action = #selector(AppDelegate.showWindow)
+        statusBarItem.button?.target = self
+        
+//        statusBarButton.image = #imageLiteral(resourceName: "StatusBarIcon")
+//        statusBarButton.image?.size = NSSize(width: 18.0, height: 18.0)
+//        statusBarButton.image?.isTemplate = true
 
-//        var statusBarItem: NSStatusItem!
-//        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-//        statusBarItem.button?.title = "🍺"
-//        statusBarItem.button?.action = #selector(AppDelegate.showWindow)
+        // Store in property to retain object
+        self.statusBarItem = statusBarItem
+    }
+    
+    @objc func showWindow() {
+        if let url = URL(string: "happyhour://showWindow") {
+            openURL(url)
+        }
+    }
+}
