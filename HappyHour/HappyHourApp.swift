@@ -32,13 +32,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         let statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        statusBarItem.button?.title = "🍺"
         statusBarItem.button?.action = #selector(AppDelegate.showWindow)
         statusBarItem.button?.target = self
         
-//        statusBarButton.image = #imageLiteral(resourceName: "StatusBarIcon")
-//        statusBarButton.image?.size = NSSize(width: 18.0, height: 18.0)
-//        statusBarButton.image?.isTemplate = true
+        statusBarItem.button?.image = NSImage(named: NSImage.Name("StatusBarIcon"))
+        statusBarItem.button?.image?.size = NSSize(width: 18.0, height: 18.0)
+        statusBarItem.button?.image?.isTemplate = true
 
         // Store in property to retain object
         self.statusBarItem = statusBarItem
