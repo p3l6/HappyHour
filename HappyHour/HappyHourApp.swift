@@ -16,8 +16,16 @@ struct HappyHourApp: App {
                 .onReceive(NotificationCenter.default.publisher(for: NSApplication.willResignActiveNotification)) { _ in
                     itemModel.save()
                 }
-                .handlesExternalEvents(preferring: Set(arrayLiteral: "showWindow"), allowing: Set(arrayLiteral: "*"))
-        }.handlesExternalEvents(matching: Set(arrayLiteral: "showWindow"))
+                .handlesExternalEvents(preferring: Set(["showWindow","add"]), allowing: Set(["showWindow","add"]))
+                .onOpenURL { url in
+                    if let parts = URLComponents(url: url, resolvingAgainstBaseURL: false),
+                       parts.host == "add",
+                       parts.path == "/today",
+                       let item = parts.queryItems?.first?.value  {
+                        itemModel.today.add(item)
+                    }
+                }
+        }.handlesExternalEvents(matching: Set(["showWindow","add"]))
         
         Settings {
             SettingsView()
