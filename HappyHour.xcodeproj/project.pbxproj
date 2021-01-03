@@ -18,6 +18,7 @@
 		DA7EA8342462F14B005B1B4B /* TaskTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7EA8332462F14B005B1B4B /* TaskTimer.swift */; };
 		DAA6712F2560D413004CE69E /* TimerBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA6712E2560D413004CE69E /* TimerBar.swift */; };
 		DAA671322560DC58004CE69E /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA671312560DC58004CE69E /* HelpView.swift */; };
+		DAA8857825A21B9000547911 /* HappyHour.alfredworkflow in Resources */ = {isa = PBXBuildFile; fileRef = DAA8857625A21AA300547911 /* HappyHour.alfredworkflow */; };
 		DAAF1C9F2565B03D00E287CC /* DragHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF1C9E2565B03D00E287CC /* DragHelper.swift */; };
 		DABCA5C72560B46200F02836 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABCA5C62560B46200F02836 /* Formatter.swift */; };
 		DABCA5CA2560B66A00F02836 /* DiskData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABCA5C92560B66A00F02836 /* DiskData.swift */; };
@@ -38,6 +39,7 @@
 		DA7EA8332462F14B005B1B4B /* TaskTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTimer.swift; sourceTree = "<group>"; };
 		DAA6712E2560D413004CE69E /* TimerBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerBar.swift; sourceTree = "<group>"; };
 		DAA671312560DC58004CE69E /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		DAA8857625A21AA300547911 /* HappyHour.alfredworkflow */ = {isa = PBXFileReference; lastKnownFileType = file; path = HappyHour.alfredworkflow; sourceTree = "<group>"; };
 		DAAF1C9E2565B03D00E287CC /* DragHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DragHelper.swift; path = HappyHour/DragHelper.swift; sourceTree = SOURCE_ROOT; };
 		DABCA5C62560B46200F02836 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		DABCA5C92560B66A00F02836 /* DiskData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskData.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		DA8B300424ED758D001E1AA2 /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				DAA8857625A21AA300547911 /* HappyHour.alfredworkflow */,
 				DA528E2F23C6306B001E5445 /* Assets.xcassets */,
 				DA528E3723C6306B001E5445 /* Info.plist */,
 				DA528E3823C6306B001E5445 /* HappyHour.entitlements */,
@@ -186,6 +189,7 @@
 			files = (
 				DA528E3323C6306B001E5445 /* Preview Assets.xcassets in Resources */,
 				DA528E3023C6306B001E5445 /* Assets.xcassets in Resources */,
+				DAA8857825A21B9000547911 /* HappyHour.alfredworkflow in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

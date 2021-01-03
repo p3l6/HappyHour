@@ -10,6 +10,13 @@ struct MainSettings: View {
             TextField("https://github.com/user/project/pull/", text: $settings.pullRequestURLprefix)
             Text("Standup email thread address")
             TextField("standup@your-team.com", text: $settings.standupEmail)
+            Button() {
+                if let filePath = Bundle.main.url(forResource: "HappyHour", withExtension: "alfredworkflow") {
+                    NSWorkspace.shared.open(filePath)
+                }
+            } label: {
+                Label("Install alfred workflow", systemImage:"square.grid.2x2.fill")
+            }
         }
     }
 }
