@@ -155,8 +155,8 @@ struct ContentView: View {
                 SectionView(title:"QBI", icon: "hand.raised").environmentObject(model.qbi)
             }
         }
-        .frame(minWidth: 520, maxWidth: .infinity,
-               minHeight: 425, maxHeight: .infinity,
+        .frame(minWidth: 325, idealWidth: 450, maxWidth: .infinity,
+               minHeight: 400, idealHeight: 450, maxHeight: .infinity,
                alignment: .topLeading)
         .navigationTitle(settings.storageFileName)
         .toolbar(id: "mainToolbar") { ToolbarItems() }

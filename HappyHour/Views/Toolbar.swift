@@ -131,7 +131,7 @@ struct ToolbarItems: CustomizableToolbarContent {
     var body: some CustomizableToolbarContent {
         Group {
             ToolbarItem(id: "preferences", placement: .automatic, showsByDefault: true) { TBPreferences() }
-            ToolbarItem(id: "timer", placement: .automatic, showsByDefault: true) { TBTimer() }
+            ToolbarItem(id: "timer", placement: .automatic, showsByDefault: false) { TBTimer() }
             ToolbarItem(id: "showHelp", placement: .automatic, showsByDefault: true) { TBHelp() }
             ToolbarItem(id: "sendEmail", placement: .automatic, showsByDefault: true) { TBSendEmail() }
             ToolbarItem(id: "reset", placement: .automatic, showsByDefault: true) { TBReset() }
