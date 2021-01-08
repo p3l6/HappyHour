@@ -11,6 +11,12 @@ struct HelpView: View {
             Text("PR 1234 | PR1234")
             Text("And they will be automatically linked, using the URL set in preferences.")
             Divider()
+            Group {
+                Text("You May specify jira issues with the follwing format:")
+                Text("ABC-1234")
+                Text("And they will be automatically linked, using the URL and prefixes set in preferences.")
+                Divider()
+            }
             Text("Resetting the form clears all sections,")
             Text("except that the contents from tomorrow are moved to planned")
         }.padding()

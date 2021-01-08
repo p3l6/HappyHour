@@ -8,6 +8,12 @@ struct MainSettings: View {
         Form {
             Text("Pull Request URL")
             TextField("https://github.com/user/project/pull/", text: $settings.pullRequestURLprefix)
+            
+            Text("Jira Issue URL")
+            TextField("https://someone.atlassian.net/browse/", text: $settings.jiraURLprefix)
+            Text("Jira Project Prefixes (space separated)")
+            TextField("ABC BUG", text: $settings.jiraProjectprefixes)
+            
             Text("Standup email thread address")
             TextField("standup@your-team.com", text: $settings.standupEmail)
             Button() {

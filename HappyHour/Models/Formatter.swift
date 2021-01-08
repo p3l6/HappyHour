@@ -2,6 +2,22 @@
 import Foundation
 import AppKit
 
+fileprivate func makeLinks(_ text: NSMutableAttributedString,
+                           base: String,
+                           matching regex: NSRegularExpression,
+                           prefix: String) {
+    guard prefix.count > 0 else { return }
+    
+    let fullRange = NSRange(location:0, length:base.utf16.count)
+    
+    regex.enumerateMatches(in: base, options: [], range: fullRange) { (match, _, _) in
+        guard let match = match else { return }
+        let path = "\(prefix)\(text.attributedSubstring(from: match.range(at: 1)).string)"
+        guard let url = URL(string:path) else { return }
+        text.addAttributes([NSAttributedString.Key.link: url], range: match.range)
+    }
+}
+
 extension ItemModel {
     func formatted() -> NSAttributedString {
         // MARKDOWN Version of pr replacement
@@ -13,19 +29,19 @@ extension ItemModel {
         let baseAttrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0)]
         let boldAttrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0, weight: .bold)]
         
-        func transform(text: String) -> NSAttributedString {
+        func addAllLinks(text: String) -> NSAttributedString {
             let attrText = NSMutableAttributedString(string: text, attributes: baseAttrs)
-            let pullUrl = UserSettings().pullRequestURLprefix
-            if pullUrl.count > 0 {
-                let fullRange = NSRange(text.startIndex..<text.endIndex, in: text)
-                let regex = try! NSRegularExpression(pattern: #"PR ?(\d+)"#)
-                regex.enumerateMatches(in: text, options: [], range: fullRange) { (match, _, _) in
-                    guard let match = match else { return }
-                    let path = "\(pullUrl)\(text[Range(match.range(at: 1), in: text)!])"
-                    guard let url = URL(string:path) else { return }
-                    attrText.addAttributes([NSAttributedString.Key.link: url], range: match.range)
+            
+            if let regex = try? NSRegularExpression(pattern: #"PR ?(\d+)"#) {
+                makeLinks(attrText, base: text, matching: regex, prefix: UserSettings().pullRequestURLprefix)
+            }
+            
+            for prefix in UserSettings().jiraProjectprefixes.split(separator: " ") {
+                if let regex = try? NSRegularExpression(pattern: #"(\#(prefix)-\d+)"#) {
+                    makeLinks(attrText, base: text, matching: regex, prefix: UserSettings().jiraURLprefix)
                 }
             }
+            
             return attrText
         }
         
@@ -45,7 +61,7 @@ extension ItemModel {
                 string.append(attr(":\n"))
                 for item in list.items {
                     string.append(attr(prefix))
-                    string.append(transform(text:item.text))
+                    string.append(addAllLinks(text:item.text))
                     string.append(attr("\n"))
                 }
             }

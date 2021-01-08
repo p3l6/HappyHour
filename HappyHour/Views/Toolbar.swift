@@ -133,7 +133,7 @@ struct ToolbarItems: CustomizableToolbarContent {
             ToolbarItem(id: "preferences", placement: .automatic, showsByDefault: true) { TBPreferences() }
             ToolbarItem(id: "timer", placement: .automatic, showsByDefault: false) { TBTimer() }
             ToolbarItem(id: "showHelp", placement: .automatic, showsByDefault: true) { TBHelp() }
-            ToolbarItem(id: "sendEmail", placement: .automatic, showsByDefault: true) { TBSendEmail() }
+            ToolbarItem(id: "sendEmail", placement: .automatic, showsByDefault: false) { TBSendEmail() }
             ToolbarItem(id: "reset", placement: .automatic, showsByDefault: true) { TBReset() }
             ToolbarItem(id: "copy", placement: .automatic, showsByDefault: true) { TBCopy() }
             ToolbarItem(id: "preview", placement: .automatic, showsByDefault: true) { TBPreview() }

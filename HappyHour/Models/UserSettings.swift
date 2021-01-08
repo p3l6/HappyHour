@@ -24,6 +24,14 @@ class UserSettings: ObservableObject {
         didSet { UserDefaults.standard.set(pullRequestURLprefix, forKey: "pullRequestURLprefix") }
     }
     
+    @Published var jiraURLprefix: String {
+        didSet { UserDefaults.standard.set(jiraURLprefix, forKey: "jiraURLprefix") }
+    }
+    
+    @Published var jiraProjectprefixes: String {
+        didSet { UserDefaults.standard.set(jiraProjectprefixes, forKey: "jiraProjectprefixes") }
+    }
+    
     @Published var standupEmail: String {
         didSet { UserDefaults.standard.set(standupEmail, forKey: "standupEmail") }
     }
@@ -50,6 +58,8 @@ class UserSettings: ObservableObject {
     
     init() {
         self.pullRequestURLprefix = loadPreference("pullRequestURLprefix", initially: "")
+        self.jiraURLprefix = loadPreference("jiraURLprefix", initially: "")
+        self.jiraProjectprefixes = loadPreference("jiraProjectprefixes", initially: "")
         self.standupEmail = loadPreference("standupEmail", initially: "")
         self.storageFileName = loadPreference("storageFileName", initially: "Standup")
         
