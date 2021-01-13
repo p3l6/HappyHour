@@ -35,7 +35,7 @@ struct TBHelp: View {
             Label("Help", systemImage:"questionmark.circle")
         }
         .help("Show help...")
-        .popover(isPresented: $helpSheetVisible) {
+        .popover(isPresented: $helpSheetVisible, arrowEdge: .bottom) {
            HelpView()
         }
     }
