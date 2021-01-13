@@ -9,7 +9,13 @@ struct ButtonStyleNoBack: ButtonStyle {
 
 struct DropDivider: View {
     let visible: Bool
-    var body: some View { Group { if visible { Divider().background(Color.accentColor)}}}
+    var body: some View {
+        Group {
+            if visible {
+                Divider().background(Color.accentColor)
+            }
+        }
+    }
 }
 
 struct Trash: View {
@@ -111,12 +117,14 @@ struct SectionView: View {
     let icon: String
     
     var body: some View {
-        Section(header: SectionHeader(title: title, icon: icon).onDrop(of: DragHelper.type, isTargeted: $dropTarget, perform:performDrop),
+        Section(header:SectionHeader(title: title, icon: icon)
+                    .onDrop(of: DragHelper.type, isTargeted: $dropTarget, perform:performDrop)
+                    .font(Font.system(.title2)),
                 footer: NewItem().onDrop(of: DragHelper.type, isTargeted: $dropTargetFooter, perform:performDropFooter)){
             DropDivider(visible: dropTarget)
             
             ForEach(Array(listModel.items.enumerated()), id:\.1.id) { index, item in
-                ListRow(index: index).environmentObject(item)
+                ListRow(index: index).environmentObject(item).font(Font.system(.title3))
             }
             
             DropDivider(visible: dropTargetFooter)
