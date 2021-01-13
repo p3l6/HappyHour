@@ -55,9 +55,11 @@ struct ListRow: View {
             HStack {
                 Image(systemName: "rhombus").foregroundColor(.accentColor)
                 EditField()
-                if hovered { Trash(index: index) }
-                Image(systemName: "line.horizontal.3")
-                    .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
+                if hovered {
+                    Trash(index: index)
+                    Image(systemName: "line.horizontal.3")
+                        .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
+                }
             }
             .onHover { over in hovered = over }
             
