@@ -8,7 +8,7 @@ struct HappyHourApp: App {
     let itemModel = DiskData.load().makeModel()
     
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "SomeWindow") {
             ContentView()
                 .environmentObject(itemModel)
                 .environmentObject(TaskTimer())
@@ -21,7 +21,7 @@ struct HappyHourApp: App {
                     if let parts = URLComponents(url: url, resolvingAgainstBaseURL: false),
                        parts.host == "add",
                        parts.path == "/today",
-                       let item = parts.queryItems?.first?.value  {
+                       let item = parts.queryItems?.first?.value {
                         itemModel.today.add(item)
                     }
                 }

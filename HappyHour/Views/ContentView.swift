@@ -1,6 +1,17 @@
 
 import SwiftUI
 
+// TODO: Remove this hack when swiftui allows disabling focus ring for specific TextFields
+// Then, disable them for all the text fields on this page
+// https://stackoverflow.com/a/60290791
+// This disables all focus rings for all text fields in the whole app
+extension NSTextField {
+    open override var focusRingType: NSFocusRingType {
+        get { .none }
+        set { }
+    }
+}
+
 struct ButtonStyleNoBack: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label.background(Color.clear)
@@ -33,12 +44,15 @@ struct Trash: View {
 
 struct EditField: View {
     @EnvironmentObject var item: ItemModel.Item
+    @State private var editing = false
 
     var body: some View {
-        TextField("blank", text:$item.text)
-        .padding(.vertical, 3)
+        TextField("blank", text:$item.text, onEditingChanged: { editing = $0 })
+        .padding(5)
         .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
         .textFieldStyle(PlainTextFieldStyle())
+        .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
+            .stroke(editing ? Color.accentColor : Color.clear, lineWidth: 2))
     }
 }
 
@@ -53,11 +67,15 @@ struct ListRow: View {
     var body: some View {
         VStack {
             HStack {
-                Image(systemName: "rhombus").foregroundColor(.accentColor)
+                Image(systemName: "rhombus")
+                    .foregroundColor(.accentColor)
+                    .font(Font.system(.title3))
                 EditField()
                 if hovered {
                     Trash(index: index)
+                        .font(Font.system(.title3))
                     Image(systemName: "line.horizontal.3")
+                        .font(Font.system(.title3))
                         .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
                 }
             }
@@ -87,25 +105,31 @@ struct SectionHeader: View {
             .padding(.vertical, 2)
             .padding(.leading, 20)
             .foregroundColor(.accentColor)
+            .font(Font.system(.title2))
     }
 }
 
 struct NewItem: View {
     @EnvironmentObject var listModel: ItemModel.List
     @State var editText: String = ""
+    @State private var editing = false
     
     var body: some View {
         HStack{
-            Image(systemName: "rhombus").foregroundColor(.secondary)
-            TextField("add item", text:$editText, onCommit: {
+            Image(systemName: "rhombus")
+                .foregroundColor(.secondary)
+                .font(Font.system(.title3))
+            TextField("add item", text:$editText, onEditingChanged: { editing = $0 }, onCommit: {
                 if editText.count > 0 {
                     listModel.add(editText)
                     editText = ""
                 }
             })
-            .padding(.vertical, 3)
+            .padding(5)
             .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
             .textFieldStyle(PlainTextFieldStyle())
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .stroke(editing ? Color.accentColor : Color.clear, lineWidth: 2))
         }
     }
 }
@@ -120,13 +144,12 @@ struct SectionView: View {
     
     var body: some View {
         Section(header:SectionHeader(title: title, icon: icon)
-                    .onDrop(of: DragHelper.type, isTargeted: $dropTarget, perform:performDrop)
-                    .font(Font.system(.title2)),
+                    .onDrop(of: DragHelper.type, isTargeted: $dropTarget, perform:performDrop),
                 footer: NewItem().onDrop(of: DragHelper.type, isTargeted: $dropTargetFooter, perform:performDropFooter)){
             DropDivider(visible: dropTarget)
             
             ForEach(Array(listModel.items.enumerated()), id:\.1.id) { index, item in
-                ListRow(index: index).environmentObject(item).font(Font.system(.title3))
+                ListRow(index: index).environmentObject(item)
             }
             
             DropDivider(visible: dropTargetFooter)
@@ -156,7 +179,7 @@ struct ContentView: View {
     @EnvironmentObject var settings: UserSettings
 
     var body: some View {
-        Group {
+        VStack {
             TimerBar()
             ScrollView {
                 SectionView(title:"Planned", icon: "tray").environmentObject(model.planned)
@@ -165,8 +188,8 @@ struct ContentView: View {
                 SectionView(title:"QBI", icon: "hand.raised").environmentObject(model.qbi)
             }
         }
-        .frame(minWidth: 325, idealWidth: 450, maxWidth: .infinity,
-               minHeight: 400, idealHeight: 450, maxHeight: .infinity,
+        .frame(minWidth: 350, idealWidth: 450, maxWidth: 1000,
+               minHeight: 450, idealHeight: 550, maxHeight: .infinity,
                alignment: .topLeading)
         .navigationTitle(settings.storageFileName)
         .toolbar(id: "mainToolbar") { ToolbarItems() }

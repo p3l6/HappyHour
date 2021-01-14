@@ -130,13 +130,14 @@ struct ToolbarItems: CustomizableToolbarContent {
     
     var body: some CustomizableToolbarContent {
         Group {
-            ToolbarItem(id: "preferences", placement: .automatic, showsByDefault: true) { TBPreferences() }
-            ToolbarItem(id: "timer", placement: .automatic, showsByDefault: false) { TBTimer() }
-            ToolbarItem(id: "showHelp", placement: .automatic, showsByDefault: true) { TBHelp() }
-            ToolbarItem(id: "sendEmail", placement: .automatic, showsByDefault: false) { TBSendEmail() }
-            ToolbarItem(id: "reset", placement: .automatic, showsByDefault: true) { TBReset() }
             ToolbarItem(id: "copy", placement: .automatic, showsByDefault: true) { TBCopy() }
+            ToolbarItem(id: "reset", placement: .automatic, showsByDefault: true) { TBReset() }
+            ToolbarItem(id: "preferences", placement: .automatic, showsByDefault: true) { TBPreferences() }
+            ToolbarItem(id: "showHelp", placement: .automatic, showsByDefault: true) { TBHelp() }
             ToolbarItem(id: "preview", placement: .automatic, showsByDefault: true) { TBPreview() }
+            
+            ToolbarItem(id: "timer", placement: .automatic, showsByDefault: false) { TBTimer() }
+            ToolbarItem(id: "sendEmail", placement: .automatic, showsByDefault: false) { TBSendEmail() }
         }
     }
 }
