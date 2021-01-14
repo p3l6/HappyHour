@@ -91,9 +91,26 @@ which seems to be the case most of the time.
 This toolbar button is hidden by default, but as most mac apps,
 you can customize to toolbar (by right clicking on it) to add this button.
 """)
+            
+            HelpSection(title: "Timer",
+                        image: "timer",
+                        text: """
+The "Focus Timer" action allows you to select a time interval,
+and a system notification will alert you when it ends.
+
+A header is displayed in the app to let you know if the timer
+is still running, or if it has ended. However, a countdown is
+not shown, since that would distract from your focus. The idea
+is that you would block out other distractions (including the
+timer itself) until the time has elapsed.
+
+By default, the timer feature is hidden from the toolbar, since
+it is an orthogonal feature to the rest of the app.
+""")
+            
         }
         .padding()
-        .frame(minWidth: 200, minHeight: 350)
+        .frame(minWidth: 250, minHeight: 350)
     }
 }
 
