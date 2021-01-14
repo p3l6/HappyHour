@@ -45,6 +45,7 @@ struct Trash: View {
 struct EditField: View {
     @EnvironmentObject var item: ItemModel.Item
     @State private var editing = false
+    @Binding var outline: Bool
 
     var body: some View {
         TextField("blank", text:$item.text, onEditingChanged: { editing = $0 })
@@ -52,7 +53,8 @@ struct EditField: View {
         .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
         .textFieldStyle(PlainTextFieldStyle())
         .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .stroke(editing ? Color.accentColor : Color.clear, lineWidth: 2))
+            .stroke(editing ? Color.accentColor :
+                   (outline ? Color.gray : Color.clear), lineWidth: 2))
     }
 }
 
@@ -70,7 +72,7 @@ struct ListRow: View {
                 Image(systemName: "rhombus")
                     .foregroundColor(.accentColor)
                     .font(Font.system(.title3))
-                EditField()
+                EditField(outline: $hovered)
                 if hovered {
                     Trash(index: index)
                         .font(Font.system(.title3))
