@@ -8,8 +8,8 @@ This is a small application for MacOS that may help you keep track of notes for 
 The screenshot above will produce a message ready to paste into your standup thread:
 
 > **Today:**  
-> ✅ Rewrite some code PR-123  
-> ✅ Fix that annoying bug BUG-4 PR-124  
+> ✅ Rewrite some code PR 123  
+> ✅ Fix that annoying bug BUG-4 PR 124  
 > **Tomorrow:**  
 > ➡️ Out on holiday tomorrow  
 > **QBI:**  
