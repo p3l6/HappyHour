@@ -72,13 +72,11 @@ struct ListRow: View {
                 Image(systemName: "rhombus")
                     .foregroundColor(.accentColor)
                     .font(Font.system(.title3))
+                    .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
                 EditField(outline: $hovered)
                 if hovered {
                     Trash(index: index)
                         .font(Font.system(.title3))
-                    Image(systemName: "line.horizontal.3")
-                        .font(Font.system(.title3))
-                        .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
                 }
             }
             .onHover { over in hovered = over }
