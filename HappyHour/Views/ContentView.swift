@@ -174,6 +174,39 @@ struct SectionView: View {
     }
 }
 
+struct Footer: View {
+    @EnvironmentObject var model: ItemModel
+    @EnvironmentObject var settings: UserSettings
+
+    func binding(for key: String) -> Binding<ItemModel.FooterStatus> {
+        return Binding(get: {
+            return model.footer[key] ?? .no
+        }, set: {
+            model.footer[key] = $0
+        })
+    }
+    
+    func options() -> some View {
+        Group {
+            Text("Yes").tag(ItemModel.FooterStatus.yes)
+            Text("Maybe").tag(ItemModel.FooterStatus.maybe)
+            Text("No").tag(ItemModel.FooterStatus.no)
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            ForEach(settings.footerItems, id: \.self) { item in
+                Picker(selection: binding(for: item),
+                       label: Label(item, systemImage:"questionmark.diamond")
+                        .foregroundColor(.accentColor)
+                        .fixedSize()) { options() }
+                    .scaledToFit()
+            }
+        }
+    }
+}
+
 struct ContentView: View {
     @EnvironmentObject var model: ItemModel
     @EnvironmentObject var settings: UserSettings
@@ -190,6 +223,10 @@ struct ContentView: View {
                     .environmentObject(model.tomorrow)
                 SectionView(title:settings.displayNameQBI, icon: "hand.raised")
                     .environmentObject(model.qbi)
+            }
+            if !settings.footerItems.isEmpty {
+                Divider()
+                Footer().padding()
             }
         }
         .frame(minWidth: 350, idealWidth: 450, maxWidth: 1000,

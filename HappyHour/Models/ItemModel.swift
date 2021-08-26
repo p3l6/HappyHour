@@ -26,17 +26,25 @@ final class ItemModel: ObservableObject {
             items.append(Item(initialText: x))
         }
     }
+    
+    enum FooterStatus: String {
+        case yes = "yes"
+        case maybe = "maybe"
+        case no = "no"
+    }
 
     @Published var planned: List
     @Published var today: List
     @Published var tomorrow: List
     @Published var qbi: List
+    @Published var footer: [String: FooterStatus]
     
     init() {
         planned = List()
         today = List()
         tomorrow = List()
         qbi = List()
+        footer = [:]
     }
     
     func save() {

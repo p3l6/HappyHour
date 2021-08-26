@@ -6,6 +6,7 @@ struct DiskData: Codable {
     let today: [String]?
     let tomorrow: [String]?
     let qbi: [String]?
+    let footer: [String: String]?
     
     init(planned: [String]? = nil,
          today: [String]? = nil,
@@ -15,6 +16,7 @@ struct DiskData: Codable {
         self.today = today
         self.tomorrow = tomorrow
         self.qbi = qbi
+        self.footer = [:]
     }
     
     init(itemModel: ItemModel) {
@@ -22,6 +24,7 @@ struct DiskData: Codable {
         today = itemModel.today.items.map { $0.text }
         tomorrow = itemModel.tomorrow.items.map { $0.text }
         qbi = itemModel.qbi.items.map { $0.text }
+        footer = itemModel.footer.mapValues { $0.rawValue }
     }
     
     func makeModel() -> ItemModel {
@@ -31,6 +34,11 @@ struct DiskData: Codable {
         self.today?.forEach { itemModel.today.add($0) }
         self.tomorrow?.forEach { itemModel.tomorrow.add($0) }
         self.qbi?.forEach { itemModel.qbi.add($0) }
+        self.footer?.forEach {
+            if let value = ItemModel.FooterStatus(rawValue: $0.value) {
+                itemModel.footer[$0.key] = value
+            }
+        }
         return itemModel
     }
     

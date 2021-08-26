@@ -100,9 +100,42 @@ struct ResetSettings: View {
     }
 }
 
+struct FooterSettings: View {
+    @EnvironmentObject var settings: UserSettings
+    @State var newItem: String = ""
+    
+    var body: some View {
+        VStack {
+            Text("A list of Yes/No/Maybe questions at the end of the report")
+            List {
+                ForEach(Array(settings.footerItems.enumerated()), id:\.1.self) { index, item in
+                    HStack {
+                        Button {
+                            settings.footerItems.remove(at: index)
+                        } label: {
+                            Label("Trash", systemImage: "trash").labelStyle(IconOnlyLabelStyle())
+                        }
+                        Text(item)
+                    }
+                }
+                Divider()
+                HStack {
+                    TextField("Is Jira up to date?", text:$newItem)
+                    Button {
+                        settings.footerItems.append(newItem)
+                        newItem = ""
+                    } label: {
+                        Label("Add", systemImage: "plus")
+                    }.disabled(newItem.isEmpty)
+                }
+            }
+        }
+    }
+}
+
 struct SettingsView: View {
     private enum Tabs: Hashable {
-        case general, display, reset
+        case general, display, footer, reset
     }
     
     var body: some View {
@@ -113,6 +146,9 @@ struct SettingsView: View {
             DisplaySettings()
                 .tabItem {Label("Display", systemImage: "macwindow") }
                 .tag(Tabs.display)
+            FooterSettings()
+                .tabItem {Label("Footer", systemImage: "questionmark.diamond") }
+                .tag(Tabs.footer)
             ResetSettings()
                 .tabItem {Label("Daily Reset", systemImage: "repeat")}
                 .tag(Tabs.reset)
@@ -127,9 +163,10 @@ struct SettingsView_Previews: PreviewProvider {
         Group{
             MainSettings()
             ResetSettings()
+            FooterSettings()
         }
         .padding(20)
-        .frame(width: 350)
+        .frame(width: 400)
         .environmentObject(UserSettings())
     }
 }

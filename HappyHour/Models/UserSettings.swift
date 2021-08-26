@@ -76,6 +76,10 @@ class UserSettings: ObservableObject {
         didSet { UserDefaults.standard.set(formatEmptySections, forKey: "formatEmptySections") }
     }
     
+    @Published var footerItems: [String] {
+        didSet { UserDefaults.standard.set(footerItems, forKey: "footerItems") }
+    }
+    
     init() {
         self.pullRequestURLprefix = loadPreference("pullRequestURLprefix", initially: "")
         self.jiraURLprefix = loadPreference("jiraURLprefix", initially: "")
@@ -93,5 +97,7 @@ class UserSettings: ObservableObject {
         self.displayNameToday = loadPreference("displayNameToday", initially: "Today")
         self.displayNameTomorrow = loadPreference("displayNameTomorrow", initially: "Tomorrow")
         self.displayNameQBI = loadPreference("displayNameQBI", initially: "QBI")
+        
+        self.footerItems = loadPreference("footerItems", initially: [])
     }
 }

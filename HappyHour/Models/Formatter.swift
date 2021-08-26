@@ -56,8 +56,13 @@ extension ItemModel {
         
         let string = NSMutableAttributedString(string: "", attributes: baseAttrs)
         
+        var previousItem = false
         func printList(title: String, list: List, prefix: String) {
             if !list.items.isEmpty {
+                if previousItem {
+                    string.append(attr("\n"))
+                }
+                previousItem = true
                 string.append(bold(title))
                 string.append(attr(":\n"))
                 for item in list.items {
@@ -66,6 +71,10 @@ extension ItemModel {
                     string.append(attr("\n"))
                 }
             } else if settings.formatEmptySections {
+                if previousItem {
+                    string.append(attr("\n"))
+                }
+                previousItem = true
                 string.append(bold(title))
                 string.append(attr(":\n(none)"))
             }
@@ -73,6 +82,19 @@ extension ItemModel {
         printList(title: settings.displayNameToday, list: today, prefix: "✅ ")
         printList(title: settings.displayNameTomorrow, list: tomorrow, prefix: "➡️ ")
         printList(title: settings.displayNameQBI, list: qbi, prefix: "⁉️ ")
+        
+        if !settings.footerItems.isEmpty {
+            string.append(attr("\n"))
+            for item in settings.footerItems {
+                string.append(bold("\(item) "))
+                switch (footer[item] ?? .no) {
+                case .yes: string.append(attr("✅"))
+                case .maybe: string.append(attr("🤷"))
+                case .no: string.append(attr("❌"))
+                }
+                string.append(attr("\n"))
+            }
+        }
         
         return string
     }
