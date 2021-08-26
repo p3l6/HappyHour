@@ -213,7 +213,6 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            TimerBar()
             ScrollView {
                 SectionView(title:settings.displayNamePlanned, icon: "tray")
                     .environmentObject(model.planned)
@@ -251,7 +250,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(sampleData())
-            .environmentObject(TaskTimer())
             .environmentObject(UserSettings())
     }
 }

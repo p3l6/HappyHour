@@ -11,21 +11,6 @@ struct TBPreferences: View {
     }
 }
 
-struct TBTimer: View {
-    @State var timerSheetVisible = false
-    var body: some View {
-        Button {
-            timerSheetVisible = true
-        } label: {
-            Label("Focus Timer", systemImage:"timer")
-        }
-        .help("Start a timer...")
-        .popover(isPresented: $timerSheetVisible) {
-            TimerStarter(popupVisible: $timerSheetVisible)
-        }
-    }
-}
-
 struct TBHelp: View {
     @State var helpSheetVisible = false
     var body: some View {
@@ -136,7 +121,6 @@ struct ToolbarItems: CustomizableToolbarContent {
             ToolbarItem(id: "showHelp", placement: .automatic, showsByDefault: true) { TBHelp() }
             ToolbarItem(id: "preview", placement: .automatic, showsByDefault: true) { TBPreview() }
             
-            ToolbarItem(id: "timer", placement: .automatic, showsByDefault: false) { TBTimer() }
             ToolbarItem(id: "sendEmail", placement: .automatic, showsByDefault: false) { TBSendEmail() }
         }
     }

@@ -11,7 +11,6 @@ struct HappyHourApp: App {
         WindowGroup(id: "SomeWindow") {
             ContentView()
                 .environmentObject(itemModel)
-                .environmentObject(TaskTimer())
                 .environmentObject(settings)
                 .onReceive(NotificationCenter.default.publisher(for: NSApplication.willResignActiveNotification)) { _ in
                     itemModel.save()
