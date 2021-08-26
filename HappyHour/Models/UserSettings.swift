@@ -56,6 +56,22 @@ class UserSettings: ObservableObject {
         didSet { UserDefaults.standard.set(resetBehaviorQbi.rawValue, forKey: "resetBehaviorQbi") }
     }
     
+    @Published var displayNamePlanned: String {
+        didSet { UserDefaults.standard.set(displayNamePlanned, forKey: "displayNamePlanned") }
+    }
+    
+    @Published var displayNameToday: String {
+        didSet { UserDefaults.standard.set(displayNameToday, forKey: "displayNameToday") }
+    }
+    
+    @Published var displayNameTomorrow: String {
+        didSet { UserDefaults.standard.set(displayNameTomorrow, forKey: "displayNameTomorrow") }
+    }
+    
+    @Published var displayNameQBI: String {
+        didSet { UserDefaults.standard.set(displayNameQBI, forKey: "displayNameQBI") }
+    }
+    
     init() {
         self.pullRequestURLprefix = loadPreference("pullRequestURLprefix", initially: "")
         self.jiraURLprefix = loadPreference("jiraURLprefix", initially: "")
@@ -67,5 +83,10 @@ class UserSettings: ObservableObject {
         self.resetBehaviorToday = loadPreferenceEnum("resetBehaviorToday", initially: ResetBehavior.discard)
         self.resetBehaviorTomorrow = loadPreferenceEnum("resetBehaviorTomorrow", initially: ResetBehavior.toPlanned)
         self.resetBehaviorQbi = loadPreferenceEnum("resetBehaviorQbi", initially: ResetBehavior.discard)
+        
+        self.displayNamePlanned = loadPreference("displayNamePlanned", initially: "Planned")
+        self.displayNameToday = loadPreference("displayNameToday", initially: "Today")
+        self.displayNameTomorrow = loadPreference("displayNameTomorrow", initially: "Tomorrow")
+        self.displayNameQBI = loadPreference("displayNameQBI", initially: "QBI")
     }
 }

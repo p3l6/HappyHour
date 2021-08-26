@@ -182,10 +182,14 @@ struct ContentView: View {
         VStack {
             TimerBar()
             ScrollView {
-                SectionView(title:"Planned", icon: "tray").environmentObject(model.planned)
-                SectionView(title:"Today", icon: "checkmark.square").environmentObject(model.today)
-                SectionView(title:"Tomorrow", icon: "calendar").environmentObject(model.tomorrow)
-                SectionView(title:"QBI", icon: "hand.raised").environmentObject(model.qbi)
+                SectionView(title:settings.displayNamePlanned, icon: "tray")
+                    .environmentObject(model.planned)
+                SectionView(title:settings.displayNameToday, icon: "checkmark.square")
+                    .environmentObject(model.today)
+                SectionView(title:settings.displayNameTomorrow, icon: "calendar")
+                    .environmentObject(model.tomorrow)
+                SectionView(title:settings.displayNameQBI, icon: "hand.raised")
+                    .environmentObject(model.qbi)
             }
         }
         .frame(minWidth: 350, idealWidth: 450, maxWidth: 1000,

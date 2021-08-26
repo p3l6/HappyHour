@@ -26,6 +26,7 @@ extension ItemModel {
         //     with: #"[PR]\(\#(pullUrl)$1\)"#,
         //     options: .regularExpression
         // )
+        let settings = UserSettings()
         let baseAttrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0)]
         let boldAttrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0, weight: .bold)]
         
@@ -33,12 +34,12 @@ extension ItemModel {
             let attrText = NSMutableAttributedString(string: text, attributes: baseAttrs)
             
             if let regex = try? NSRegularExpression(pattern: #"PR ?(\d+)"#) {
-                makeLinks(attrText, base: text, matching: regex, prefix: UserSettings().pullRequestURLprefix)
+                makeLinks(attrText, base: text, matching: regex, prefix: settings.pullRequestURLprefix)
             }
             
-            for prefix in UserSettings().jiraProjectprefixes.split(separator: " ") {
+            for prefix in settings.jiraProjectprefixes.split(separator: " ") {
                 if let regex = try? NSRegularExpression(pattern: #"(\#(prefix)-\d+)"#) {
-                    makeLinks(attrText, base: text, matching: regex, prefix: UserSettings().jiraURLprefix)
+                    makeLinks(attrText, base: text, matching: regex, prefix: settings.jiraURLprefix)
                 }
             }
             
@@ -66,9 +67,9 @@ extension ItemModel {
                 }
             }
         }
-        printList(title: "Today", list: today, prefix: "✅ ")
-        printList(title: "Tomorrow", list: tomorrow, prefix: "➡️ ")
-        printList(title: "QBI", list: qbi, prefix: "⁉️ ")
+        printList(title: settings.displayNameToday, list: today, prefix: "✅ ")
+        printList(title: settings.displayNameTomorrow, list: tomorrow, prefix: "➡️ ")
+        printList(title: settings.displayNameQBI, list: qbi, prefix: "⁉️ ")
         
         return string
     }

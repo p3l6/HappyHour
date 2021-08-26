@@ -27,6 +27,45 @@ struct MainSettings: View {
     }
 }
 
+struct DisplaySettings: View {
+    @EnvironmentObject var settings: UserSettings
+    
+    var body: some View {
+        Form {
+            Section(header: Text("Heading display names:")) {
+                Picker(selection: $settings.displayNamePlanned,
+                       label: Label(settings.displayNamePlanned, systemImage:"tray")) {
+                    Text("Planned").tag("Planned")
+                    Text("To Do").tag("To Do")
+                }
+                
+                Picker(selection: $settings.displayNameToday,
+                       label: Label(settings.displayNameToday, systemImage:"checkmark.square")) {
+                    Text("Today").tag("Today")
+                    Text("Yesterday").tag("Yesterday")
+                    Text("Completed").tag("Completed")
+                }
+                
+                Picker(selection: $settings.displayNameTomorrow,
+                       label: Label(settings.displayNameTomorrow, systemImage:"calendar")) {
+                    Text("Tomorrow").tag("Tomorrow")
+                    Text("Today").tag("Today")
+                    Text("Up Next").tag("Up Next")
+                }
+                
+                Picker(selection: $settings.displayNameQBI,
+                       label: Label(settings.displayNameQBI, systemImage:"hand.raised")) {
+                    Text("QBI").tag("QBI")
+                    Text("Blocks").tag("Blocks")
+                    Text("Distractors").tag("Distractors")
+                    Text("Blocks | Distractors").tag("Blocks | Distractors")
+                }
+            }
+        }
+    }
+}
+
+
 struct ResetSettings: View {
     @EnvironmentObject var settings: UserSettings
     
@@ -42,16 +81,16 @@ struct ResetSettings: View {
         Form {
             Section(header: Text("Item behavior for reset action:")) {
                 Picker(selection: $settings.resetBehaviorPlanned,
-                       label: Label("Planned", systemImage:"tray")) { options() }
+                       label: Label(settings.displayNamePlanned, systemImage:"tray")) { options() }
                 
                 Picker(selection: $settings.resetBehaviorToday,
-                       label: Label("Today", systemImage:"checkmark.square")) { options() }
+                       label: Label(settings.displayNameToday, systemImage:"checkmark.square")) { options() }
                 
                 Picker(selection: $settings.resetBehaviorTomorrow,
-                       label: Label("Tomorrow", systemImage:"calendar")) { options() }
+                       label: Label(settings.displayNameTomorrow, systemImage:"calendar")) { options() }
                 
                 Picker(selection: $settings.resetBehaviorQbi,
-                       label: Label("QBI", systemImage:"hand.raised")) { options() }
+                       label: Label(settings.displayNameQBI, systemImage:"hand.raised")) { options() }
             }
         }
     }
@@ -59,7 +98,7 @@ struct ResetSettings: View {
 
 struct SettingsView: View {
     private enum Tabs: Hashable {
-        case general, reset
+        case general, display, reset
     }
     
     var body: some View {
@@ -67,12 +106,15 @@ struct SettingsView: View {
             MainSettings()
                 .tabItem {Label("General", systemImage: "gear")}
                 .tag(Tabs.general)
+            DisplaySettings()
+                .tabItem {Label("Display", systemImage: "macwindow") }
+                .tag(Tabs.display)
             ResetSettings()
                 .tabItem {Label("Daily Reset", systemImage: "repeat")}
                 .tag(Tabs.reset)
         }
         .padding(20)
-        .frame(width: 350)
+        .frame(width: 400)
     }
 }
 
