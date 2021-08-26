@@ -92,6 +92,19 @@ This toolbar button is hidden by default, but as most mac apps,
 you can customize to toolbar (by right clicking on it) to add this button.
 """)
             
+            HelpSection(title: "Footer",
+                        image: "questionmark.diamond",
+                        text: """
+Yes/No style questions can be configured in preferences.
+
+If they exist, they will appear at the bottom of the window.
+They will also appear at the bottom of the formatted standup.
+
+Use these if your team asks specific questions each standup,
+such as "Is the issue tracker up to date?" or "Do you have any
+open PRs that need review?"
+""")
+            
             
         }
         .padding()
