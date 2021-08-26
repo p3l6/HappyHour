@@ -6,6 +6,10 @@ struct MainSettings: View {
 
     var body: some View {
         Form {
+            Toggle(isOn: $settings.formatEmptySections) {
+                Label("Include empty sections in report", systemImage: "questionmark.square.dashed").labelStyle(TitleOnlyLabelStyle())
+            }
+            
             Text("Pull Request URL")
             TextField("https://github.com/user/project/pull/", text: $settings.pullRequestURLprefix)
             

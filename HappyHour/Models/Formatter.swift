@@ -65,6 +65,9 @@ extension ItemModel {
                     string.append(addAllLinks(text:item.text))
                     string.append(attr("\n"))
                 }
+            } else if settings.formatEmptySections {
+                string.append(bold(title))
+                string.append(attr(":\n(none)"))
             }
         }
         printList(title: settings.displayNameToday, list: today, prefix: "✅ ")

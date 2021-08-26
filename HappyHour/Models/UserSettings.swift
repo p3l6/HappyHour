@@ -72,12 +72,17 @@ class UserSettings: ObservableObject {
         didSet { UserDefaults.standard.set(displayNameQBI, forKey: "displayNameQBI") }
     }
     
+    @Published var formatEmptySections: Bool {
+        didSet { UserDefaults.standard.set(formatEmptySections, forKey: "formatEmptySections") }
+    }
+    
     init() {
         self.pullRequestURLprefix = loadPreference("pullRequestURLprefix", initially: "")
         self.jiraURLprefix = loadPreference("jiraURLprefix", initially: "")
         self.jiraProjectprefixes = loadPreference("jiraProjectprefixes", initially: "")
         self.standupEmail = loadPreference("standupEmail", initially: "")
         self.storageFileName = loadPreference("storageFileName", initially: "Standup")
+        self.formatEmptySections = loadPreference("formatEmptySections", initially: false)
         
         self.resetBehaviorPlanned = loadPreferenceEnum("resetBehaviorPlanned", initially: ResetBehavior.discard)
         self.resetBehaviorToday = loadPreferenceEnum("resetBehaviorToday", initially: ResetBehavior.discard)
