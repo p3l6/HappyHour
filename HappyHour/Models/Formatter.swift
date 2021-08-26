@@ -76,7 +76,7 @@ extension ItemModel {
                 }
                 previousItem = true
                 string.append(bold(title))
-                string.append(attr(":\n(none)"))
+                string.append(attr(":\n(none)\n"))
             }
         }
         printList(title: settings.displayNameToday, list: today, prefix: "✅ ")

@@ -53,8 +53,7 @@ struct EditField: View {
         .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
         .textFieldStyle(PlainTextFieldStyle())
         .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .stroke(editing ? Color.accentColor :
-                   (outline ? Color.gray : Color.clear), lineWidth: 2))
+            .stroke(editing ? Color.accentColor : Color.clear, lineWidth: 2))
     }
 }
 
@@ -72,13 +71,13 @@ struct ListRow: View {
                 Image(systemName: "rhombus")
                     .foregroundColor(.accentColor)
                     .font(Font.system(.title3))
-                    .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
                 EditField(outline: $hovered)
                 if hovered {
                     Trash(index: index)
                         .font(Font.system(.title3))
                 }
             }
+            .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
             .onHover { over in hovered = over }
             
             DropDivider(visible: dropTarget)
@@ -143,9 +142,10 @@ struct SectionView: View {
     let icon: String
     
     var body: some View {
-        Section(header:SectionHeader(title: title, icon: icon)
+        Section(header: SectionHeader(title: title, icon: icon)
                     .onDrop(of: DragHelper.type, isTargeted: $dropTarget, perform:performDrop),
-                footer: NewItem().onDrop(of: DragHelper.type, isTargeted: $dropTargetFooter, perform:performDropFooter)){
+                footer: NewItem()
+                    .onDrop(of: DragHelper.type, isTargeted: $dropTargetFooter, perform:performDropFooter)){
             DropDivider(visible: dropTarget)
             
             ForEach(Array(listModel.items.enumerated()), id:\.1.id) { index, item in
