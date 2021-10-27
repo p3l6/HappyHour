@@ -1,5 +1,6 @@
 
 import Foundation
+import UniformTypeIdentifiers
 
 /**
  This file exists to help reimplement some included features of swiftUI's List
@@ -12,7 +13,7 @@ import Foundation
  */
 
 class DragHelper: NSObject, NSItemProviderWriting, NSItemProviderReading, Codable {
-    static let type = [kUTTypeData as String]
+    static let type = [UTType.data.identifier]
     static let readableTypeIdentifiersForItemProvider = type
     static let writableTypeIdentifiersForItemProvider = type
     
