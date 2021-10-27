@@ -1,23 +1,6 @@
 
 import SwiftUI
 
-// TODO: Remove this hack when swiftui allows disabling focus ring for specific TextFields
-// Then, disable them for all the text fields on this page
-// https://stackoverflow.com/a/60290791
-// This disables all focus rings for all text fields in the whole app
-extension NSTextField {
-    open override var focusRingType: NSFocusRingType {
-        get { .none }
-        set { }
-    }
-}
-
-struct ButtonStyleNoBack: ButtonStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label.background(Color.clear)
-    }
-}
-
 struct DropDivider: View {
     let visible: Bool
     var body: some View {
@@ -38,7 +21,7 @@ struct Trash: View {
             listModel.remove(at: index)
         } label: {
             Label("Trash", systemImage: "trash").labelStyle(IconOnlyLabelStyle())
-        }.buttonStyle(ButtonStyleNoBack())
+        }.buttonStyle(BorderlessButtonStyle())
     }
 }
 
@@ -52,6 +35,7 @@ struct EditField: View {
         .padding(5)
         .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
         .textFieldStyle(PlainTextFieldStyle())
+        .focusable(false)
         .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
             .stroke(editing ? Color.accentColor : Color.clear, lineWidth: 2))
     }

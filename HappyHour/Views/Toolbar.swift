@@ -55,12 +55,13 @@ struct TBReset: View {
             resetAlertVisible = true
         } label: {
             Label("Reset", systemImage:"repeat")
-        }.alert(isPresented: $resetAlertVisible) {
-            Alert(title: Text("Do you want to reset the lists?"),
-                  message: Text("By default, this will move tomorrow's items to planned. Everything else will be lost."),
-                  primaryButton: .default(Text("Reset"), action: { model.clear()}),
-                  secondaryButton: .cancel())
-        }.help("Reset the lists, according to preferences")
+        }
+        .confirmationDialog(Text("Do you want to reset the lists? By default, this will move tomorrow's items to planned. Everything else will be lost."),
+                            isPresented: $resetAlertVisible) {
+            Button(role: .destructive) { model.clear() } label: { Text("Reset") }
+            Button("Cancel", role: .cancel, action: {} )
+        }
+        .help("Reset the lists, according to preferences")
     }
 }
 
