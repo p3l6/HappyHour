@@ -21,7 +21,10 @@ The screenshot above will produce a message ready to paste into your standup thr
 
 ## Features
 * Sections for planning, today, tomorrow, questions/blockers/interesting
-* Auto-linking to pull requests and Jira issues
+* Auto-linking to
+    * Pull requests 
+    * Jira issues 
+    * Other markdown links
 * Drag items to reorder, even between sections
 * Customizable reset behavior. By default, anything set for "Tomorrow" becomes "Planned"
 * A few choices for section headers.

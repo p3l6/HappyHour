@@ -22,6 +22,7 @@ extension ItemModel {
                 )
             }
             
+            // Also converts user entered markdown links!
             do { return try AttributedString(markdown: mdText) }
             catch {
                 print("Error in link formatting: \(mdText)")
