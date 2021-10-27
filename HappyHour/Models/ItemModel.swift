@@ -57,9 +57,12 @@ final class ItemModel: ObservableObject {
            dirtyLists.count != 0 {
             print("  saving")
             
-            DiskData(itemModel:self).save()
             dirtyItems.forEach { $0.dirty = false }
             dirtyLists.forEach { $0.dirty = false }
+            
+            Task.init(priority: .background) {
+                await DiskData(itemModel:self).save()
+            }
         }
     }
     

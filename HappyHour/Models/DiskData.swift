@@ -75,7 +75,7 @@ struct DiskData: Codable {
         return diskData
     }
     
-    func save() {
+    func save() async {
         guard let dir = DiskData.dataDirectory() else { return }
         let name = UserSettings().storageFileName
         let file = dir.appendingPathComponent(name).appendingPathExtension("json")
