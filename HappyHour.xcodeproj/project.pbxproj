@@ -39,6 +39,7 @@
 		DAAF1C9E2565B03D00E287CC /* DragHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DragHelper.swift; path = HappyHour/DragHelper.swift; sourceTree = SOURCE_ROOT; };
 		DABCA5C62560B46200F02836 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		DABCA5C92560B66A00F02836 /* DiskData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskData.swift; sourceTree = "<group>"; };
+		DAF277382729AD20003ADCEC /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +78,7 @@
 		DA528E1F23C6306A001E5445 = {
 			isa = PBXGroup;
 			children = (
+				DAF277382729AD20003ADCEC /* Readme.md */,
 				DA528E2A23C6306A001E5445 /* HappyHour */,
 				DA528E2923C6306A001E5445 /* Products */,
 			);
