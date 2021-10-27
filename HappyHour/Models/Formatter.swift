@@ -2,81 +2,62 @@
 import Foundation
 import AppKit
 
-fileprivate func makeLinks(_ text: NSMutableAttributedString,
-                           base: String,
-                           matching regex: NSRegularExpression,
-                           prefix: String) {
-    guard prefix.count > 0 else { return }
-    
-    let fullRange = NSRange(location:0, length:base.utf16.count)
-    
-    regex.enumerateMatches(in: base, options: [], range: fullRange) { (match, _, _) in
-        guard let match = match else { return }
-        let path = "\(prefix)\(text.attributedSubstring(from: match.range(at: 1)).string)"
-        guard let url = URL(string:path) else { return }
-        text.addAttributes([NSAttributedString.Key.link: url], range: match.range)
-    }
-}
 
 extension ItemModel {
-    func formatted() -> NSAttributedString {
-        // MARKDOWN Version of pr replacement
-        // string = string.replacingOccurrences(
-        //     of: #"PR ?(\d+)"#,
-        //     with: #"[PR]\(\#(pullUrl)$1\)"#,
-        //     options: .regularExpression
-        // )
+    func formatted() -> AttributedString {
         let settings = UserSettings()
-        let baseAttrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0)]
-        let boldAttrs = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: 14.0, weight: .bold)]
         
-        func addAllLinks(text: String) -> NSAttributedString {
-            let attrText = NSMutableAttributedString(string: text, attributes: baseAttrs)
+        func addAllLinks(text: String) -> AttributedString {
+            var mdText = text.replacingOccurrences(
+                of: #"PR ?(\d+)"#,
+                with: #"[$0]\(\#(settings.pullRequestURLprefix)$1\)"#,
+                options: .regularExpression
+            )
             
-            if let regex = try? NSRegularExpression(pattern: #"PR ?(\d+)"#) {
-                makeLinks(attrText, base: text, matching: regex, prefix: settings.pullRequestURLprefix)
+            for jiraPrefix in settings.jiraProjectprefixes.split(separator: " ") {
+                mdText = mdText.replacingOccurrences(
+                    of: #"(\#(jiraPrefix)-\d+)"#,
+                    with: #"[$0]\(\#(settings.jiraURLprefix)$1\)"#,
+                    options: .regularExpression
+                )
             }
             
-            for prefix in settings.jiraProjectprefixes.split(separator: " ") {
-                if let regex = try? NSRegularExpression(pattern: #"(\#(prefix)-\d+)"#) {
-                    makeLinks(attrText, base: text, matching: regex, prefix: settings.jiraURLprefix)
-                }
+            do { return try AttributedString(markdown: mdText) }
+            catch {
+                print("Error in link formatting: \(mdText)")
+                return AttributedString(text)
             }
-            
-            return attrText
         }
         
-        func attr(_ string: String) -> NSAttributedString {
-            return NSMutableAttributedString(string: string, attributes: baseAttrs)
+        func bold(_ string: String) -> AttributedString {
+            var attrString =  AttributedString(string)
+            attrString.inlinePresentationIntent = .stronglyEmphasized
+            return attrString
         }
         
-        func bold(_ string: String) -> NSAttributedString {
-            return NSMutableAttributedString(string: string, attributes:boldAttrs)
-        }
-        
-        let string = NSMutableAttributedString(string: "", attributes: baseAttrs)
+        var string = AttributedString("")
         
         var previousItem = false
         func printList(title: String, list: List, prefix: String) {
             if !list.items.isEmpty {
                 if previousItem {
-                    string.append(attr("\n"))
+                    string.append(AttributedString("\n"))
                 }
                 previousItem = true
                 string.append(bold(title))
-                string.append(attr(":\n"))
+                string.append(AttributedString(":\n"))
                 for item in list.items {
-                    string.append(attr(prefix))
+                    string.append(AttributedString(prefix))
                     string.append(addAllLinks(text:item.text))
-                    string.append(attr("\n"))
+                    string.append(AttributedString("\n"))
                 }
             } else if settings.formatEmptySections {
                 if previousItem {
-                    string.append(attr("\n"))
+                    string.append(AttributedString("\n"))
                 }
                 previousItem = true
                 string.append(bold(title))
-                string.append(attr(":\n(none)\n"))
+                string.append(AttributedString(":\n(none)\n"))
             }
         }
         printList(title: settings.displayNameToday, list: today, prefix: "✅ ")
@@ -84,15 +65,15 @@ extension ItemModel {
         printList(title: settings.displayNameQBI, list: qbi, prefix: "⁉️ ")
         
         if !settings.footerItems.isEmpty {
-            string.append(attr("\n"))
+            string.append(AttributedString("\n"))
             for item in settings.footerItems {
                 string.append(bold("\(item) "))
                 switch (footer[item] ?? .no) {
-                case .yes: string.append(attr("✅"))
-                case .maybe: string.append(attr("🤷"))
-                case .no: string.append(attr("❌"))
+                case .yes: string.append(AttributedString("✅"))
+                case .maybe: string.append(AttributedString("🤷"))
+                case .no: string.append(AttributedString("❌"))
                 }
-                string.append(attr("\n"))
+                string.append(AttributedString("\n"))
             }
         }
         

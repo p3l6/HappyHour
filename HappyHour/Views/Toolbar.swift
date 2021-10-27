@@ -72,7 +72,7 @@ struct TBCopy: View {
         let text = model.formatted()
         let pasteboard = NSPasteboard.general
         pasteboard.declareTypes([NSPasteboard.PasteboardType.rtf], owner: nil)
-        pasteboard.writeObjects([text])
+        pasteboard.writeObjects([NSAttributedString(text)])
     }
     
     var body: some View {
@@ -90,7 +90,7 @@ struct TBPreview: View {
         let text = model.formatted()
         let pasteboard = NSPasteboard.general
         pasteboard.declareTypes([NSPasteboard.PasteboardType.rtf], owner: nil)
-        pasteboard.writeObjects([text])
+        pasteboard.writeObjects([NSAttributedString(text)])
     }
     
     var body: some View {
@@ -102,8 +102,7 @@ struct TBPreview: View {
         .help("Preview formatted standup")
         .popover(isPresented: $previewSheetVisible) {
             VStack {
-                // FIXME: SwiftUI.Text does not support attributed strings at this time
-                Text(model.formatted().string)
+                Text(model.formatted())
                 Button(action: copyHandler) {
                     Label("Copy", systemImage:"doc.on.doc")
                 }.help("Copy formatted standup to clipboard")
