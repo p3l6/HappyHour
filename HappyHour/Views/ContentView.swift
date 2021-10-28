@@ -184,8 +184,7 @@ struct Footer: View {
                 Picker(selection: binding(for: item),
                        label: Label(item, systemImage:"questionmark.diamond")
                         .foregroundColor(.accentColor)
-                        .fixedSize()) { options() }
-                    .scaledToFit()
+                ) { options() }
             }
         }
     }
@@ -231,9 +230,15 @@ struct ContentView_Previews: PreviewProvider {
         return model
     }
     
+    static func sampleSettings() -> UserSettings {
+        let settings = UserSettings(store: nil)
+        settings.footerItems = ["Question 1?"]
+        return settings
+    }
+    
     static var previews: some View {
         ContentView()
             .environmentObject(sampleData())
-            .environmentObject(UserSettings())
+            .environmentObject(sampleSettings())
     }
 }

@@ -173,6 +173,6 @@ struct SettingsView_Previews: PreviewProvider {
         }
         .padding(20)
         .frame(width: 400)
-        .environmentObject(UserSettings())
+        .environmentObject(UserSettings(store: nil))
     }
 }
