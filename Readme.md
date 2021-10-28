@@ -32,6 +32,16 @@ The screenshot above will produce a message ready to paste into your standup thr
     * If you post standups in the morning, you can use Yesterday/Today
 * Define your own Yes/No questions to be included at the bottom of a standup report
 
+## Keyboard shortcuts
+
+Shortcut | Action
+---------|-------
+  ⌘ E    | Copy to clipboard
+  ⌘ R    | Reset lists
+  ⌘ P    | Show Preview popup
+  ⌘ /    | Show help popup
+  
+
 ## Build
 1. Open the xcode project (Big sur required)
 2. Build and run

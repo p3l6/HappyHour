@@ -20,6 +20,7 @@ struct TBHelp: View {
             Label("Help", systemImage:"questionmark.circle")
         }
         .help("Show help...")
+        .keyboardShortcut("/")
         .popover(isPresented: $helpSheetVisible, arrowEdge: .bottom) {
            HelpView()
         }
@@ -58,10 +59,11 @@ struct TBReset: View {
         }
         .confirmationDialog(Text("Do you want to reset the lists? By default, this will move tomorrow's items to planned. Everything else will be lost."),
                             isPresented: $resetAlertVisible) {
-            Button(role: .destructive) { model.clear() } label: { Text("Reset") }
-            Button("Cancel", role: .cancel, action: {} )
+            Button(role: .destructive) { model.clear() } label: { Text("Reset") }.keyboardShortcut(.defaultAction)
+            Button("Cancel", role: .cancel, action: {} ).keyboardShortcut(.cancelAction)
         }
         .help("Reset the lists, according to preferences")
+        .keyboardShortcut("r")
     }
 }
 
@@ -78,7 +80,9 @@ struct TBCopy: View {
     var body: some View {
         Button(action: copyHandler) {
             Label("Copy", systemImage:"doc.on.doc")
-        }.help("Copy formatted standup to clipboard")
+        }
+        .help("Copy formatted standup to clipboard")
+        .keyboardShortcut("e")
     }
 }
 
@@ -100,6 +104,7 @@ struct TBPreview: View {
             Label("Preview", systemImage:"doc.richtext")
         }
         .help("Preview formatted standup")
+        .keyboardShortcut("p")
         .popover(isPresented: $previewSheetVisible) {
             VStack {
                 Text(model.formatted())

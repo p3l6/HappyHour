@@ -10,16 +10,22 @@ struct MainSettings: View {
                 Label("Include empty sections in report", systemImage: "questionmark.square.dashed").labelStyle(TitleOnlyLabelStyle())
             }
             
-            Text("Pull Request URL")
-            TextField("https://github.com/user/project/pull/", text: $settings.pullRequestURLprefix)
+            TextField("Pull Request URL",
+                      text: $settings.pullRequestURLprefix,
+                      prompt: Text("https://github.com/user/project/pull/"))
             
-            Text("Jira Issue URL")
-            TextField("https://someone.atlassian.net/browse/", text: $settings.jiraURLprefix)
-            Text("Jira Project Prefixes (space separated)")
-            TextField("ABC BUG", text: $settings.jiraProjectprefixes)
+            TextField("Jira Issue URL",
+                      text: $settings.jiraURLprefix,
+                      prompt: Text("https://someone.atlassian.net/browse/"))
+
+            TextField("Jira Project Prefixes (space separated)",
+                      text: $settings.jiraProjectprefixes,
+                      prompt: Text("ABC BUG"))
             
-            Text("Standup email thread address")
-            TextField("standup@your-team.com", text: $settings.standupEmail)
+            TextField("Standup email thread address",
+                      text: $settings.standupEmail,
+                      prompt: Text("standup@your-team.com"))
+                      
             Button() {
                 if let filePath = Bundle.main.url(forResource: "HappyHour", withExtension: "alfredworkflow") {
                     NSWorkspace.shared.open(filePath)
@@ -154,7 +160,7 @@ struct SettingsView: View {
                 .tag(Tabs.reset)
         }
         .padding(20)
-        .frame(width: 400)
+        .frame(width: 600)
     }
 }
 
