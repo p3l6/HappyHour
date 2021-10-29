@@ -7,6 +7,7 @@ struct DropDivider: View {
         Group {
             if visible {
                 Divider().background(Color.accentColor)
+                // TODO: use isHidden here
             }
         }
     }
@@ -27,17 +28,11 @@ struct Trash: View {
 
 struct EditField: View {
     @EnvironmentObject var item: ItemModel.Item
-    @State private var editing = false
-    @Binding var outline: Bool
 
     var body: some View {
-        TextField("blank", text:$item.text, onEditingChanged: { editing = $0 })
-        .padding(5)
-        .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
-        .textFieldStyle(PlainTextFieldStyle())
-        .focusable(false)
-        .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .stroke(editing ? Color.accentColor : Color.clear, lineWidth: 2))
+        MultilineTextField("blank", text:$item.text)
+            .padding(5)
+            .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
     }
 }
 
@@ -55,11 +50,10 @@ struct ListRow: View {
                 Image(systemName: "rhombus")
                     .foregroundColor(.accentColor)
                     .font(Font.system(.title3))
-                EditField(outline: $hovered)
-                if hovered {
-                    Trash(index: index)
-                        .font(Font.system(.title3))
-                }
+                EditField()
+                Trash(index: index)
+                    .font(Font.system(.title3))
+                    .isHidden(!hovered)
             }
             .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
             .onHover { over in hovered = over }
@@ -95,14 +89,13 @@ struct SectionHeader: View {
 struct NewItem: View {
     @EnvironmentObject var listModel: ItemModel.List
     @State var editText: String = ""
-    @State private var editing = false
     
     var body: some View {
         HStack{
             Image(systemName: "rhombus")
                 .foregroundColor(.secondary)
                 .font(Font.system(.title3))
-            TextField("add item", text:$editText, onEditingChanged: { editing = $0 }, onCommit: {
+            MultilineTextField("add item", text:$editText, onCommit: {
                 if editText.count > 0 {
                     listModel.add(editText)
                     editText = ""
@@ -110,9 +103,6 @@ struct NewItem: View {
             })
             .padding(5)
             .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
-            .textFieldStyle(PlainTextFieldStyle())
-            .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .stroke(editing ? Color.accentColor : Color.clear, lineWidth: 2))
         }
     }
 }

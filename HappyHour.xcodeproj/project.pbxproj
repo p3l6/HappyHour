@@ -20,6 +20,8 @@
 		DAAF1C9F2565B03D00E287CC /* DragHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF1C9E2565B03D00E287CC /* DragHelper.swift */; };
 		DABCA5C72560B46200F02836 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABCA5C62560B46200F02836 /* Formatter.swift */; };
 		DABCA5CA2560B66A00F02836 /* DiskData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABCA5C92560B66A00F02836 /* DiskData.swift */; };
+		DAF2773D272C6263003ADCEC /* MultilineText.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2773C272C6263003ADCEC /* MultilineText.swift */; };
+		DAF2773F272C84E1003ADCEC /* HideHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2773E272C84E1003ADCEC /* HideHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,10 +38,12 @@
 		DA60540423C7884D006BB663 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
 		DAA671312560DC58004CE69E /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		DAA8857625A21AA300547911 /* HappyHour.alfredworkflow */ = {isa = PBXFileReference; lastKnownFileType = file; path = HappyHour.alfredworkflow; sourceTree = "<group>"; };
-		DAAF1C9E2565B03D00E287CC /* DragHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DragHelper.swift; path = HappyHour/DragHelper.swift; sourceTree = SOURCE_ROOT; };
+		DAAF1C9E2565B03D00E287CC /* DragHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DragHelper.swift; path = HappyHour/Helpers/DragHelper.swift; sourceTree = SOURCE_ROOT; };
 		DABCA5C62560B46200F02836 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		DABCA5C92560B66A00F02836 /* DiskData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskData.swift; sourceTree = "<group>"; };
 		DAF277382729AD20003ADCEC /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		DAF2773C272C6263003ADCEC /* MultilineText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineText.swift; sourceTree = "<group>"; };
+		DAF2773E272C84E1003ADCEC /* HideHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				DA528E2B23C6306A001E5445 /* HappyHourApp.swift */,
-				DAAF1C9E2565B03D00E287CC /* DragHelper.swift */,
+				DAF27740272C85E1003ADCEC /* Helpers */,
 				DA3E6E82255F8D990071E539 /* Views */,
 				DA3E6E80255F8D900071E539 /* Models */,
 				DA8B300424ED758D001E1AA2 /* Content */,
@@ -122,6 +126,16 @@
 				DA528E3823C6306B001E5445 /* HappyHour.entitlements */,
 			);
 			name = Content;
+			sourceTree = "<group>";
+		};
+		DAF27740272C85E1003ADCEC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DAAF1C9E2565B03D00E287CC /* DragHelper.swift */,
+				DAF2773E272C84E1003ADCEC /* HideHelper.swift */,
+				DAF2773C272C6263003ADCEC /* MultilineText.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,8 +231,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAAF1C9F2565B03D00E287CC /* DragHelper.swift in Sources */,
+				DAF2773F272C84E1003ADCEC /* HideHelper.swift in Sources */,
 				DA60540523C7884D006BB663 /* ItemModel.swift in Sources */,
 				DA4C826E2564363D002D67BF /* Toolbar.swift in Sources */,
+				DAF2773D272C6263003ADCEC /* MultilineText.swift in Sources */,
 				DA3E6E86255F8E3F0071E539 /* UserSettings.swift in Sources */,
 				DA528E2E23C6306A001E5445 /* ContentView.swift in Sources */,
 				DAA671322560DC58004CE69E /* HelpView.swift in Sources */,
