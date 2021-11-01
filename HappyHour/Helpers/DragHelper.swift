@@ -17,11 +17,9 @@ class DragHelper: NSObject, NSItemProviderWriting, NSItemProviderReading, Codabl
     static let readableTypeIdentifiersForItemProvider = type
     static let writableTypeIdentifiersForItemProvider = type
     
-    let text: String
     let source: UUID
     
-    required init(text: String, source: UUID) {
-        self.text = text
+    required init(_ source: UUID) {
         self.source = source
     }
     

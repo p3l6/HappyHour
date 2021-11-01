@@ -4,12 +4,9 @@ import SwiftUI
 struct DropDivider: View {
     let visible: Bool
     var body: some View {
-        Group {
-            if visible {
-                Divider().background(Color.accentColor)
-                // TODO: use isHidden here
-            }
-        }
+        Divider()
+            .background(Color.accentColor)
+            .isHidden(!visible)
     }
 }
 
@@ -23,16 +20,6 @@ struct Trash: View {
         } label: {
             Label("Trash", systemImage: "trash").labelStyle(IconOnlyLabelStyle())
         }.buttonStyle(BorderlessButtonStyle())
-    }
-}
-
-struct EditField: View {
-    @EnvironmentObject var item: ItemModel.Item
-
-    var body: some View {
-        MultilineTextField("blank", text:$item.text)
-            .padding(5)
-            .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
     }
 }
 
@@ -50,12 +37,14 @@ struct ListRow: View {
                 Image(systemName: "rhombus")
                     .foregroundColor(.accentColor)
                     .font(Font.system(.title3))
-                EditField()
+                MultilineTextField("blank", text:$item.text)
+                    .padding(1)
+                    .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
                 Trash(index: index)
                     .font(Font.system(.title3))
                     .isHidden(!hovered)
             }
-            .onDrag { NSItemProvider(object: DragHelper(text:self.item.text, source: item.id)) }
+            .onDrag { NSItemProvider(object: DragHelper(item.id)) }
             .onHover { over in hovered = over }
             
             DropDivider(visible: dropTarget)
@@ -65,9 +54,7 @@ struct ListRow: View {
     
     func performDrop(itemProviders: [NSItemProvider]) -> Bool {
         return dropHelper(itemProviders) { dragHelper in
-            let item = ItemModel.Item(initialText: dragHelper.text)
-            listModel.items.insert(item, at: index+1)
-            model.remove(id: dragHelper.source)
+            model.move(id: dragHelper.source, to: listModel, at: index+1)
         }
     }
 }
@@ -81,6 +68,7 @@ struct SectionHeader: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.vertical, 2)
             .padding(.leading, 20)
+            .padding(.top)
             .foregroundColor(.accentColor)
             .font(Font.system(.title2))
     }
@@ -101,7 +89,7 @@ struct NewItem: View {
                     editText = ""
                 }
             })
-            .padding(5)
+            .padding(1)
             .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }
         }
     }
@@ -133,17 +121,13 @@ struct SectionView: View {
 
     func performDrop(itemProviders: [NSItemProvider]) -> Bool {
         return dropHelper(itemProviders) { dragHelper in
-            let item = ItemModel.Item(initialText: dragHelper.text)
-            listModel.items.insert(item, at: 0)
-            model.remove(id: dragHelper.source)
+            model.move(id: dragHelper.source, to: listModel, at: 0)
         }
     }
     
     func performDropFooter(itemProviders: [NSItemProvider]) -> Bool {
         return dropHelper(itemProviders) { dragHelper in
-            let item = ItemModel.Item(initialText: dragHelper.text)
-            listModel.items.append(item)
-            model.remove(id: dragHelper.source)
+            model.move(id: dragHelper.source, to: listModel, at: Int.max)
         }
     }
 }

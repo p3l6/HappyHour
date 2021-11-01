@@ -127,6 +127,7 @@ fileprivate final class Coordinator: NSObject, NSTextViewDelegate, NSControlText
 
         // Functionality (more available)
         textView.allowsUndo = true
+        textView.isRichText = false
         textView.isAutomaticLinkDetectionEnabled = true
         textView.displaysLinkToolTips = true
         textView.isAutomaticDataDetectionEnabled = true
@@ -173,7 +174,7 @@ fileprivate final class Coordinator: NSObject, NSTextViewDelegate, NSControlText
         switch (commandSelector) {
         case #selector(NSResponder.insertNewline(_:)),
              #selector(NSResponder.insertTab(_:)):
-            // TODO: select next line
+            // TODO: select next line, or make a new line? on enter that is
             NSApp.keyWindow?.makeFirstResponder(nil)
             return true
         default:

@@ -66,12 +66,27 @@ final class ItemModel: ObservableObject {
         }
     }
     
-    func remove(id: UUID) {
-        //TODO: could be more efficient?
-        planned.items.removeAll(where: {item in item.id == id })
-        today.items.removeAll(where: {item in item.id == id })
-        tomorrow.items.removeAll(where: {item in item.id == id })
-        qbi.items.removeAll(where: {item in item.id == id })
+    func move(id: UUID, to: List, at: Int ) {
+        func tryMove(_ list: List) -> Bool {
+            if let index = list.items.firstIndex(where: {item in item.id == id }) {
+                let item = list.items.remove(at: index)
+                let dest = index < at ? at-1 : at
+                if dest >= to.items.count {
+                    to.items.append(item)
+                } else {
+                    to.items.insert(item, at: dest)
+                }
+                return true
+            }
+            return false
+        }
+        
+        if  !tryMove(planned) &&
+            !tryMove(today) &&
+            !tryMove(tomorrow) &&
+            !tryMove(qbi) {
+            print("Error: source item not found")
+        }
     }
     
     func clear() {
