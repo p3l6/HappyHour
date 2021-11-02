@@ -88,6 +88,9 @@ struct NewItem: View {
                     listModel.add(editText)
                     editText = ""
                 }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    NSApp.keyWindow?.recalculateKeyViewLoop()
+                }
             })
             .padding(1)
             .onExitCommand { NSApp.keyWindow?.makeFirstResponder(nil) }

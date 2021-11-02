@@ -1,6 +1,7 @@
 
 import Foundation
 import UniformTypeIdentifiers
+import AppKit
 
 /**
  This file exists to help reimplement some included features of swiftUI's List
@@ -48,6 +49,9 @@ func dropHelper(_ itemProviders: [NSItemProvider], _ wrapping: @escaping (DragHe
         guard let dragHelper = maybeDragHelper as? DragHelper else { return }
         DispatchQueue.main.async {
             wrapping(dragHelper)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NSApp.keyWindow?.recalculateKeyViewLoop()
         }
     }
     return true
