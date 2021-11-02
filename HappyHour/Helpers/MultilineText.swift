@@ -19,7 +19,7 @@ struct MultilineTextField: View {
 
     init (_ placeholder: String = "",
           text: Binding<String>,
-          nsFont: NSFont = NSFont.preferredFont(forTextStyle: .body),
+          nsFont: NSFont = NSFont.monospacedSystemFont(ofSize: 0, weight: .regular),
           onCommit: (() -> Void)? = nil) {
         self.placeholder = placeholder
         self._text = text
@@ -47,6 +47,7 @@ struct MultilineTextField: View {
         Text(placeholder)
             .font(.system(size: nsFont.pointSize))
             .opacity(textIsEmpty ? 0.3 : 0)
+            .padding(.leading, 5)
             .animation(.easeInOut(duration: 0.15), value: textIsEmpty)
     }
 }
@@ -172,13 +173,62 @@ fileprivate final class Coordinator: NSObject, NSTextViewDelegate, NSControlText
     
     func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         switch (commandSelector) {
-        case #selector(NSResponder.insertNewline(_:)),
-             #selector(NSResponder.insertTab(_:)):
-            // TODO: select next line, or make a new line? on enter that is
+        case #selector(NSResponder.insertNewline(_:)):
+            // TODO: cursor to the "new item" field in current section
             NSApp.keyWindow?.makeFirstResponder(nil)
+            return true
+        case #selector(NSResponder.insertTab(_:)):
+            NSApp.keyWindow?.makeFirstResponder(nextTextView(textView))
+            return true
+        case #selector(NSResponder.moveUp(_:)):
+            // TODO: dont move if  we're at the top
+            guard let cursorCoordinates = cursorCoordinates(textView),
+                  cursorCoordinates.minY == 0,
+                  let previous = previousTextView(textView) else { return false }
+            
+            NSApp.keyWindow?.makeFirstResponder(previous)
+            let index = previous.characterIndexForInsertion(at: NSPoint(x: cursorCoordinates.minX, y: previous.bounds.size.height - 2));
+            previous.setSelectedRange(NSRange(location:index, length:0))
+            return true
+        case #selector(NSResponder.moveDown(_:)):
+            guard let cursorCoordinates = cursorCoordinates(textView),
+                  cursorCoordinates.maxY == textView.bounds.maxY,
+                  let next = nextTextView(textView) else { return false }
+            
+            NSApp.keyWindow?.makeFirstResponder(next)
+            let index = next.characterIndexForInsertion(at: NSPoint(x: cursorCoordinates.minX, y:0));
+            next.setSelectedRange(NSRange(location:index, length:0))
             return true
         default:
             return false
         }
     }
+}
+
+fileprivate func previousTextView(_ current: NSTextView) -> NSTextView? {
+    var previous: NSView? = current
+    while previous != nil {
+        previous = previous?.previousKeyView
+        if let previous = previous as? NSTextView {
+            return previous
+        }
+    }
+    return nil
+}
+
+fileprivate func nextTextView(_ current: NSTextView) -> NSTextView? {
+    var next: NSView? = current
+    while next != nil {
+        next = next?.nextKeyView
+        if let next = next as? NSTextView {
+            return next
+        }
+    }
+    return nil
+}
+
+fileprivate func cursorCoordinates(_ textView: NSTextView) -> NSRect? {
+    let cursorLocation = NSRange(location:textView.selectedRange().location, length:0);
+    guard let container = textView.textContainer else { return nil }
+    return textView.layoutManager?.boundingRect(forGlyphRange: cursorLocation, in: container)
 }
