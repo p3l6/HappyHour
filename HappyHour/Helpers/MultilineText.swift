@@ -174,8 +174,13 @@ fileprivate final class Coordinator: NSObject, NSTextViewDelegate, NSControlText
     func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         switch (commandSelector) {
         case #selector(NSResponder.insertNewline(_:)):
-            // TODO: cursor to the "new item" field in current section
+            // Cause text did end editing on the current text box
             NSApp.keyWindow?.makeFirstResponder(nil)
+            // Then reselect ourself
+            // TODO: only if this is the "new item" field ?
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                NSApp.keyWindow?.makeFirstResponder(textView)
+            }
             return true
         case #selector(NSResponder.insertTab(_:)):
             NSApp.keyWindow?.makeFirstResponder(nextTextView(textView))
